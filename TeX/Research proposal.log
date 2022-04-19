@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.19)  19 APR 2022 16:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.19)  19 APR 2022 17:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -156,31 +156,37 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 31.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 52.
+(Font)              <7> on input line 48.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 52.
+(Font)              <5> on input line 48.
+
+Overfull \hbox (25.99973pt too wide) in paragraph at lines 58--95
+[] 
+ []
+
 [1
 
 {C:/Users/itsth/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2]
-(Research proposal.aux) ) 
+[3] (Research proposal.aux) ) 
 Here is how much of TeX's memory you used:
  2338 strings out of 478582
- 38959 string characters out of 2844344
- 352095 words of memory out of 3000000
- 20548 multiletter control sequences out of 15000+600000
- 476601 words of font info for 43 fonts, out of 8000000 for 9000
+ 38964 string characters out of 2844344
+ 353137 words of memory out of 3000000
+ 20546 multiletter control sequences out of 15000+600000
+ 477720 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,6n,62p,680b,190s stack positions out of 10000i,1000n,20000p,200000b,80000s
- <C:\Users\itsth\AppData\Local\MiKTeX\fonts/pk/ljfour/
-jknappen/ec/dpi600\ecrm0700.pk> <C:\Users\itsth\AppData\Local\MiKTeX\fonts/pk/l
-jfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\itsth\AppData\Local\MiKTeX\font
-s/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\itsth\AppData\Local\MiKTe
-X\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\itsth\AppData\Local
-\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk><C:/Users/itsth/AppData/
-Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
-Output written on "Research proposal.pdf" (2 pages, 58971 bytes).
+ 55i,9n,62p,388b,225s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ <C:\Users\itsth\AppData\Local\MiKTeX\fonts/pk/ljf
+our/jknappen/ec/dpi600\tcrm1000.pk> <C:\Users\itsth\AppData\Local\MiKTeX\fonts/
+pk/ljfour/jknappen/ec/dpi600\ecbx1000.pk> <C:\Users\itsth\AppData\Local\MiKTeX\
+fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\itsth\AppData\Local\M
+iKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\itsth\AppData\L
+ocal\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\itsth\App
+Data\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\its
+th\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk>
+Output written on "Research proposal.pdf" (3 pages, 56451 bytes).
 PDF statistics:
- 165 PDF objects out of 1000 (max. 8388607)
+ 186 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
