@@ -1,0 +1,22 @@
+TY  - JOUR
+T1  - SMT encodings for Resource-Constrained Project Scheduling Problems
+AU  - Bofill, Miquel
+AU  - Coll, Jordi
+AU  - Suy, Josep
+AU  - Villaret, Mateu
+JO  - Computers & Industrial Engineering
+VL  - 149
+SP  - 106777
+PY  - 2020
+DA  - 2020/11/01/
+SN  - 0360-8352
+DO  - https://doi.org/10.1016/j.cie.2020.106777
+UR  - https://www.sciencedirect.com/science/article/pii/S0360835220304873
+KW  - Scheduling
+KW  - RCPSP
+KW  - MRCPSP
+KW  - RCPSP/t
+KW  - SMT
+KW  - Resource constraints
+AB  - The Resource-Constrained Project Scheduling Problem (RCPSP) is a paradigmatic scheduling problem where the activities of a project have to be scheduled while respecting a combination of precedence and resource constraints. Precedence constraints are relations between two activities stating that one cannot start until the other has ended, and resource constraints bound the amount of resources used by activities running simultaneously. Many generalizations of the RCPSP have been proposed in the literature, including multiple execution modes for the activities (MRCPSP), or time varying resource availabilities and demands (RCPSP/t). In this work we present Satisfiability Modulo Theories (SMT) formulations to solve the RCPSP, as well as its two variants MRCPSP and RCPSP/t. Although it is really natural to formulate resource constraints of RCPSP-like problems using the linear integer arithmetic (LIA) theory, we show how, by exploiting the information provided by the precedence relations, we can obtain compact and efficient encodings of resource constraints to Boolean Satisfiability (SAT) formulas. Using these SAT encodings instead of the LIA ones, turns to be crucial regarding efficiency. The method is adapted to encode resource constraints for the other two considered variants. In this adaptation, the method exploits not only precedences, but multiple execution modes or time varying resource availabilities and demands. Our experimental results show that the proposed encodings are more efficient than existing state-of-the-art exact solving techniques for the studied problems.
+ER  - 
