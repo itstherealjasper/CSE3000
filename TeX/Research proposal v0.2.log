@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.19)  21 APR 2022 11:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.19)  21 APR 2022 12:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -160,20 +160,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 34--38
 
  []
 
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 53.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 53.
 [1
 
 {C:/Users/itsth/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-Overfull \hbox (25.99973pt too wide) in paragraph at lines 63--100
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 68.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 68.
+
+Overfull \hbox (25.99973pt too wide) in paragraph at lines 78--115
 [] 
  []
 
 [2] [3] (Research proposal v0.2.bbl
 ! Misplaced alignment tab character &.
-l.29 \newblock {\em Computers &
+l.35 \newblock {\em Computers &
                                 Operations Research}, 109:230--249, 2019.
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -184,24 +185,24 @@ might try typing `S' now just to see what is salvageable.
 
 ) [4] (Research proposal v0.2.aux) ) 
 Here is how much of TeX's memory you used:
- 2357 strings out of 478582
- 39340 string characters out of 2844344
- 354113 words of memory out of 3000000
- 20561 multiletter control sequences out of 15000+600000
+ 2358 strings out of 478582
+ 39346 string characters out of 2844344
+ 354117 words of memory out of 3000000
+ 20562 multiletter control sequences out of 15000+600000
  478406 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,9n,62p,692b,226s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 55i,9n,62p,924b,209s stack positions out of 10000i,1000n,20000p,200000b,80000s
  <C:\Users\itsth\AppData\Local\MiKTeX\fonts
 /pk/ljfour/jknappen/ec/dpi600\ecti1000.pk> <C:\Users\itsth\AppData\Local\MiKTeX
-\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk> <C:\Users\itsth\AppData\Local\
-MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1000.pk> <C:\Users\itsth\AppData\
-Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\itsth\Ap
+\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1000.pk> <C:\Users\itsth\AppData\Local\
+MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\itsth\AppData\
+Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk> <C:\Users\itsth\Ap
 pData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\it
 sth\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Us
 ers\itsth\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> 
 <C:\Users\itsth\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm172
 8.pk>
-Output written on "Research proposal v0.2.pdf" (4 pages, 75297 bytes).
+Output written on "Research proposal v0.2.pdf" (4 pages, 76283 bytes).
 PDF statistics:
  238 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

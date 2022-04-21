@@ -6,6 +6,12 @@ Peter Brucker, Andreas Drexl, Rolf Möhring, Klaus Neumann, and Erwin Pesch.
   models, and methods.
 \newblock {\em European Journal of Operational Research}, 112(1):3--41, 1999.
 
+\bibitem{RN14}
+Dieter Debels and Mario Vanhoucke.
+\newblock A decomposition-based genetic algorithm for the resource-constrained
+  project-scheduling problem.
+\newblock {\em Operations Research}, 55(3):457--469, 2007.
+
 \bibitem{RN6}
 Sönke Hartmann and Dirk Briskorn.
 \newblock A survey of variants and extensions of the resource-constrained

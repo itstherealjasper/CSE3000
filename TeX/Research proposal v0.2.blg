@@ -7,45 +7,45 @@ Reallocating 'name_of_file' (item size: 1) to 12 items.
 Database file #1: ProposalBib.bib
 Warning--can't use both author and editor fields in RN9
 Warning--empty journal in RN13
-You've used 5 entries,
+You've used 6 entries,
             2118 wiz_defined-function locations,
-            536 strings with 4886 characters,
-and the built_in function-call counts, 1632 in all, are:
-= -- 152
-> -- 79
+            544 strings with 5056 characters,
+and the built_in function-call counts, 1957 in all, are:
+= -- 184
+> -- 92
 < -- 1
-+ -- 33
-- -- 26
-* -- 117
-:= -- 283
-add.period$ -- 15
-call.type$ -- 5
-change.case$ -- 27
++ -- 39
+- -- 30
+* -- 142
+:= -- 337
+add.period$ -- 18
+call.type$ -- 6
+change.case$ -- 32
 chr.to.int$ -- 0
-cite$ -- 7
-duplicate$ -- 61
-empty$ -- 125
-format.name$ -- 26
-if$ -- 338
+cite$ -- 8
+duplicate$ -- 72
+empty$ -- 152
+format.name$ -- 30
+if$ -- 406
 int.to.chr$ -- 0
-int.to.str$ -- 5
-missing$ -- 6
-newline$ -- 28
-num.names$ -- 10
-pop$ -- 27
+int.to.str$ -- 6
+missing$ -- 7
+newline$ -- 33
+num.names$ -- 12
+pop$ -- 30
 preamble$ -- 1
-purify$ -- 23
+purify$ -- 27
 quote$ -- 0
-skip$ -- 42
+skip$ -- 50
 stack$ -- 0
-substring$ -- 87
-swap$ -- 10
+substring$ -- 114
+swap$ -- 11
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 18
+type$ -- 22
 warning$ -- 2
-while$ -- 15
-width$ -- 6
-write$ -- 56
+while$ -- 18
+width$ -- 7
+write$ -- 67
 (There were 2 warnings)
