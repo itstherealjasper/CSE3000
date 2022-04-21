@@ -19,27 +19,28 @@
 \newcommand{\namelistlabel}[1]{\mbox{#1}\hfil}
 \newenvironment{namelist}[1]{%1
 \begin{list}{}
-    {
-        \let\makelabel\namelistlabel
-        \settowidth{\labelwidth}{#1}
-        \setlength{\leftmargin}{1.1\labelwidth}
-    }
-  }{%1
+	{
+		\let\makelabel\namelistlabel
+		\settowidth{\labelwidth}{#1}
+		\setlength{\leftmargin}{1.1\labelwidth}
+		}
+	}{%1
 \end{list}}
 
 \begin{document}
 \maketitle
 
-
 \section*{Background of the research}
 The problem of scheduling tasks arises in industries all the time. It is not hard to imagine that generating an optimized schedule can be of great profit for production or logistic operations.
 Optimization can for example be minimizing the overall required time or minimizing the delay before starting a task. Because this type of problem is so prevalent it has already been subject to much research.\\
-Formally this specific type of problem is known as the resource-constrained project scheduling problem (RCPSP). On its own the problem definition for RCPSP is to limited to be of use for realistic application. To make sure the researched algorithms solving the scheduling problem would have a wider use case many variations and extensions to the problem definition have been made over time \cite{RN6}.
+Formally this specific type of problem is known as the resource-constrained project scheduling problem (RCPSP). On its own the problem definition for RCPSP is to limited to be of use for realistic application. To make sure the researched algorithms solving the scheduling problem would have a wider use case many variations and extensions to the problem definition have been classified over time \cite{RN9}, \cite{RN10}. More recently the variations and extensions have also been surveyed and put into a structured overview \cite{RN6}.\\
+For this research the preemptive resource-constrained project scheduling problem with setup times (PRCPSP-ST) variant is under study. Preemption allows an activity to be interrupted during its scheduled time by another activity. Each interruption can be seen as a split of the activity into multiple smaller activities. The setup times are introduced for each interruption in an activity to discourage endless splits resulting in a chaotic schedule. This model has already been established \cite{RN13} and a proposed algorithm was found to result in a reduction of the makespan \cite{RN1} compared to the optimal schedule without activity preemption.\\
+
 
 
 \section*{Research Question}
-Can the addition of a heuristic in a SAT solver algorithm for PRCPSP-ST models reduce the average time needed for each intermediate schedule it creates?
-Can the addition of a heuristic for variable selection in the SAT solver algorithm applied to PRCPSP-ST models reduce the average of resulting schedule makespans?
+Can the addition of a heuristic for activity segment selection in the SAT solver algorithm applied to PRCPSP-ST models reduce the average makespan of the resulting schedules generated from the selected activity segment list in either an equal amount of iterations or the same amount time?
+
 
 \section*{Method}
 TBD in the final version of the research plan.

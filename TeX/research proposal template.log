@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.19)  21 APR 2022 11:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.19)  21 APR 2022 11:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**"./Research proposal v0.2.tex"
-(Research proposal v0.2.tex
+**"./research proposal template.tex"
+(research proposal template.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2022-02-24>
 (C:\Users\itsth\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
@@ -97,8 +97,8 @@ tex.def
 File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count198
 \l__pdf_internal_box=\box50
-) (Research proposal v0.2.aux)
-\openout1 = `"Research proposal v0.2.aux"'.
+) (research proposal template.aux)
+\openout1 = `"research proposal template.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
 LaTeX Font Info:    ... okay on input line 30.
@@ -155,55 +155,32 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 31.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 31.
-
-Underfull \hbox (badness 10000) in paragraph at lines 34--38
-
- []
-
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 53.
+(Font)              <7> on input line 52.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 53.
+(Font)              <5> on input line 52.
 [1
 
-{C:/Users/itsth/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-Overfull \hbox (25.99973pt too wide) in paragraph at lines 63--100
-[] 
- []
-
-[2] [3] (Research proposal v0.2.bbl
-! Misplaced alignment tab character &.
-l.29 \newblock {\em Computers &
-                                Operations Research}, 109:230--249, 2019.
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
-) [4] (Research proposal v0.2.aux) ) 
+{C:/Users/itsth/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2]
+(research proposal template.aux) ) 
 Here is how much of TeX's memory you used:
- 2357 strings out of 478582
- 39340 string characters out of 2844344
- 354113 words of memory out of 3000000
- 20561 multiletter control sequences out of 15000+600000
- 478406 words of font info for 46 fonts, out of 8000000 for 9000
+ 2338 strings out of 478582
+ 39076 string characters out of 2844344
+ 352119 words of memory out of 3000000
+ 20548 multiletter control sequences out of 15000+600000
+ 476601 words of font info for 43 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,9n,62p,692b,226s stack positions out of 10000i,1000n,20000p,200000b,80000s
- <C:\Users\itsth\AppData\Local\MiKTeX\fonts
-/pk/ljfour/jknappen/ec/dpi600\ecti1000.pk> <C:\Users\itsth\AppData\Local\MiKTeX
-\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk> <C:\Users\itsth\AppData\Local\
-MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1000.pk> <C:\Users\itsth\AppData\
-Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\itsth\Ap
-pData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\it
-sth\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Us
-ers\itsth\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> 
-<C:\Users\itsth\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm172
-8.pk>
-Output written on "Research proposal v0.2.pdf" (4 pages, 75297 bytes).
+ 55i,6n,62p,689b,189s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ <C:\Users\itsth\AppData\Local\MiKTeX\fonts/p
+k/ljfour/jknappen/ec/dpi600\ecrm0700.pk> <C:\Users\itsth\AppData\Local\MiKTeX\f
+onts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\itsth\AppData\Local\Mi
+KTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\itsth\AppData\Lo
+cal\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\itsth\AppD
+ata\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk><C:/Users/itsth
+/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
+Output written on "research proposal template.pdf" (2 pages, 58110 bytes).
 PDF statistics:
- 238 PDF objects out of 1000 (max. 8388607)
+ 165 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

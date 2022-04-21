@@ -5,44 +5,47 @@ Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: plain.bst
 Reallocating 'name_of_file' (item size: 1) to 12 items.
 Database file #1: ProposalBib.bib
-You've used 1 entry,
+Warning--can't use both author and editor fields in RN9
+Warning--empty journal in RN13
+You've used 5 entries,
             2118 wiz_defined-function locations,
-            506 strings with 4228 characters,
-and the built_in function-call counts, 318 in all, are:
-= -- 29
-> -- 13
-< -- 0
-+ -- 6
-- -- 4
-* -- 24
-:= -- 60
-add.period$ -- 3
-call.type$ -- 1
-change.case$ -- 5
+            536 strings with 4886 characters,
+and the built_in function-call counts, 1632 in all, are:
+= -- 152
+> -- 79
+< -- 1
++ -- 33
+- -- 26
+* -- 117
+:= -- 283
+add.period$ -- 15
+call.type$ -- 5
+change.case$ -- 27
 chr.to.int$ -- 0
-cite$ -- 1
-duplicate$ -- 11
-empty$ -- 25
-format.name$ -- 4
-if$ -- 63
+cite$ -- 7
+duplicate$ -- 61
+empty$ -- 125
+format.name$ -- 26
+if$ -- 338
 int.to.chr$ -- 0
-int.to.str$ -- 1
-missing$ -- 1
-newline$ -- 8
-num.names$ -- 2
-pop$ -- 3
+int.to.str$ -- 5
+missing$ -- 6
+newline$ -- 28
+num.names$ -- 10
+pop$ -- 27
 preamble$ -- 1
-purify$ -- 4
+purify$ -- 23
 quote$ -- 0
-skip$ -- 8
+skip$ -- 42
 stack$ -- 0
-substring$ -- 18
-swap$ -- 1
-text.length$ -- 0
+substring$ -- 87
+swap$ -- 10
+text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 4
-warning$ -- 0
-while$ -- 3
-width$ -- 2
-write$ -- 13
+type$ -- 18
+warning$ -- 2
+while$ -- 15
+width$ -- 6
+write$ -- 56
+(There were 2 warnings)

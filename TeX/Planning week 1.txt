@@ -1,0 +1,66 @@
+To make finish the project successfully a planning is outlined in this section. For each week the meetings and presentations are outlined in the fist subsection. The next subsection contains all the activities that should be performed and lastly a list of deliverables is provided to keep track of all parts required for the following weeks.
+\subsection{Week 1}
+\subsubsection{Meetings}
+
+\begin{tabular}{ l c l }
+  \hline			
+  Participants & Objective & Date and time \\
+  \hline\hline
+  Peers + supervisor & Detailing research topic & \date{April 20 9:00 am} \\
+  Peers & Discussing research plan and background information & \date{April 21} or \date{April 22} \\
+  \hline  
+\end{tabular}
+
+\subsubsection{Activities}
+\begin{tabular}{ l p{0.6\textwidth}}
+  \hline			
+  Activity & Objective \\
+  \hline\hline
+  Read reference paper from project forum & {\begin{itemize}
+    \item Gain insight in the RCPSP problem
+    \item Learn about the pre-emption variant of the problem
+    \item Learn a way to model the problem
+    \item Analyse the use of the model in a SAT-solver
+\end{itemize}{}}  \\
+  Analyse research topic & {\begin{itemize}
+    \item Formulate the research topic
+    \item Formulate a research question
+    \item Derive sub-questions
+    \item Make search queries
+    \item Selecting information sources
+    \item Store information sources
+    \item Generate a literature list
+\end{itemize}{}} \\
+  Read abstracts from literature list & {\begin{itemize}
+    \item Make tags for literature list
+    \item Find an example for a RCPSP problem model
+    \item Gather information for the background of the research
+\end{itemize}{}} \\
+  Transform sub-questions into tasks & {\begin{itemize}
+    \item Find the required tasks to answer the research question
+    \item Make a time-line for the remaining 9 weeks of the project
+\end{itemize}{}} \\
+  Make a list of tools/software/data & {\begin{itemize}
+    \item Making sure all required parts are accessible
+    \item Checking for completeness with supervisor
+\end{itemize}{}} \\
+  Write research plan & {\begin{itemize}
+    \item Finishing the first deliverable to get feedback from supervisor
+\end{itemize}{}} \\
+  \hline  
+\end{tabular}
+
+\subsubsection{Deliverables}
+After all the activities have been finished the following deliverables should have been made:
+{\begin{itemize}
+    \item Research question
+    \item Sub-questions
+    \item Information sources
+    \item Literature list (with tags)
+    \item Example for a RCPSP problem model
+    \item Written background research
+    \item List of tasks
+    \item Time-line for tasks and official deadlines
+    \item List of tools/software/data
+    \item Final version research plan
+\end{itemize}{}}
