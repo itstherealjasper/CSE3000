@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.19)  21 APR 2022 12:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.19)  22 APR 2022 15:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -30,10 +30,7 @@ Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 Package: inputenc 2021/02/14 v1.3d Input encoding file
 \inpenc@prehook=\toks16
 \inpenc@posthook=\toks17
-
-(C:\Users\itsth\AppData\Local\Programs\MiKTeX\tex/latex/base\latin9.def
-File: latin9.def 2021/02/14 v1.3d Input encoding file
-))
+)
 (C:\Users\itsth\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
 
@@ -163,18 +160,27 @@ Underfull \hbox (badness 10000) in paragraph at lines 34--38
 [1
 
 {C:/Users/itsth/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 68.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 68.
+Underfull \hbox (badness 10000) in paragraph at lines 66--67
 
-Overfull \hbox (25.99973pt too wide) in paragraph at lines 78--115
+ []
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 72.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 72.
+
+Overfull \hbox (39.80486pt too wide) in paragraph at lines 72--118
 [] 
  []
 
-[2] [3] (Research proposal v0.2.bbl
+[2]
+Overfull \hbox (23.7855pt too wide) in paragraph at lines 120--139
+[] 
+ []
+
+(Research proposal v0.2.bbl [3]
 ! Misplaced alignment tab character &.
-l.35 \newblock {\em Computers &
+l.52 \newblock {\em Computers &
                                 Operations Research}, 109:230--249, 2019.
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -185,26 +191,24 @@ might try typing `S' now just to see what is salvageable.
 
 ) [4] (Research proposal v0.2.aux) ) 
 Here is how much of TeX's memory you used:
- 2358 strings out of 478582
- 39346 string characters out of 2844344
- 354117 words of memory out of 3000000
- 20562 multiletter control sequences out of 15000+600000
- 478406 words of font info for 46 fonts, out of 8000000 for 9000
+ 2348 strings out of 478582
+ 39068 string characters out of 2844344
+ 356262 words of memory out of 3000000
+ 20556 multiletter control sequences out of 15000+600000
+ 477630 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,9n,62p,924b,209s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 55i,9n,62p,967b,209s stack positions out of 10000i,1000n,20000p,200000b,80000s
  <C:\Users\itsth\AppData\Local\MiKTeX\fonts
 /pk/ljfour/jknappen/ec/dpi600\ecti1000.pk> <C:\Users\itsth\AppData\Local\MiKTeX
-\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1000.pk> <C:\Users\itsth\AppData\Local\
-MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\itsth\AppData\
-Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk> <C:\Users\itsth\Ap
-pData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\it
-sth\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Us
-ers\itsth\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> 
-<C:\Users\itsth\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm172
-8.pk>
-Output written on "Research proposal v0.2.pdf" (4 pages, 76283 bytes).
+\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\itsth\AppData\Local\
+MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk> <C:\Users\itsth\AppData\
+Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\itsth\Ap
+pData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\it
+sth\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Us
+ers\itsth\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk>
+Output written on "Research proposal v0.2.pdf" (4 pages, 75282 bytes).
 PDF statistics:
- 238 PDF objects out of 1000 (max. 8388607)
+ 228 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

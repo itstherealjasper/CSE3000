@@ -1,10 +1,27 @@
 \begin{thebibliography}{1}
 
+\bibitem{RN15}
+J.~Blazewicz, J.~K. Lenstra, and A.~H. G.~Rinnooy Kan.
+\newblock Scheduling subject to resource constraints: classification and
+  complexity.
+\newblock {\em Discrete Applied Mathematics}, 5(1):11--24, 1983.
+
 \bibitem{RN10}
 Peter Brucker, Andreas Drexl, Rolf Möhring, Klaus Neumann, and Erwin Pesch.
 \newblock Resource-constrained project scheduling: Notation, classification,
   models, and methods.
 \newblock {\em European Journal of Operational Research}, 112(1):3--41, 1999.
+
+\bibitem{RN3}
+José Coelho and Mario Vanhoucke.
+\newblock Multi-mode resource-constrained project scheduling using rcpsp and
+  sat solvers.
+\newblock {\em European Journal of Operational Research}, 213(1):73--82, 2011.
+
+\bibitem{RN16}
+Martin Davis, George Logemann, and Donald Loveland.
+\newblock A machine program for theorem-proving.
+\newblock {\em Communications of the ACM}, 5(7):394--397, 1962.
 
 \bibitem{RN14}
 Dieter Debels and Mario Vanhoucke.
