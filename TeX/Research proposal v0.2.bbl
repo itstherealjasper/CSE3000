@@ -1,10 +1,10 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
-\bibitem{RN15}
-J.~Blazewicz, J.~K. Lenstra, and A.~H. G.~Rinnooy Kan.
+\bibitem{RN20}
+Jacek Blazewicz, Jan~Karel Lenstra, and Alexander H. G.~Rinnooy Kan.
 \newblock Scheduling subject to resource constraints: classification and
   complexity.
-\newblock {\em Discrete Applied Mathematics}, 5(1):11--24, 1983.
+\newblock {\em Discret. Appl. Math.}, 5:11--24, 1983.
 
 \bibitem{RN10}
 Peter Brucker, Andreas Drexl, Rolf Möhring, Klaus Neumann, and Erwin Pesch.
@@ -23,11 +23,29 @@ Martin Davis, George Logemann, and Donald Loveland.
 \newblock A machine program for theorem-proving.
 \newblock {\em Communications of the ACM}, 5(7):394--397, 1962.
 
+\bibitem{RN18}
+Martin Davis and Hilary Putnam.
+\newblock A computing procedure for quantification theory.
+\newblock {\em J. ACM}, 7(3):201–215, 1960.
+
 \bibitem{RN14}
 Dieter Debels and Mario Vanhoucke.
 \newblock A decomposition-based genetic algorithm for the resource-constrained
   project-scheduling problem.
 \newblock {\em Operations Research}, 55(3):457--469, 2007.
+
+\bibitem{RN24}
+Erik Demeulemeester and Willy Herroelen.
+\newblock A branch-and-bound procedure for the multiple resource-constrained
+  project scheduling problem.
+\newblock {\em Management Science}, 38(12):1803--1818, 1992.
+\newblock doi: 10.1287/mnsc.38.12.1803.
+
+\bibitem{RN21}
+Erik~L. Demeulemeester and Willy~S. Herroelen.
+\newblock An efficient optimal solution procedure for the preemptive
+  resource-constrained project scheduling problem.
+\newblock {\em European Journal of Operational Research}, 90(2):334--348, 1996.
 
 \bibitem{RN6}
 Sönke Hartmann and Dirk Briskorn.
@@ -45,10 +63,24 @@ Lori Kaplan.
 \newblock Resource-constrained project scheduling with setup times.
 \newblock 1991.
 
+\bibitem{RN25}
+Rainer Kolisch, Arno Sprecher, and Andreas Drexl.
+\newblock Characterization and generation of a general class of
+  resource-constrained project scheduling problems.
+\newblock {\em Management Science}, 41(10):1693, 1995.
+\newblock Copyright - Copyright Institute for Operations Research and the
+  Management Sciences Oct 1995 CODEN - MNSCDI.
+
 \bibitem{RN1}
 Mario Vanhoucke and José Coelho.
 \newblock Resource-constrained project scheduling with activity splitting and
   setup times.
 \newblock {\em Computers & Operations Research}, 109:230--249, 2019.
+
+\bibitem{RN23}
+Mario Vanhoucke and Dieter Debels.
+\newblock The impact of various activity assumptions on the lead time and
+  resource utilization of resource-constrained projects.
+\newblock {\em Computers & Industrial Engineering}, 54(1):140--154, 2008.
 
 \end{thebibliography}

@@ -18,18 +18,33 @@ Serial SGS},
    type = {Journal Article}
 }
 
-@article{RN15,
-   author = {Blazewicz, J. and Lenstra, J. K. and Kan, A. H. G. Rinnooy},
+@article{RN20,
+   author = {Blazewicz, Jacek and Lenstra, Jan Karel and Kan, Alexander H. G. Rinnooy},
    title = {Scheduling subject to resource constraints: classification and complexity},
-   journal = {Discrete Applied Mathematics},
+   journal = {Discret. Appl. Math.},
    volume = {5},
-   number = {1},
    pages = {11-24},
-   abstract = {In deterministic sequencing and scheduling problems, jobs are to be processed on machines of limited capacity. We consider an extension of this class of problems, in which the jobs require the use of additional scarce resources during their execution. A classification scheme for resource constraints is proposed and the computational complexity of the extended problem class is investigated in terms of this classification. Models involving parallel machines, unit-time jobs and the maximum completion time criterion are studied in detail; other models are briefly discussed.},
-   ISSN = {0166-218X},
-   DOI = {https://doi.org/10.1016/0166-218X(83)90012-4},
-   url = {https://www.sciencedirect.com/science/article/pii/0166218X83900124},
    year = {1983},
+   type = {Journal Article}
+}
+
+@article{RN2,
+   author = {Bofill, Miquel and Coll, Jordi and Suy, Josep and Villaret, Mateu},
+   title = {SMT encodings for Resource-Constrained Project Scheduling Problems},
+   journal = {Computers & Industrial Engineering},
+   volume = {149},
+   pages = {106777},
+   abstract = {The Resource-Constrained Project Scheduling Problem (RCPSP) is a paradigmatic scheduling problem where the activities of a project have to be scheduled while respecting a combination of precedence and resource constraints. Precedence constraints are relations between two activities stating that one cannot start until the other has ended, and resource constraints bound the amount of resources used by activities running simultaneously. Many generalizations of the RCPSP have been proposed in the literature, including multiple execution modes for the activities (MRCPSP), or time varying resource availabilities and demands (RCPSP/t). In this work we present Satisfiability Modulo Theories (SMT) formulations to solve the RCPSP, as well as its two variants MRCPSP and RCPSP/t. Although it is really natural to formulate resource constraints of RCPSP-like problems using the linear integer arithmetic (LIA) theory, we show how, by exploiting the information provided by the precedence relations, we can obtain compact and efficient encodings of resource constraints to Boolean Satisfiability (SAT) formulas. Using these SAT encodings instead of the LIA ones, turns to be crucial regarding efficiency. The method is adapted to encode resource constraints for the other two considered variants. In this adaptation, the method exploits not only precedences, but multiple execution modes or time varying resource availabilities and demands. Our experimental results show that the proposed encodings are more efficient than existing state-of-the-art exact solving techniques for the studied problems.},
+   keywords = {Scheduling
+RCPSP
+MRCPSP
+RCPSP/t
+SMT
+Resource constraints},
+   ISSN = {0360-8352},
+   DOI = {https://doi.org/10.1016/j.cie.2020.106777},
+   url = {https://www.sciencedirect.com/science/article/pii/S0360835220304873},
+   year = {2020},
    type = {Journal Article}
 }
 
@@ -88,6 +103,20 @@ Multi-mode RCPSP},
    type = {Journal Article}
 }
 
+@article{RN18,
+   author = {Davis, Martin and Putnam, Hilary},
+   title = {A Computing Procedure for Quantification Theory},
+   journal = {J. ACM},
+   volume = {7},
+   number = {3},
+   pages = {201–215},
+   ISSN = {0004-5411},
+   DOI = {10.1145/321033.321034},
+   url = {https://doi-org.tudelft.idm.oclc.org/10.1145/321033.321034},
+   year = {1960},
+   type = {Journal Article}
+}
+
 @article{RN14,
    author = {Debels, Dieter and Vanhoucke, Mario},
    title = {A Decomposition-Based Genetic Algorithm for the Resource-Constrained Project-Scheduling Problem},
@@ -99,6 +128,44 @@ Multi-mode RCPSP},
    ISSN = {0030364X, 15265463},
    url = {http://www.jstor.org.tudelft.idm.oclc.org/stable/25147093},
    year = {2007},
+   type = {Journal Article}
+}
+
+@article{RN24,
+   author = {Demeulemeester, Erik and Herroelen, Willy},
+   title = {A Branch-and-Bound Procedure for the Multiple Resource-Constrained Project Scheduling Problem},
+   journal = {Management Science},
+   volume = {38},
+   number = {12},
+   pages = {1803-1818},
+   note = {doi: 10.1287/mnsc.38.12.1803},
+   abstract = {In this paper a branch-and-bound procedure is described for scheduling the activities of a project of the PERT/CPM variety subject to precedence and resource constraints where the objective is to minimize project duration. The procedure is based on a depth-first solution strategy in which nodes in the solution tree represent resource and precedence feasible partial schedules. Branches emanating from a parent node correspond to exhaustive and minimal combinations of activities, the delay of which resolves resource conflicts at each parent node. Precedence and resource-based bounds described in the paper are combined with new dominance pruning rules to rapidly fathom major portions of the solution tree. The procedure is programmed in the C language for use on both a mainframe and a personal computer. The procedure has been validated using a standard set of test problems with between 7 and 50 activities requiring up to three resource types each. Computational experience on a personal computer indicates that the procedure is 11.6 times faster than the most rapid solution procedure reported in the literature while requiring less computer storage. Moreover, problems requiring large amounts of computer time using existing approaches for solving this problem type are rapidly solved with our procedure using the dominance rules described, resulting in a significant reduction in the variability in solution times as well.},
+   ISSN = {0025-1909},
+   DOI = {10.1287/mnsc.38.12.1803},
+   url = {https://doi.org/10.1287/mnsc.38.12.1803},
+   year = {1992},
+   type = {Journal Article}
+}
+
+@article{RN21,
+   author = {Demeulemeester, Erik L. and Herroelen, Willy S.},
+   title = {An efficient optimal solution procedure for the preemptive resource-constrained project scheduling problem},
+   journal = {European Journal of Operational Research},
+   volume = {90},
+   number = {2},
+   pages = {334-348},
+   abstract = {In this paper a branch-and-bound procedure is described for scheduling project activities subject to precedence and resource constraints, where activities can be preempted at any discrete time instant and where the objective is to minimize the project duration. The procedure is based on a depth-first solution strategy in which nodes in the solution tree represent resource and precedence feasible partial schedules. Branches emanating from a parent node correspond to exhaustive and minimal combinations of activities, the delay of which resolves resource conflicts at each parent node. A precedence based lower bound and several dominance rules are introduced in order to restrict the growth of the solutions tree. The solution procedure has been programmed in the C language and extensive computational experience is reported.},
+   keywords = {Project management
+Resource constrainta
+Preemption
+Programming
+Branch-and-bound
+Networks/graphs
+Applications},
+   ISSN = {0377-2217},
+   DOI = {https://doi.org/10.1016/0377-2217(95)00358-4},
+   url = {https://www.sciencedirect.com/science/article/pii/0377221795003584},
+   year = {1996},
    type = {Journal Article}
 }
 
@@ -138,10 +205,72 @@ Networks},
    type = {Book Section}
 }
 
+@article{RN17,
+   author = {Horbach, Andrei},
+   title = {A Boolean satisfiability approach to the resource-constrained project scheduling problem},
+   journal = {Annals of Operations Research},
+   volume = {181},
+   number = {1},
+   pages = {89-107},
+   abstract = {We formulate the resource-constrained project scheduling problem as a satisfiability problem and adapt a satisfiability solver for the specific domain of the problem. Our solver is lightweight and shows good performance both in finding feasible solutions and in proving lower bounds. Our numerical tests allowed us to close several benchmark instances of the RCPSP that have never been closed before by proving tighter lower bounds and by finding better feasible solutions. Using our method we solve optimally more instances of medium and large size from the benchmark library PSPLIB and do it faster compared to any other existing solver.},
+   ISSN = {1572-9338},
+   DOI = {10.1007/s10479-010-0693-2},
+   url = {https://doi.org/10.1007/s10479-010-0693-2},
+   year = {2010},
+   type = {Journal Article}
+}
+
+@article{RN5,
+   author = {Horn, Matthias and Raidl, Günther and Blum, Christian},
+   title = {Job sequencing with one common and multiple secondary resources: An A⁎/Beam Search based anytime algorithm},
+   journal = {Artificial Intelligence},
+   volume = {277},
+   pages = {103173},
+   abstract = {We consider a sequencing problem that arises, for example, in the context of scheduling patients in particle therapy facilities for cancer treatment. A set of non-preemptive jobs needs to be scheduled, where each job requires two resources: (1) a common resource that is shared by all jobs and (2) a secondary resource, which is shared with only a subset of the other jobs. While the common resource is only required for a part of the job's processing time, the secondary resource is required for the whole duration. The objective is to minimize the makespan. First we show that the tackled problem is NP-hard and provide three different lower bounds for the makespan. These lower bounds are then exploited in a greedy construction heuristic and a novel exact anytime A⁎ algorithm, which uses an advanced diving mechanism based on Beam Search and Local Search to find good heuristic solutions early. For comparison we also provide a basic Constraint Programming model solved with the ILOG CP optimizer. An extensive experimental evaluation on two types of problem instances shows that the approach works even for large instances with up to 2000 jobs extremely well. It typically yields either optimal solutions or solutions with an optimality gap of less than 1%.},
+   keywords = {Sequencing
+Scheduling
+A algorithm
+Beam Search
+Particle therapy patient scheduling},
+   ISSN = {0004-3702},
+   DOI = {https://doi.org/10.1016/j.artint.2019.103173},
+   url = {https://www.sciencedirect.com/science/article/pii/S0004370218301085},
+   year = {2019},
+   type = {Journal Article}
+}
+
 @article{RN13,
    author = {Kaplan, Lori},
    title = {Resource-constrained project scheduling with setup times},
    year = {1991},
+   type = {Journal Article}
+}
+
+@article{RN25,
+   author = {Kolisch, Rainer and Sprecher, Arno and Drexl, Andreas},
+   title = {Characterization and generation of a general class of resource-constrained project scheduling problems},
+   journal = {Management Science},
+   volume = {41},
+   number = {10},
+   pages = {1693},
+   note = {Copyright - Copyright Institute for Operations Research and the Management Sciences Oct 1995
+CODEN - MNSCDI},
+   abstract = {The issue of how to generate problem instances of controlled difficulty is addressed. Precedence- and resource-constrained (project) scheduling problems are focused on, but similar ideas may be applied to other network optimization problems. A network construction procedure is described that takes into account: 1. constraints on the network topology, 2. a resource factor that reflects the density of the coefficient matrix, and 3. a resource strength, which measures the availability of resources. The strong impact of the chosen parametric characterization of the problems is shown via an in depth computational study. Instances for the single- and multi-mode resource-constrained project scheduling problem are benchmarked by using the state of the art (branch and bound) procedures. The results provided demonstrate that the classical benchmark instances used by several researchers over decades belong to the subset of the very easy ones. In addition, it is shown that hard instances, being far smaller in size than presumed in the literature, may not be solved to optimality even within a large amount of computation time.},
+   keywords = {Business And Economics--Labor And Industrial Relations
+Studies
+Scheduling
+Optimization
+Operations research
+Mathematical models
+Project management
+Network management systems
+2600:Management science/operations research
+9130:Experimental/theoretical treatment},
+   ISSN = {00251909},
+   url = {https://www.proquest.com/scholarly-journals/characterization-generation-general-class/docview/213234738/se-2?accountid=27026
+http://sfx.tudelft.nl:8888/sfx_local?url_ver=Z39.88-2004&rft_val_fmt=info:ofi/fmt:kev:mtx:journal&genre=article&sid=ProQ:ProQ%3Apq1busgeneral&atitle=Characterization+and+generation+of+a+general+class+of+resource-constrained+project+scheduling+problems&title=Management+Science&issn=00251909&date=1995-10-01&volume=41&issue=10&spage=1693&au=Kolisch%2C+Rainer%3BSprecher%2C+Arno%3BDrexl%2C+Andreas&isbn=&jtitle=Management+Science&btitle=&rft_id=info:eric/01149143&rft_id=info:doi/
+http://tudelft.on.worldcat.org/atoztitles/link?sid=ProQ:&issn=00251909&volume=41&issue=10&title=Management+Science&spage=1693&date=1995-10-01&atitle=Characterization+and+generation+of+a+general+class+of+resource-constrained+project+scheduling+problems&au=Kolisch%2C+Rainer%3BSprecher%2C+Arno%3BDrexl%2C+Andreas&id=doi:},
+   year = {1995},
    type = {Journal Article}
 }
 
@@ -162,6 +291,25 @@ Setup times},
    type = {Journal Article}
 }
 
+@article{RN4,
+   author = {Vanhoucke, Mario and Coelho, José},
+   title = {An approach using SAT solvers for the RCPSP with logical constraints},
+   journal = {European Journal of Operational Research},
+   volume = {249},
+   number = {2},
+   pages = {577-591},
+   abstract = {This paper presents a new solution approach to solve the resource-constrained project scheduling problem in the presence of three types of logical constraints. Apart from the traditional AND constraints with minimal time-lags, these precedences are extended to OR constraints and bidirectional (BI) relations. These logical constraints extend the set of relations between pairs of activities and make the RCPSP definition somewhat different from the traditional RCPSP research topics in literature. It is known that the RCPSP with AND constraints, and hence its extension to OR and BI constraints, is NP-hard. The new algorithm consists of a set of network transformation rules that removes the OR and BI logical constraints to transform them into AND constraints and hereby extends the set of activities to maintain the original logic. A satisfiability (SAT) solver is used to guarantee the original precedence logic and is embedded in a metaheuristic search to resource feasible schedules that respect both the limited renewable resource availability as well as the precedence logic. Computational results on two well-known datasets from literature show that the algorithm can compete with the multi-mode algorithms from literature when no logical constraints are taken into account. When the logical constraints are taken into account, the algorithm can report major reductions in the project makespan for most of the instances within a reasonable time.},
+   keywords = {Project scheduling
+RCPSP
+AND/OR/BI constraints
+SAT},
+   ISSN = {0377-2217},
+   DOI = {https://doi.org/10.1016/j.ejor.2015.08.044},
+   url = {https://www.sciencedirect.com/science/article/pii/S0377221715008000},
+   year = {2016},
+   type = {Journal Article}
+}
+
 @article{RN1,
    author = {Vanhoucke, Mario and Coelho, José},
    title = {Resource-constrained project scheduling with activity splitting and setup times},
@@ -177,6 +325,24 @@ Setup times},
    DOI = {https://doi.org/10.1016/j.cor.2019.05.004},
    url = {https://www.sciencedirect.com/science/article/pii/S0305054819301170},
    year = {2019},
+   type = {Journal Article}
+}
+
+@article{RN23,
+   author = {Vanhoucke, Mario and Debels, Dieter},
+   title = {The impact of various activity assumptions on the lead time and resource utilization of resource-constrained projects},
+   journal = {Computers & Industrial Engineering},
+   volume = {54},
+   number = {1},
+   pages = {140-154},
+   abstract = {The well-known resource-constrained project scheduling problem (RCPSP) schedules project activities within the precedence and renewable resource constraints while minimizing the total lead time of the project. The basic problem description assumes non-pre-emptive activities with fixed durations, and has been extended to various other assumptions in the literature. In this paper, we investigate the effect of three activity assumptions on the total lead time and the total resource utilization of a project. More precisely, we investigate the influence of variable activity durations under a fixed work content, the possibility of allowing activity pre-emption and the use of fast tracking to decrease a project’s duration. We give an overview of the procedures developed in the literature and present some modifications to an existing solution approach to cope with our activity assumptions under study. We present computational results on a generated dataset and evaluate the impact of all assumptions on the quality of the schedule.},
+   keywords = {Project scheduling
+Resource-constraints
+Lead-time minimization},
+   ISSN = {0360-8352},
+   DOI = {https://doi.org/10.1016/j.cie.2007.07.001},
+   url = {https://www.sciencedirect.com/science/article/pii/S0360835207001404},
+   year = {2008},
    type = {Journal Article}
 }
 

@@ -2,6 +2,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
+\usepackage{hyperref}
 \geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
 
 \makeatletter
@@ -33,7 +34,7 @@
 \section*{Background of the research}
 The problem of scheduling tasks arises in industries all the time. It is not hard to imagine that generating an optimized schedule can be of great profit for production or logistic operations. Optimization can for example be minimizing the overall required time or minimizing the delay before starting a task. Because this type of problem is so prevalent it has already been subject to much research.\\
 Formally this specific type of problem is known as the resource-constrained project scheduling problem (RCPSP). On its own the problem definition for RCPSP is to limited to be of use for realistic application. To make sure the researched algorithms solving the scheduling problem would have a wider use case many variations and extensions to the problem definition have been classified over time \cite{RN9}, \cite{RN10}. More recently the variations and extensions have also been surveyed and put into a structured overview \cite{RN6}.\\
-For this research the preemptive resource-constrained project scheduling problem with setup times (PRCPSP-ST) variant is under study. Preemption allows an activity to be interrupted during its scheduled time by another activity. Each interruption can be seen as a split of the activity into multiple smaller activities. The setup times are introduced for each interruption in an activity to discourage endless splits resulting in a chaotic schedule. This model had already been established \cite{RN13} and a proposed algorithm was found to result in a reduction of the makespan compared to the optimal schedule without activity preemption \cite{RN1}. Within this algorithm the activities are split into all possible integer time segments and a SAT solver made a selection from these segments \cite{RN3}. The resulting list was used to construct a schedule with a genetic algorithm established in earlier research \cite{RN14}.\\
+For this research the preemptive resource-constrained project scheduling problem with setup times (PRCPSP-ST) variant is under study. Preemption allows an activity to be interrupted during its scheduled time by another activity. Each interruption can be seen as a split of the activity into multiple smaller activities. The setup times are introduced for each interruption in an activity to discourage endless splits resulting in a chaotic schedule. Both a model for allowing preemption \cite{RN21} and including setup times \cite{RN13} have already been established and a proposed algorithm for a combined model was found to result in a reduction of the makespan compared to the optimal schedule without activity preemption \cite{RN1}. Within this algorithm the activities are split into all possible integer time segments and a SAT solver made a selection from these segments \cite{RN3}. The resulting list was used to construct a schedule with a genetic algorithm established in earlier research \cite{RN14}.\\
 %What is still missing? This may be much more complex / far into the future than your contribution.
 
 \section*{Research Question}
@@ -41,29 +42,31 @@ This research will try to answer the following question:
 \begin{quote}
 Can the addition of a simple heuristic to a SAT solver algorithm used to solve to PRCPSP-ST models reduce the average makespan of the resulting schedule in an equal amount time?
 \end{quote}
-Because the RCPSP is known to be strongly NP-hard \cite{RN15} any general algorithm that can be applied to the problem might be outperformed by an algorithm specialized for the specific variation.
+Because the RCPSP is known to be strongly NP-hard \cite{RN20} any general algorithm that can be applied to the problem might be outperformed by an algorithm specialized for the specific variation.
 To specialize an algorithm this way knowledge or an insight into the problem variation can be translated into a heuristic rule for the algorithm to use. The intention is that this heuristic rule will increase the performance of the algorithm. Because scheduling is so prevalent in industries performance better performing algorithms are desirable ways to increase profits.\\
 It has already been shown that allowing for preemption in schedules can lead to a reduction in the resulting makespan even if penalties are given for each activity that is not finished from start to finish \cite{RN1}.
 For this research a similar algorithm will be setup that uses a SAT solver algorithm to make a selection of activity segments and constructs a schedule from the selected segments. The expectation for this research is to show that a heuristic version of the SAT solver algorithm will result in a lower makespan when running an equal amount of time.
 
+The answers to the following supporting sub-questions will help towards answering the main research question.
 {\begin{itemize}
-    \item What is a model for the activities in a RCPSP problem?
-    \item How can the RCPSP model be transformed to include activity preemption?
-    \item How can setup times be included in the RCPSP model for splits in an activity schedule?
-    \item What is the role of a SAT solver in an RCPSP optimization algorithm?
-    \item What is the required input of a SAT solver?
-    \item How can PRCPSP-ST problems be modelled as an input to a SAT solver for activity segment selection?
-    \item How can the output of a SAT solver be used to construct an activity schedule?
-    \item What could be a possible heuristic for the SAT solver algorithm?
-    \item Where can a heuristic be used by a SAT solver algorithm?
-    \item Why could a heuristic be beneficial for solving PRCPSP-ST problems?
-    \item How does the heuristic change the resulting activity schedule?
-    \item How does the heuristic change the time required by the SAT solver algorithm?
+  \item What is a model for the activities in a RCPSP problem?
+  \item How can the RCPSP model be transformed to include activity preemption?
+  \item How can setup times be included in the RCPSP model for splits in an activity schedule?
+  \item What is the required input of a SAT solver?
+  \item How can PRCPSP-ST problems be modelled as an input to a SAT solver for activity segment selection?
+  \item What could be a possible heuristic for the SAT solver algorithm?
+  \item Where can a heuristic be used by a SAT solver algorithm?
+  \item Does the heuristic reduce the resulting activity schedule makespan compared to the default algorithm?
+  \item Does the heuristic reduce the time required by the SAT solver algorithm compared to the default algorithm?
 \end{itemize}{}}
 
-
 \section*{Method}
-The schedule construction might be done using a simpler method than the genetic algorithm that has been used before \cite{RN14} because this study will try the use of a heuristic in the SAT solver part of the algorithm. When this algorithm is implemented a benchmark can be made using a known and efficient SAT solver algorithm like DPLL \cite{RN16}. With this baseline benchmark a heuristic version of the DPLL algorithm can be tested and results will show if a there is a reduction in the makespan after running the algorithm for the same amount of time.\\
+This research will first need a model definition for PRCPSP-ST problems. The model takes a standard RCPSP dataset and includes the possibility for splitting the activities at integer parts for a time penalty trade-off. There are existing activity network for both setup times \cite{RN13} and preemption \cite{RN21} that can be combined. This combined model results in a network that is the same as a standard RCPSP activity network and can therefore be solved by any RCPSP solving algorithm. The extended activity network includes all possible activity segments and needs to be transformed into an input for the SAT solver. For the algorithm to work the input of the SAT solver must force the result to only contain each activity segment once. The SAT solver that is going to be used will be one of the implementations found on \url{https://maxsat-evaluations.github.io/2021/descriptions.html} using the DPLL algorithm \cite{RN18}\cite{RN16}. When the SAT solver returns a selection of segments it can be used to construct a schedule with a minimum makespan. The process going from the combined model to the segment selection has been done in a research before \cite{RN1}.\\
+For the construction of the schedule from the selected activity segments the established branch-and-bound algorithm \cite{RN24} can be updated to specific PRCPSP-ST requirements. Previous attempts at altering the branch-and-bound algorithm to include activity preemption has already proven to be successful \cite{RN23}. When the schedule is constructed the objective value must be calculated and for this research it will be the schedule makespan. The algorithm will make multiple iterations within a given time ensuring different results from the SAT solver and when a schedule with a lower makespan is found it is saved. When the time runs out the final makespan is returned.\\
+
+With the first algorithm implementation a baseline benchmark can be generated. Because the RCPSP class of problems is widely studied has a well known and researched dataset \cite{RN25} that can be downloaded at \url{https://www.om-db.wi.tum.de/psplib/data.html}. This will also provide optimal schedule solutions without preemption and setup times to check the quality of the results if necessary.
+
+A last step is including a heuristic in the SAT solver algorithm to make use of problem specific knowledge. If this research is to be successful the resulting set of selected activity segments will result in a lower makespan after the branch-and-bound algorithm is run. A single iteration might take longer but as long as the final makespan after the same given time is lower the heuristic algorithm will be considered more optimal.
 
 \section*{Planning of the research project}
 Meetings with the project supervisor and peer group will be held weekly on Wednesdays at 13:00. These meetings are used for feedback on project process and problem resolution.
@@ -136,17 +139,6 @@ Meetings with the project supervisor and peer group will be held weekly on Wedne
   Scientific paper: final version & \date{June 19, 2022} \\
   Software programmed to obtain results & \date{June 19, 2022} \\
 \end{tabular}
-
-%A research plan: first week plan (what you will do in the first week)
-%Research plan: a document describing  what you will do and when (see an example template below)
-%A midterm presentation: show to your responsible professor and peers that you are well on track
-%A scientific paper, describing the research (question, results and conclusions), including reflection on ethical/%reproducibility aspects of your methods
-%	v1: for peer feedback on writing, and content feedback by supervisor,
-%	v2: for feedback on both content and writing by responsible professor,
-%	final paper 
-%A peer review of another student's paper v1.
-%A poster summarizing the research, supporting the Q&A with the examiner.
-%(Possibly) software programmed to obtain the results.
 
 \bibliographystyle{plain}
 \bibliography{ProposalBib}
