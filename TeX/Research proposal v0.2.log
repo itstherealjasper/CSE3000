@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.19)  24 APR 2022 14:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.19)  24 APR 2022 14:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -329,12 +329,12 @@ Overfull \hbox (39.80486pt too wide) in paragraph at lines 75--122
 [] 
  []
 
-
+[3]
 Overfull \hbox (23.7855pt too wide) in paragraph at lines 124--143
 [] 
  []
 
-(Research proposal v0.2.bbl [3] [4]
+(Research proposal v0.2.bbl [4] [5]
 ! Misplaced alignment tab character &.
 l.78 \newblock {\em Computers &
                                 Operations Research}, 109:230--249, 2019.
@@ -355,15 +355,15 @@ up above has ended a previous alignment prematurely,
 you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
-) [5] (Research proposal v0.2.aux)
+) [6] (Research proposal v0.2.aux)
 Package rerunfilecheck Info: File `"Research proposal v0.2".out' has not change
 d.
 (rerunfilecheck)             Checksum: 22A8FABBC6F723FEA2AE3ACDAAEF5ADB;239.
  ) 
 Here is how much of TeX's memory you used:
- 8975 strings out of 478582
- 144641 string characters out of 2844344
- 460985 words of memory out of 3000000
+ 8976 strings out of 478582
+ 144647 string characters out of 2844344
+ 460030 words of memory out of 3000000
  27053 multiletter control sequences out of 15000+600000
  477943 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -377,9 +377,9 @@ pen/ec/dpi600\tcrm1000.pk> <C:\Users\itsth\AppData\Local\MiKTeX\fonts/pk/ljfour
 ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\itsth\AppData\Local\MiKTeX\fon
 ts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\itsth\AppData\Local\MiKT
 eX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk>
-Output written on "Research proposal v0.2.pdf" (5 pages, 96250 bytes).
+Output written on "Research proposal v0.2.pdf" (6 pages, 96455 bytes).
 PDF statistics:
- 329 PDF objects out of 1000 (max. 8388607)
- 27 named destinations out of 1000 (max. 500000)
+ 333 PDF objects out of 1000 (max. 8388607)
+ 28 named destinations out of 1000 (max. 500000)
  17 words of extra memory for PDF output out of 10000 (max. 10000000)
 
