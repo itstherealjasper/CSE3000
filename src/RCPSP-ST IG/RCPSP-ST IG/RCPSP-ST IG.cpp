@@ -22,17 +22,20 @@ struct Job
 };
 
 const string project_lib_filename = "C:/Projects/cse3000/src/RCPSP-ST IG/RCPSP-ST IG/j30.sm/j301_1.sm";
+const int destruction_count = 6;
 
 void parse_jobs(int& job_count, int& horizon, std::vector<Job>& jobs, int& resource_count, vector<int>& resource_availability, string filename);
 void calculate_average_resource_utility_rate(std::vector<Job>& jobs, std::vector<int>& resource_availabilities);
 void fix_presedence_constraint(std::vector<Job>& jobs);
+bool check_presedence_violation(std::vector<Job>& jobs);
 bool check_presedence_violation(std::vector<Job>& jobs, std::vector<int>& job_in_violation_at_index);
 template <typename t> void move(std::vector<t>& v, size_t oldIndex, size_t newIndex);
-void build_schedule(std::vector<Job>& jobs, std::vector<int> resource_availabilities, int horizon, std::vector<int>& schedule);
+int build_schedule(int job_count, std::vector<Job>& jobs, std::vector<int> resource_availabilities, int horizon, std::vector<int>& schedule);
 void build_remaning_resources(std::vector<int>& resource_availabilities, int horizon, std::vector<vector<int>>& remaining_resources);
 int find_earliest_start_time(int duration, int resourcenr, int resource_requirement, std::vector<std::vector<int>>& remaining_resources, int earliest_start_time);
+void write_resource_schedule(int makespan, int resource_count, std::vector<int>& schedule, int job_count, std::vector<int>& resource_availabilities, std::vector<Job>& jobs, std::string filename);
 
-void write_resource_schedule(int resource_count, std::vector<int>& schedule, int job_count, std::vector<int>& resource_availabilities, std::vector<Job>& jobs);
+void greedy_destruction_rebuild(int job_count, std::vector<Job>& jobs, int makespan, std::vector<int>& resource_availabilities, int horizon);
 
 int main()
 {
@@ -41,6 +44,7 @@ int main()
 	vector<Job> jobs;
 	int resource_count;
 	vector<int> resource_availabilities;
+	int makespan;
 
 	parse_jobs(job_count, horizon, jobs, resource_count, resource_availabilities, project_lib_filename);
 
@@ -52,14 +56,64 @@ int main()
 
 	vector<int> schedule;
 
-	build_schedule(jobs, resource_availabilities, horizon, schedule);
+	makespan = build_schedule(job_count, jobs, resource_availabilities, horizon, schedule);
 
-	write_resource_schedule(resource_count, schedule, job_count, resource_availabilities, jobs);
+	write_resource_schedule(makespan, resource_count, schedule, job_count, resource_availabilities, jobs, "initial_schedule");
+
+	//greedy_destruction_rebuild(job_count, jobs, makespan, resource_availabilities, horizon);
 
 	return 0;
 }
 
-void write_resource_schedule(int resource_count, std::vector<int>& schedule, int job_count, std::vector<int>& resource_availabilities, std::vector<Job>& jobs)
+void greedy_destruction_rebuild(int job_count, std::vector<Job>& jobs, int makespan, std::vector<int>& resource_availabilities, int horizon)
+{
+	vector<Job> removed_jobs;
+	vector<Job> remaining_jobs;
+	vector<int> destruction_indices;
+	for (int i = 0; i < destruction_count; i++)
+	{
+		int random = (rand() % (job_count - 2)) + 1;
+		while (find(destruction_indices.begin(), destruction_indices.end(), random) != destruction_indices.end()) {
+			random = (rand() % (job_count - 2)) + 1;
+		}
+		destruction_indices.push_back(random);
+	}
+	for (int i = 0; i < jobs.size(); i++)
+	{
+		if (find(destruction_indices.begin(), destruction_indices.end(), i) != destruction_indices.end())
+		{
+			removed_jobs.push_back(jobs[i]);
+		}
+		else
+		{
+			remaining_jobs.push_back(jobs[i]);
+		}
+	}
+	fix_presedence_constraint(removed_jobs);
+	for (int i = 0; i < destruction_count; i++)
+	{
+		int best_makespan = makespan;
+		int best_index = -1;
+		for (int j = 1; j < remaining_jobs.size() - 1; j++)
+		{
+			remaining_jobs.insert(remaining_jobs.begin() + j, removed_jobs[i]);
+			if (!check_presedence_violation(remaining_jobs))
+			{
+				vector<int> new_schedule;
+				int new_makespan = build_schedule(job_count, remaining_jobs, resource_availabilities, horizon, new_schedule);
+				if (new_makespan < best_makespan) {
+					best_makespan = new_makespan;
+					best_index = j;
+				}
+			}
+			remaining_jobs.erase(remaining_jobs.begin() + j);
+		}
+		assert(best_index >= 0);
+		remaining_jobs.insert(remaining_jobs.begin() + best_index, removed_jobs[i]);
+	}
+}
+
+void write_resource_schedule(int makespan, int resource_count, std::vector<int>& schedule, int job_count, std::vector<int>& resource_availabilities, std::vector<Job>& jobs, std::string filename)
 {
 	vector<vector<vector<int>>> resource_schedule;
 	for (int i = 0; i < resource_count; i++)
@@ -67,7 +121,7 @@ void write_resource_schedule(int resource_count, std::vector<int>& schedule, int
 		resource_schedule.push_back(vector<vector<int>>(schedule[job_count - 1], vector<int>(resource_availabilities[i], 0)));
 	}
 
-	for (int i = 1; i < jobs.size() - 2; i++)
+	for (int i = 1; i < jobs.size() - 1; i++)
 	{
 		int start_time = schedule[jobs[i].jobnr - 1];
 		int resource_index = 0;
@@ -102,9 +156,10 @@ void write_resource_schedule(int resource_count, std::vector<int>& schedule, int
 		}
 	}
 
-	ofstream schedule_file("schedule.txt");
+	ofstream schedule_file(filename + ".txt");
 	if (schedule_file.is_open())
 	{
+		schedule_file << "Makespan: " << makespan << "\n\n";
 		for (int i = 0; i < resource_count; i++)
 		{
 			schedule_file << "R " << i + 1 << '\n';
@@ -129,12 +184,12 @@ void write_resource_schedule(int resource_count, std::vector<int>& schedule, int
 }
 
 
-void build_schedule(std::vector<Job>& jobs, std::vector<int> resource_availabilities, int horizon, std::vector<int>& schedule)
+int build_schedule(int job_count, std::vector<Job>& jobs, std::vector<int> resource_availabilities, int horizon, std::vector<int>& schedule)
 {
 	vector<vector<int>> remaining_resources;
 	build_remaning_resources(resource_availabilities, horizon, remaining_resources);
 
-	vector<int> new_schedule(jobs.size(), 0);
+	vector<int> new_schedule(job_count, 0);
 
 	for (int i = 0; i < jobs.size(); i++)
 	{
@@ -155,6 +210,7 @@ void build_schedule(std::vector<Job>& jobs, std::vector<int> resource_availabili
 	}
 
 	schedule = new_schedule;
+	return schedule[schedule.size() - 1];
 }
 
 int find_earliest_start_time(int duration, int resourcenr, int resource_requirement, std::vector<std::vector<int>>& remaining_resources, int earliest_start_time)
@@ -209,6 +265,22 @@ template <typename t> void move(std::vector<t>& v, size_t oldIndex, size_t newIn
 	else {
 		std::rotate(v.begin() + oldIndex, v.begin() + oldIndex + 1, v.begin() + newIndex + 1);
 	}
+}
+
+bool check_presedence_violation(std::vector<Job>& jobs)
+{
+	for (int i = 1; i < jobs.size(); i++)
+	{
+		for (int j = 0; j < i; j++)
+		{
+			int sucessor_index = find(jobs[i].successors.begin(), jobs[i].successors.end(), jobs[j].jobnr) - jobs[i].successors.begin();
+			if (sucessor_index != jobs[i].successors.end() - jobs[i].successors.begin())
+			{
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 bool check_presedence_violation(std::vector<Job>& jobs, std::vector<int>& job_in_violation_at_index)
