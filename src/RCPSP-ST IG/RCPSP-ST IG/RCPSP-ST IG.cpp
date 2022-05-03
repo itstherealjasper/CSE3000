@@ -10,8 +10,8 @@ struct Job
 	vector<int> successors;
 	int mode;
 	int duration;
-	int resourcenr = 1;
-	int resource_requirement = 0;
+	int resourcenr = 1; // default value required
+	int resource_requirement = 0; // default value required
 	// average resource utility rate
 	double arur;
 
@@ -25,12 +25,13 @@ const string project_lib_filename = "C:/Projects/cse3000/src/RCPSP-ST IG/RCPSP-S
 const int destruction_count = 6;
 
 void parse_jobs(int& job_count, int& horizon, std::vector<Job>& jobs, int& resource_count, vector<int>& resource_availability, string filename);
+void extend_successors(Job& job, std::vector<Job>& jobs);
 void calculate_average_resource_utility_rate(std::vector<Job>& jobs, std::vector<int>& resource_availabilities);
 void fix_presedence_constraint(std::vector<Job>& jobs);
 bool check_presedence_violation(std::vector<Job>& jobs);
 bool check_presedence_violation(std::vector<Job>& jobs, std::vector<int>& job_in_violation_at_index);
 template <typename t> void move(std::vector<t>& v, size_t oldIndex, size_t newIndex);
-int build_schedule(int job_count, std::vector<Job>& jobs, std::vector<int> resource_availabilities, int horizon, std::vector<int>& schedule);
+int construct_schedule(int horizon, int job_count, std::vector<Job>& jobs, std::vector<int> resource_availabilities, std::vector<int>& schedule);
 void build_remaning_resources(std::vector<int>& resource_availabilities, int horizon, std::vector<vector<int>>& remaining_resources);
 int find_earliest_start_time(int duration, int resourcenr, int resource_requirement, std::vector<std::vector<int>>& remaining_resources, int earliest_start_time);
 void write_resource_schedule(int makespan, int resource_count, std::vector<int>& schedule, int job_count, std::vector<int>& resource_availabilities, std::vector<Job>& jobs, std::string filename);
@@ -39,78 +40,64 @@ void greedy_destruction_rebuild(int job_count, std::vector<Job>& jobs, int makes
 
 int main()
 {
-	int job_count;
 	int horizon;
+	int job_count;
 	vector<Job> jobs;
 	int resource_count;
 	vector<int> resource_availabilities;
-	int makespan;
 
+#pragma region setup
 	parse_jobs(job_count, horizon, jobs, resource_count, resource_availabilities, project_lib_filename);
+
+	extend_successors(jobs[0], jobs);
 
 	calculate_average_resource_utility_rate(jobs, resource_availabilities);
 
 	sort(jobs.begin() + 1, jobs.end() - 1, greater<Job>());
 
 	fix_presedence_constraint(jobs);
+#pragma endregion
 
+
+#pragma region initial schedule
+	int makespan;
 	vector<int> schedule;
 
-	makespan = build_schedule(job_count, jobs, resource_availabilities, horizon, schedule);
-
-	write_resource_schedule(makespan, resource_count, schedule, job_count, resource_availabilities, jobs, "initial_schedule");
-
-	//greedy_destruction_rebuild(job_count, jobs, makespan, resource_availabilities, horizon);
-
-	return 0;
-}
-
-void greedy_destruction_rebuild(int job_count, std::vector<Job>& jobs, int makespan, std::vector<int>& resource_availabilities, int horizon)
-{
-	vector<Job> removed_jobs;
-	vector<Job> remaining_jobs;
-	vector<int> destruction_indices;
-	for (int i = 0; i < destruction_count; i++)
+	vector<Job> scheduled_jobs;
+	vector<Job> to_schedule_jobs;
+	scheduled_jobs.push_back(jobs[0]);
+	scheduled_jobs.push_back(jobs[1]);
+	for (int i = 2; i < job_count; i++)
 	{
-		int random = (rand() % (job_count - 2)) + 1;
-		while (find(destruction_indices.begin(), destruction_indices.end(), random) != destruction_indices.end()) {
-			random = (rand() % (job_count - 2)) + 1;
-		}
-		destruction_indices.push_back(random);
+		to_schedule_jobs.push_back(jobs[i]);
 	}
-	for (int i = 0; i < jobs.size(); i++)
-	{
-		if (find(destruction_indices.begin(), destruction_indices.end(), i) != destruction_indices.end())
+	while (to_schedule_jobs.size() > 0) {
+		int minimum_makespan = horizon;
+		int optimal_index = -1;
+		Job to_schedule_job = to_schedule_jobs[0];
+		to_schedule_jobs.erase(to_schedule_jobs.begin());
+		for (int i = 0; i <= scheduled_jobs.size(); i++)
 		{
-			removed_jobs.push_back(jobs[i]);
-		}
-		else
-		{
-			remaining_jobs.push_back(jobs[i]);
-		}
-	}
-	fix_presedence_constraint(removed_jobs);
-	for (int i = 0; i < destruction_count; i++)
-	{
-		int best_makespan = makespan;
-		int best_index = -1;
-		for (int j = 1; j < remaining_jobs.size() - 1; j++)
-		{
-			remaining_jobs.insert(remaining_jobs.begin() + j, removed_jobs[i]);
-			if (!check_presedence_violation(remaining_jobs))
-			{
-				vector<int> new_schedule;
-				int new_makespan = build_schedule(job_count, remaining_jobs, resource_availabilities, horizon, new_schedule);
-				if (new_makespan < best_makespan) {
-					best_makespan = new_makespan;
-					best_index = j;
+			scheduled_jobs.insert(scheduled_jobs.begin() + i, to_schedule_job);
+			if (!check_presedence_violation(scheduled_jobs)) {
+				int makespan_test = construct_schedule(horizon, job_count, scheduled_jobs, resource_availabilities, vector<int>(job_count, 0));
+				if (makespan_test < minimum_makespan) {
+					minimum_makespan = makespan_test;
+					optimal_index = i;
 				}
 			}
-			remaining_jobs.erase(remaining_jobs.begin() + j);
+			scheduled_jobs.erase(scheduled_jobs.begin() + i);
 		}
-		assert(best_index >= 0);
-		remaining_jobs.insert(remaining_jobs.begin() + best_index, removed_jobs[i]);
+		assert(optimal_index >= 0);
+		scheduled_jobs.insert(scheduled_jobs.begin() + optimal_index, to_schedule_job);
 	}
+
+	makespan = construct_schedule(horizon, job_count, scheduled_jobs, resource_availabilities, schedule);
+
+	write_resource_schedule(makespan, resource_count, schedule, job_count, resource_availabilities, jobs, "initial_schedule");
+#pragma endregion
+
+	return 0;
 }
 
 void write_resource_schedule(int makespan, int resource_count, std::vector<int>& schedule, int job_count, std::vector<int>& resource_availabilities, std::vector<Job>& jobs, std::string filename)
@@ -184,7 +171,7 @@ void write_resource_schedule(int makespan, int resource_count, std::vector<int>&
 }
 
 
-int build_schedule(int job_count, std::vector<Job>& jobs, std::vector<int> resource_availabilities, int horizon, std::vector<int>& schedule)
+int construct_schedule(int horizon, int job_count, std::vector<Job>& jobs, std::vector<int> resource_availabilities, std::vector<int>& schedule)
 {
 	vector<vector<int>> remaining_resources;
 	build_remaning_resources(resource_availabilities, horizon, remaining_resources);
@@ -306,6 +293,24 @@ void calculate_average_resource_utility_rate(std::vector<Job>& jobs, std::vector
 	for (int i = 0; i < jobs.size(); i++)
 	{
 		jobs[i].arur = jobs[i].duration * (double)jobs[i].resource_requirement / (double)resource_availabilities[jobs[i].resourcenr - 1];
+	}
+}
+
+void extend_successors(Job& job, std::vector<Job>& jobs) {
+	if (job.jobnr == jobs[jobs.size() - 1].jobnr) {
+		return;
+	}
+	for (int i = 0; i < job.successor_count; i++)
+	{
+		extend_successors(jobs[job.successors[i] - 1], jobs);
+		for (int j = 0; j < jobs[job.successors[i] - 1].successor_count; j++)
+		{
+			if (find(job.successors.begin(), job.successors.end(), jobs[job.successors[i] - 1].successors[j]) == job.successors.end()) {
+				job.successor_count++;
+				job.successors.push_back(jobs[job.successors[i] - 1].successors[j]);
+			}
+		}
+		sort(job.successors.begin(), job.successors.end());
 	}
 }
 
