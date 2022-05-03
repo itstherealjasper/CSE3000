@@ -25,7 +25,7 @@ struct Job
 const int destruction_count = 6;
 
 // Global variables for the specific problem instance used
-const string project_lib_filename = "C:/Projects/cse3000/src/RCPSP-ST IG/RCPSP-ST IG/j30.sm/j301_1.sm";
+const string project_lib_filename = "C:/Projects/cse3000/src/RCPSP-ST IG/RCPSP-ST IG/j30.sm/j301_4.sm";
 int horizon;
 int job_count;
 vector<Job> jobs;
@@ -44,6 +44,7 @@ int construct_schedule(std::vector<Job>& job_list, std::vector<int>& schedule);
 void build_remaning_resources(std::vector<vector<int>>& remaining_resources);
 int find_earliest_start_time(int duration, int resourcenr, int resource_requirement, std::vector<std::vector<int>>& remaining_resources, int earliest_start_time);
 void write_resource_schedule(int makespan, std::vector<int>& schedule, std::vector<Job>& job_list, std::string filename);
+void try_build_3d_resource_schedule(std::vector<Job>& job_list, std::vector<int>& schedule, vector<vector<vector<int>>>& resource_schedule);
 
 int main()
 {
@@ -79,43 +80,17 @@ int main()
 void write_resource_schedule(int makespan, std::vector<int>& schedule, std::vector<Job>& job_list, std::string filename)
 {
 	vector<vector<vector<int>>> resource_schedule;
-	for (int i = 0; i < resource_count; i++)
-	{
-		resource_schedule.push_back(vector<vector<int>>(schedule[job_count - 1], vector<int>(resource_availabilities[i], 0)));
-	}
 
-	for (int i = 1; i < job_list.size() - 1; i++)
-	{
-		int start_time = schedule[job_list[i].jobnr - 1];
-		int resource_index = 0;
-		bool found_space = false;
-		while (!found_space)
+	bool found_possible_schedule = false;
+	while (!found_possible_schedule) {
+		try
 		{
-			bool space_error = false;
-			for (int j = start_time; j < start_time + job_list[i].duration; j++)
-			{
-				for (int k = 0; k < job_list[i].resource_requirement; k++)
-				{
-					if (resource_schedule[job_list[i].resourcenr - 1][j][k + resource_index] != 0) {
-						space_error = true;
-					}
-				}
-			}
-			if (space_error)
-			{
-				resource_index++;
-			}
-			else
-			{
-				found_space = true;
-			}
+			try_build_3d_resource_schedule(job_list, schedule, resource_schedule);
+			found_possible_schedule = true;
 		}
-		for (int j = start_time; j < start_time + job_list[i].duration; j++)
+		catch (const std::exception&)
 		{
-			for (int k = 0; k < job_list[i].resource_requirement; k++)
-			{
-				resource_schedule[job_list[i].resourcenr - 1][j][k + resource_index] = job_list[i].jobnr;
-			}
+			shuffle(job_list.begin(), job_list.end(), default_random_engine());
 		}
 	}
 
@@ -140,10 +115,63 @@ void write_resource_schedule(int makespan, std::vector<int>& schedule, std::vect
 				}
 				schedule_file << '\n';
 			}
-			schedule_file << '\n' << '\n';
 		}
 		schedule_file.close();
 	}
+}
+
+void try_build_3d_resource_schedule(std::vector<Job>& job_list, std::vector<int>& schedule, vector<vector<vector<int>>>& resource_schedule)
+{
+	vector<vector<vector<int>>> new_resource_schedule;
+
+	for (int i = 0; i < resource_count; i++)
+	{
+		new_resource_schedule.push_back(vector<vector<int>>(schedule[job_count - 1], vector<int>(resource_availabilities[i], 0)));
+	}
+
+	for (int i = 1; i < job_list.size() - 1; i++)
+	{
+		assert(job_list[i].jobnr - 1 < schedule.size());
+		int start_time = schedule[job_list[i].jobnr - 1];
+		int resource_index = 0;
+		bool found_space = false;
+		while (!found_space)
+		{
+			bool space_error = false;
+			for (int j = start_time; j < start_time + job_list[i].duration; j++)
+			{
+				for (int k = 0; k < job_list[i].resource_requirement; k++)
+				{
+					assert(job_list[i].resourcenr - 1 < new_resource_schedule.size());
+					assert(j < new_resource_schedule[job_list[i].resourcenr - 1].size());
+					if (k + resource_index >= new_resource_schedule[job_list[i].resourcenr - 1][j].size()) {
+						throw exception();
+					}
+					assert(k + resource_index < new_resource_schedule[job_list[i].resourcenr - 1][j].size());
+					if (new_resource_schedule[job_list[i].resourcenr - 1][j][k + resource_index] != 0) {
+						space_error = true;
+					}
+				}
+			}
+			if (space_error)
+			{
+				resource_index++;
+			}
+			else
+			{
+				found_space = true;
+			}
+		}
+		for (int j = start_time; j < start_time + job_list[i].duration; j++)
+		{
+			for (int k = 0; k < job_list[i].resource_requirement; k++)
+			{
+				new_resource_schedule[job_list[i].resourcenr - 1][j][k + resource_index] = job_list[i].jobnr;
+			}
+		}
+	}
+
+	resource_schedule = new_resource_schedule;
 }
 
 
@@ -368,7 +396,6 @@ void parse_jobs(string filename)
 		Job job;
 		jobs.push_back(job);
 		project_lib >> jobs[i].jobnr >> jobs[i].modes_count >> jobs[i].successor_count;
-		//cout << i << ' ' << jobs[i].jobnr <<'\n';
 		vector<int> successors(jobs[i].successor_count);
 		for (int j = 0; j < jobs[i].successor_count; j++)
 		{
@@ -385,7 +412,6 @@ void parse_jobs(string filename)
 	for (int i = 0; i < job_count; i++)
 	{
 		project_lib >> jobs[i].jobnr >> jobs[i].mode >> jobs[i].duration;
-		//cout << i << ' ' << jobs[i].jobnr << ' ' << jobs[i].duration << '\n';
 		int resource_requirement;
 		for (int j = 0; j < resource_count; j++)
 		{
