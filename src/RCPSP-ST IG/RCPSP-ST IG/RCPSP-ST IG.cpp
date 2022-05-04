@@ -22,10 +22,12 @@ struct Job
 };
 
 // Parameters to tune the algorithm
-const int destruction_count = 6;
+const int destruction_count = 10;
+const int cpu_time_deadline = 1; // seconds
 
 // Global variables for the specific problem instance used
-const string project_lib_filename = "C:/Projects/cse3000/src/RCPSP-ST IG/RCPSP-ST IG/j30.sm/j301_4.sm";
+const string project_lib_filename = "C:/Projects/cse3000/src/RCPSP-ST IG/RCPSP-ST IG/j30.sm/j301_5.sm";
+//const string project_lib_filename = "C:/Projects/cse3000/src/RCPSP-ST IG/RCPSP-ST IG/j120.sm/j1201_1.sm";
 int horizon;
 int job_count;
 vector<Job> jobs;
@@ -35,16 +37,17 @@ vector<int> resource_availabilities;
 void parse_jobs(string filename);
 void extend_successors(Job& job);
 void calculate_average_resource_utility_rate();
-void fix_presedence_constraint(std::vector<Job>& job_list);
-bool check_presedence_violation(std::vector<Job>& job_list);
-bool check_presedence_violation(std::vector<Job>& job_list, std::vector<int>& job_in_violation_at_index);
-template <typename t> void move(std::vector<t>& v, size_t oldIndex, size_t newIndex);
-void construct_initial_job_list(std::vector<Job>& job_list);
-int construct_schedule(std::vector<Job>& job_list, std::vector<int>& schedule);
-void build_remaning_resources(std::vector<vector<int>>& remaining_resources);
-int find_earliest_start_time(int duration, int resourcenr, int resource_requirement, std::vector<std::vector<int>>& remaining_resources, int earliest_start_time);
-void write_resource_schedule(int makespan, std::vector<int>& schedule, std::vector<Job>& job_list, std::string filename);
-void try_build_3d_resource_schedule(std::vector<Job>& job_list, std::vector<int>& schedule, vector<vector<vector<int>>>& resource_schedule);
+void fix_presedence_constraint(vector<Job>& job_list);
+bool check_presedence_violation(vector<Job>& job_list);
+bool check_presedence_violation(vector<Job>& job_list, vector<int>& job_in_violation_at_index);
+template <typename t> void move(vector<t>& v, size_t oldIndex, size_t newIndex);
+void construct_initial_job_list(vector<Job>& job_list);
+int construct_schedule(vector<Job>& job_list, vector<int>& schedule);
+void build_remaning_resources(vector<vector<int>>& remaining_resources);
+int find_earliest_start_time(int duration, int resourcenr, int resource_requirement, vector<vector<int>>& remaining_resources, int earliest_start_time);
+void write_resource_schedule(int makespan, vector<int>& schedule, vector<Job>& job_list, string filename);
+void try_build_3d_resource_schedule(vector<Job>& job_list, vector<int>& schedule, vector<vector<vector<int>>>& resource_schedule);
+int optimize_job_list(int makespan, vector<Job>& job_list);
 
 int main()
 {
@@ -58,7 +61,7 @@ int main()
 #pragma endregion
 
 
-#pragma region initial schedule
+#pragma region initial initial_schedule
 
 	vector<Job> job_list = jobs;
 
@@ -68,16 +71,95 @@ int main()
 
 	construct_initial_job_list(job_list);
 
-	vector<int> schedule;
-	int makespan = construct_schedule(job_list, schedule);
+	vector<int> initial_schedule;
+	int initial_makespan = construct_schedule(job_list, initial_schedule);
 
-	write_resource_schedule(makespan, schedule, job_list, "initial_schedule");
+	cout << "Initial schedule done. \nMakespan: " << initial_makespan << "\n";
+
+	write_resource_schedule(initial_makespan, initial_schedule, job_list, "initial_schedule");
+#pragma endregion
+
+#pragma region algorithm
+
+	vector<int> schedule;
+	int makespan = initial_makespan;
+
+	long double time_elapsed_ms = 0.0;
+
+	clock_t c_start = clock();
+	while (time_elapsed_ms < 1000 * cpu_time_deadline) {
+		makespan = optimize_job_list(makespan, job_list);
+		clock_t c_end = clock();
+		time_elapsed_ms = 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC;
+	}
+
+	cout << "CPU time used for optimization: " << time_elapsed_ms << " ms\nMakespan: " << makespan;
+
+	construct_schedule(job_list, schedule);
+	write_resource_schedule(makespan, schedule, job_list, "optimized_schedule");
+
 #pragma endregion
 
 	return 0;
 }
 
-void write_resource_schedule(int makespan, std::vector<int>& schedule, std::vector<Job>& job_list, std::string filename)
+int optimize_job_list(int makespan, vector<Job>& job_list)
+{
+	vector<Job> new_job_list;
+	vector<Job> remaining_job_list;
+
+	vector<int> destruction_indices;
+	for (int i = 0; i < destruction_count; i++)
+	{
+		int random = (rand() % (job_count - 2)) + 1;
+		while (find(destruction_indices.begin(), destruction_indices.end(), random) != destruction_indices.end()) {
+			random = (rand() % (job_count - 2)) + 1;
+		}
+		destruction_indices.push_back(random);
+	}
+	for (int i = 0; i < jobs.size(); i++)
+	{
+		if (find(destruction_indices.begin(), destruction_indices.end(), i) != destruction_indices.end())
+		{
+			remaining_job_list.push_back(jobs[i]);
+		}
+		else
+		{
+			new_job_list.push_back(jobs[i]);
+		}
+	}
+
+	while (remaining_job_list.size() > 0) {
+		int minimum_makespan = horizon;
+		int optimal_index = -1;
+		Job to_schedule_job = remaining_job_list[0];
+		remaining_job_list.erase(remaining_job_list.begin());
+		for (int i = 0; i <= new_job_list.size(); i++)
+		{
+			new_job_list.insert(new_job_list.begin() + i, to_schedule_job);
+			if (!check_presedence_violation(new_job_list)) {
+				int makespan_test = construct_schedule(new_job_list, vector<int>(job_count, 0));
+				if (makespan_test < minimum_makespan) {
+					minimum_makespan = makespan_test;
+					optimal_index = i;
+				}
+			}
+			new_job_list.erase(new_job_list.begin() + i);
+		}
+		assert(optimal_index >= 0);
+		new_job_list.insert(new_job_list.begin() + optimal_index, to_schedule_job);
+	}
+	int makespan_test = construct_schedule(new_job_list, vector<int>(job_count, 0));
+
+	if (makespan_test < makespan) {
+		job_list = new_job_list;
+		return makespan_test;
+	}
+
+	return makespan;
+}
+
+void write_resource_schedule(int makespan, vector<int>& schedule, vector<Job>& job_list, string filename)
 {
 	vector<vector<vector<int>>> resource_schedule;
 
@@ -88,7 +170,7 @@ void write_resource_schedule(int makespan, std::vector<int>& schedule, std::vect
 			try_build_3d_resource_schedule(job_list, schedule, resource_schedule);
 			found_possible_schedule = true;
 		}
-		catch (const std::exception&)
+		catch (const exception&)
 		{
 			shuffle(job_list.begin(), job_list.end(), default_random_engine());
 		}
@@ -120,7 +202,7 @@ void write_resource_schedule(int makespan, std::vector<int>& schedule, std::vect
 	}
 }
 
-void try_build_3d_resource_schedule(std::vector<Job>& job_list, std::vector<int>& schedule, vector<vector<vector<int>>>& resource_schedule)
+void try_build_3d_resource_schedule(vector<Job>& job_list, vector<int>& schedule, vector<vector<vector<int>>>& resource_schedule)
 {
 	vector<vector<vector<int>>> new_resource_schedule;
 
@@ -175,7 +257,7 @@ void try_build_3d_resource_schedule(std::vector<Job>& job_list, std::vector<int>
 }
 
 
-int construct_schedule(std::vector<Job>& job_list, std::vector<int>& schedule)
+int construct_schedule(vector<Job>& job_list, vector<int>& schedule)
 {
 	vector<vector<int>> remaining_resources;
 	build_remaning_resources(remaining_resources);
@@ -204,7 +286,7 @@ int construct_schedule(std::vector<Job>& job_list, std::vector<int>& schedule)
 	return schedule[schedule.size() - 1];
 }
 
-int find_earliest_start_time(int duration, int resourcenr, int resource_requirement, std::vector<std::vector<int>>& remaining_resources, int earliest_start_time)
+int find_earliest_start_time(int duration, int resourcenr, int resource_requirement, vector<vector<int>>& remaining_resources, int earliest_start_time)
 {
 	bool found_possible_timeslot = false;
 	while (!found_possible_timeslot) {
@@ -227,7 +309,7 @@ int find_earliest_start_time(int duration, int resourcenr, int resource_requirem
 	return earliest_start_time;
 }
 
-void construct_initial_job_list(std::vector<Job>& job_list)
+void construct_initial_job_list(vector<Job>& job_list)
 {
 	vector<Job> new_job_list;
 	vector<Job> remaining_job_list;
@@ -238,6 +320,7 @@ void construct_initial_job_list(std::vector<Job>& job_list)
 	{
 		remaining_job_list.push_back(job_list[i]);
 	}
+
 	while (remaining_job_list.size() > 0) {
 		int minimum_makespan = horizon;
 		int optimal_index = -1;
@@ -262,7 +345,7 @@ void construct_initial_job_list(std::vector<Job>& job_list)
 	job_list = new_job_list;
 }
 
-void build_remaning_resources(std::vector<std::vector<int>>& remaining_resources)
+void build_remaning_resources(vector<vector<int>>& remaining_resources)
 {
 	for (int i = 0; i < horizon; i++)
 	{
@@ -270,7 +353,7 @@ void build_remaning_resources(std::vector<std::vector<int>>& remaining_resources
 	}
 }
 
-void fix_presedence_constraint(std::vector<Job>& job_list)
+void fix_presedence_constraint(vector<Job>& job_list)
 {
 	vector<int> job_in_violation_at_index;
 
@@ -282,18 +365,18 @@ void fix_presedence_constraint(std::vector<Job>& job_list)
 }
 
 // Found on StackOverflow answer: https://stackoverflow.com/a/57399634
-template <typename t> void move(std::vector<t>& v, size_t oldIndex, size_t newIndex)
+template <typename t> void move(vector<t>& v, size_t oldIndex, size_t newIndex)
 {
 	if (oldIndex > newIndex)
 	{
-		std::rotate(v.rend() - oldIndex - 1, v.rend() - oldIndex, v.rend() - newIndex);
+		rotate(v.rend() - oldIndex - 1, v.rend() - oldIndex, v.rend() - newIndex);
 	}
 	else {
-		std::rotate(v.begin() + oldIndex, v.begin() + oldIndex + 1, v.begin() + newIndex + 1);
+		rotate(v.begin() + oldIndex, v.begin() + oldIndex + 1, v.begin() + newIndex + 1);
 	}
 }
 
-bool check_presedence_violation(std::vector<Job>& job_list)
+bool check_presedence_violation(vector<Job>& job_list)
 {
 	for (int i = 1; i < job_list.size(); i++)
 	{
@@ -309,7 +392,7 @@ bool check_presedence_violation(std::vector<Job>& job_list)
 	return false;
 }
 
-bool check_presedence_violation(std::vector<Job>& job_list, std::vector<int>& job_in_violation_at_index)
+bool check_presedence_violation(vector<Job>& job_list, vector<int>& job_in_violation_at_index)
 {
 	for (int i = 1; i < job_list.size(); i++)
 	{
