@@ -1,4 +1,4 @@
-﻿#include "RCPSP-ST IG.h"
+﻿#include "rcpsp.h"
 
 using namespace std;
 
