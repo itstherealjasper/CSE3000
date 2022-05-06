@@ -29,8 +29,8 @@ const int cpu_time_deadline = 1; // seconds
 const string project_lib_filename = "C:/Projects/cse3000/src/RCPSP-ST IG/RCPSP-ST IG/j30.sm/j301_5.sm";
 //const string project_lib_filename = "C:/Projects/cse3000/src/RCPSP-ST IG/RCPSP-ST IG/j120.sm/j1201_1.sm";
 int horizon;
-int job_count;
-vector<Job> jobs;
+int activity_count;
+vector<Job> activities;
 int resource_count;
 vector<int> resource_availabilities;
 
@@ -55,7 +55,7 @@ int main()
 #pragma region setup
 	parse_jobs(project_lib_filename);
 
-	extend_successors(jobs[0]);
+	extend_successors(activities[0]);
 
 	calculate_average_resource_utility_rate();
 #pragma endregion
@@ -63,7 +63,7 @@ int main()
 
 #pragma region initial initial_schedule
 
-	vector<Job> job_list = jobs;
+	vector<Job> job_list = activities;
 
 	sort(job_list.begin() + 1, job_list.end() - 1, greater<Job>());
 
@@ -111,21 +111,21 @@ int optimize_job_list(int makespan, vector<Job>& job_list)
 	vector<int> destruction_indices;
 	for (int i = 0; i < destruction_count; i++)
 	{
-		int random = (rand() % (job_count - 2)) + 1;
+		int random = (rand() % (activity_count - 2)) + 1;
 		while (find(destruction_indices.begin(), destruction_indices.end(), random) != destruction_indices.end()) {
-			random = (rand() % (job_count - 2)) + 1;
+			random = (rand() % (activity_count - 2)) + 1;
 		}
 		destruction_indices.push_back(random);
 	}
-	for (int i = 0; i < jobs.size(); i++)
+	for (int i = 0; i < activities.size(); i++)
 	{
 		if (find(destruction_indices.begin(), destruction_indices.end(), i) != destruction_indices.end())
 		{
-			remaining_job_list.push_back(jobs[i]);
+			remaining_job_list.push_back(activities[i]);
 		}
 		else
 		{
-			new_job_list.push_back(jobs[i]);
+			new_job_list.push_back(activities[i]);
 		}
 	}
 
@@ -138,7 +138,7 @@ int optimize_job_list(int makespan, vector<Job>& job_list)
 		{
 			new_job_list.insert(new_job_list.begin() + i, to_schedule_job);
 			if (!check_presedence_violation(new_job_list)) {
-				int makespan_test = construct_schedule(new_job_list, vector<int>(job_count, 0));
+				int makespan_test = construct_schedule(new_job_list, vector<int>(activity_count, 0));
 				if (makespan_test < minimum_makespan) {
 					minimum_makespan = makespan_test;
 					optimal_index = i;
@@ -149,7 +149,7 @@ int optimize_job_list(int makespan, vector<Job>& job_list)
 		assert(optimal_index >= 0);
 		new_job_list.insert(new_job_list.begin() + optimal_index, to_schedule_job);
 	}
-	int makespan_test = construct_schedule(new_job_list, vector<int>(job_count, 0));
+	int makespan_test = construct_schedule(new_job_list, vector<int>(activity_count, 0));
 
 	if (makespan_test < makespan) {
 		job_list = new_job_list;
@@ -208,7 +208,7 @@ void try_build_3d_resource_schedule(vector<Job>& job_list, vector<int>& schedule
 
 	for (int i = 0; i < resource_count; i++)
 	{
-		new_resource_schedule.push_back(vector<vector<int>>(schedule[job_count - 1], vector<int>(resource_availabilities[i], 0)));
+		new_resource_schedule.push_back(vector<vector<int>>(schedule[activity_count - 1], vector<int>(resource_availabilities[i], 0)));
 	}
 
 	for (int i = 1; i < job_list.size() - 1; i++)
@@ -262,7 +262,7 @@ int construct_schedule(vector<Job>& job_list, vector<int>& schedule)
 	vector<vector<int>> remaining_resources;
 	build_remaning_resources(remaining_resources);
 
-	vector<int> new_schedule(job_count, 0);
+	vector<int> new_schedule(activity_count, 0);
 
 	for (int i = 0; i < job_list.size(); i++)
 	{
@@ -316,7 +316,7 @@ void construct_initial_job_list(vector<Job>& job_list)
 	new_job_list.push_back(job_list[0]);
 	new_job_list.push_back(job_list[1]);
 
-	for (int i = 2; i < job_count; i++)
+	for (int i = 2; i < activity_count; i++)
 	{
 		remaining_job_list.push_back(job_list[i]);
 	}
@@ -330,7 +330,7 @@ void construct_initial_job_list(vector<Job>& job_list)
 		{
 			new_job_list.insert(new_job_list.begin() + i, to_schedule_job);
 			if (!check_presedence_violation(new_job_list)) {
-				int makespan_test = construct_schedule(new_job_list, vector<int>(job_count, 0));
+				int makespan_test = construct_schedule(new_job_list, vector<int>(activity_count, 0));
 				if (makespan_test < minimum_makespan) {
 					minimum_makespan = makespan_test;
 					optimal_index = i;
@@ -412,24 +412,24 @@ bool check_presedence_violation(vector<Job>& job_list, vector<int>& job_in_viola
 
 void calculate_average_resource_utility_rate()
 {
-	for (int i = 0; i < jobs.size(); i++)
+	for (int i = 0; i < activities.size(); i++)
 	{
-		jobs[i].arur = jobs[i].duration * (double)jobs[i].resource_requirement / (double)resource_availabilities[jobs[i].resourcenr - 1];
+		activities[i].arur = activities[i].duration * (double)activities[i].resource_requirement / (double)resource_availabilities[activities[i].resourcenr - 1];
 	}
 }
 
 void extend_successors(Job& job) {
-	if (job.jobnr == jobs[jobs.size() - 1].jobnr) {
+	if (job.jobnr == activities[activities.size() - 1].jobnr) {
 		return;
 	}
 	for (int i = 0; i < job.successor_count; i++)
 	{
-		extend_successors(jobs[job.successors[i] - 1]);
-		for (int j = 0; j < jobs[job.successors[i] - 1].successor_count; j++)
+		extend_successors(activities[job.successors[i] - 1]);
+		for (int j = 0; j < activities[job.successors[i] - 1].successor_count; j++)
 		{
-			if (find(job.successors.begin(), job.successors.end(), jobs[job.successors[i] - 1].successors[j]) == job.successors.end()) {
+			if (find(job.successors.begin(), job.successors.end(), activities[job.successors[i] - 1].successors[j]) == job.successors.end()) {
 				job.successor_count++;
-				job.successors.push_back(jobs[job.successors[i] - 1].successors[j]);
+				job.successors.push_back(activities[job.successors[i] - 1].successors[j]);
 			}
 		}
 		sort(job.successors.begin(), job.successors.end());
@@ -455,7 +455,7 @@ void parse_jobs(string filename)
 	};
 
 	getline(project_lib, line, ':');
-	project_lib >> job_count;
+	project_lib >> activity_count;
 
 	getline(project_lib, line, ':');
 	project_lib >> horizon;
@@ -474,17 +474,17 @@ void parse_jobs(string filename)
 		getline(project_lib, line);
 	};
 
-	for (int i = 0; i < job_count; i++)
+	for (int i = 0; i < activity_count; i++)
 	{
 		Job job;
-		jobs.push_back(job);
-		project_lib >> jobs[i].jobnr >> jobs[i].modes_count >> jobs[i].successor_count;
-		vector<int> successors(jobs[i].successor_count);
-		for (int j = 0; j < jobs[i].successor_count; j++)
+		activities.push_back(job);
+		project_lib >> activities[i].jobnr >> activities[i].modes_count >> activities[i].successor_count;
+		vector<int> successors(activities[i].successor_count);
+		for (int j = 0; j < activities[i].successor_count; j++)
 		{
 			project_lib >> successors[j];
 		};
-		jobs[i].successors = successors;
+		activities[i].successors = successors;
 	}
 
 	for (int i = 0; i < 5; i++)
@@ -492,9 +492,9 @@ void parse_jobs(string filename)
 		getline(project_lib, line);
 	};
 
-	for (int i = 0; i < job_count; i++)
+	for (int i = 0; i < activity_count; i++)
 	{
-		project_lib >> jobs[i].jobnr >> jobs[i].mode >> jobs[i].duration;
+		project_lib >> activities[i].jobnr >> activities[i].mode >> activities[i].duration;
 		int resource_requirement;
 		for (int j = 0; j < resource_count; j++)
 		{
@@ -502,8 +502,8 @@ void parse_jobs(string filename)
 			project_lib >> parsed_resource_requirement;
 
 			if (parsed_resource_requirement > 0) {
-				jobs[i].resource_requirement = parsed_resource_requirement;
-				jobs[i].resourcenr = j + 1;
+				activities[i].resource_requirement = parsed_resource_requirement;
+				activities[i].resourcenr = j + 1;
 			}
 		};
 	}
@@ -522,5 +522,4 @@ void parse_jobs(string filename)
 
 	// Close the file
 	project_lib.close();
-
 }
