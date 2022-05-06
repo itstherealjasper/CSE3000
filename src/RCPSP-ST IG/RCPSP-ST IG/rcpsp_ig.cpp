@@ -1,4 +1,4 @@
-﻿#include "RCPSP-ST IG.h"
+﻿#include "rcpsp.h"
 
 using namespace std;
 
@@ -522,5 +522,4 @@ void parse_jobs(string filename)
 
 	// Close the file
 	project_lib.close();
-
 }
