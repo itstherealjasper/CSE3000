@@ -6,11 +6,28 @@ struct Id
 {
 private:
 	int id = 0;
+	vector<int> reusable_ids;
 public:
+	int get_max_id() {
+		return id;
+	}
+
 	int get_next_id() {
-		int result = id;
-		id = id + 1;
+		int result;
+		if (reusable_ids.size() > 0) {
+			result = reusable_ids[0];
+			reusable_ids.erase(reusable_ids.begin());
+		}
+		else {
+			result = id;
+			id = id + 1;
+			assert(id < INT_MAX);
+		}
 		return result;
+	}
+
+	void add_reusable_id(int id) {
+		reusable_ids.push_back(id);
 	}
 };
 
@@ -46,19 +63,20 @@ void construct_initial_task_list(vector<Task>& task_list);
 int calculate_makespan(vector<Task>& task_list, int task_count);
 int find_earliest_start_time(int duration, int resource_type, int resource_requirement, vector<vector<int>>& remaining_resources, int earliest_start_time);
 int construct_schedule(vector<Task>& task_list, vector<int>& start_times, int task_count);
-int optimize_task_list(int makespan, vector<Task>& job_list);
+int optimize_task_list(int makespan, vector<Task>& job_list, bool preempt_tasks);
 void extend_successors(Task& task, vector<Task>& task_list);
 
 void write_resource_schedule(int makespan, vector<int>& start_times, vector<Task>& task_list, string filename);
-void try_build_3d_resource_schedule(vector<Task>& task_list, vector<int>& start_times, vector<vector<vector<int>>>& resource_schedule);
+void try_build_3d_resource_schedule(vector<Task>& task_list, vector<int>& start_times, vector<vector<vector<int>>>& resource_schedule, vector<vector<vector<int>>>& resource_schedule_preemption_ids);
 
 // Parameters to tune the algorithm
-const int destruction_count = 4;
-const int cpu_time_deadline = 1; // seconds
+const int destruction_count = 10;
+const int cpu_time_deadline_optimization = 4; // seconds
+const int cpu_time_deadline_preemption = 6; // seconds
 const int setup_time = 1;
 
 // Global variables for the specific problem instance used
-const string project_lib_filename = "C:/Projects/cse3000/src/RCPSP-ST IG/RCPSP-ST IG/j30.sm/j301_1.sm";
+const string project_lib_filename = "C:/Projects/cse3000/src/RCPSP-ST IG/RCPSP-ST IG/j30.sm/j301_5.sm";
 //const string project_lib_filename = "C:/Projects/cse3000/src/RCPSP-ST IG/RCPSP-ST IG/j120.sm/j1201_1.sm";
 int horizon;
 int initial_task_count;
@@ -94,22 +112,37 @@ int main()
 
 #pragma region algorithm
 	vector<Task> task_list = initial_task_list;
-	vector<int> start_times = initial_start_times;
 	int makespan = initial_makespan;
 
-	long double time_elapsed_ms = 0.0;
-
 	clock_t c_start = clock();
-	while (time_elapsed_ms < 1000 * cpu_time_deadline) {
-		makespan = optimize_task_list(makespan, task_list);
+
+	long double time_elapsed_ms = 0.0;
+	while (time_elapsed_ms < 1000 * cpu_time_deadline_optimization) {
+		makespan = optimize_task_list(makespan, task_list, false);
 		clock_t c_end = clock();
 		time_elapsed_ms = 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC;
 	}
 
 	cout << "CPU time used for optimization: " << time_elapsed_ms << " ms\nMakespan: " << makespan << "\n";
 
-	construct_schedule(task_list, start_times, task_list.size());
+	vector<int> start_times = vector<int>(job_id.get_max_id(), 0);
+	construct_schedule(task_list, start_times, job_id.get_max_id());
 	write_resource_schedule(makespan, start_times, task_list, "optimized_schedule");
+
+	c_start = clock();
+	time_elapsed_ms = 0.0;
+	while (time_elapsed_ms < 1000 * cpu_time_deadline_preemption) {
+		makespan = optimize_task_list(makespan, task_list, true);
+		clock_t c_end = clock();
+		time_elapsed_ms = 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC;
+	}
+
+	cout << "CPU time used for optimization with preemption: " << time_elapsed_ms << " ms\nMakespan: " << makespan << "\n";
+
+	start_times = vector<int>(job_id.get_max_id(), 0);
+	construct_schedule(task_list, start_times, job_id.get_max_id());
+	write_resource_schedule(makespan, start_times, task_list, "preempted_schedule");
+
 #pragma endregion
 
 
@@ -420,7 +453,7 @@ int find_earliest_start_time(int duration, int resource_type, int resource_requi
 	return earliest_start_time;
 }
 
-int optimize_task_list(int makespan, vector<Task>& task_list)
+int optimize_task_list(int makespan, vector<Task>& task_list, bool preempt_tasks)
 {
 	vector<Task> new_task_list = task_list;
 
@@ -428,10 +461,14 @@ int optimize_task_list(int makespan, vector<Task>& task_list)
 	vector<vector<vector<int>>> destruction_split_ids;
 	for (int i = 0; i < destruction_count; i++)
 	{
-		int random_task_id = (rand() % (task_list.size() - 2)) + 1;
-		while (find(destruction_ids.begin(), destruction_ids.end(), random_task_id) != destruction_ids.end()) {
-			random_task_id = (rand() % (task_list.size() - 2)) + 1;
+
+		int random_task_index = (rand() % (task_list.size() - 1)) + 1;
+		int random_task_id = task_list[random_task_index].split_task_id;
+		while (random_task_id == initial_task_count - 1 || find(destruction_ids.begin(), destruction_ids.end(), random_task_id) != destruction_ids.end()) {
+			random_task_index = (rand() % (task_list.size() - 1)) + 1;
+			random_task_id = task_list[random_task_index].split_task_id;
 		}
+
 		destruction_ids.push_back(random_task_id);
 
 		Task to_be_destroyed;
@@ -443,31 +480,38 @@ int optimize_task_list(int makespan, vector<Task>& task_list)
 			}
 		}
 
-		int split_index = (rand() % (to_be_destroyed.duration - 1)) + 1;
-
-		Task to_be_destroyed_begin = to_be_destroyed;
-		to_be_destroyed_begin.split_task_id = job_id.get_next_id();
-		to_be_destroyed_begin.duration = split_index;
-
-		Task to_be_destroyed_end = to_be_destroyed;
-		to_be_destroyed_end.split_task_id = job_id.get_next_id();
-		to_be_destroyed_end.duration = to_be_destroyed.duration - split_index + setup_time;
-
-		to_be_destroyed_begin.successors.push_back(to_be_destroyed_end.split_task_id);
-
-		new_task_list.push_back(to_be_destroyed_begin);
-		new_task_list.push_back(to_be_destroyed_end);
-
-		for (int j = 0; j < new_task_list.size(); j++)
+		if (!preempt_tasks || to_be_destroyed.duration <= 1)
 		{
-			if (find(new_task_list[j].successors.begin(), new_task_list[j].successors.end(), to_be_destroyed.split_task_id) != new_task_list[j].successors.end())
-			{
-				new_task_list[j].successors.push_back(to_be_destroyed_begin.split_task_id);
-				new_task_list[j].successors.push_back(to_be_destroyed_end.split_task_id);
-			}
+			destruction_split_ids.push_back(vector<vector<int>> {vector<int>{to_be_destroyed.split_task_id}});
 		}
+		else
+		{
+			int split_index = (rand() % (to_be_destroyed.duration - 1)) + 1;
 
-		destruction_split_ids.push_back(vector<vector<int>> {vector<int>{to_be_destroyed.split_task_id}, vector<int>{to_be_destroyed_begin.split_task_id, to_be_destroyed_end.split_task_id}});
+			Task to_be_destroyed_begin = to_be_destroyed;
+			to_be_destroyed_begin.split_task_id = job_id.get_next_id();
+			to_be_destroyed_begin.duration = split_index;
+
+			Task to_be_destroyed_end = to_be_destroyed;
+			to_be_destroyed_end.split_task_id = job_id.get_next_id();
+			to_be_destroyed_end.duration = to_be_destroyed.duration - split_index + setup_time;
+
+			to_be_destroyed_begin.successors.push_back(to_be_destroyed_end.split_task_id);
+
+			new_task_list.push_back(to_be_destroyed_begin);
+			new_task_list.push_back(to_be_destroyed_end);
+
+			for (int j = 0; j < new_task_list.size(); j++)
+			{
+				if (find(new_task_list[j].successors.begin(), new_task_list[j].successors.end(), to_be_destroyed.split_task_id) != new_task_list[j].successors.end())
+				{
+					new_task_list[j].successors.push_back(to_be_destroyed_begin.split_task_id);
+					new_task_list[j].successors.push_back(to_be_destroyed_end.split_task_id);
+				}
+			}
+
+			destruction_split_ids.push_back(vector<vector<int>> {vector<int>{to_be_destroyed.split_task_id}, vector<int>{to_be_destroyed_begin.split_task_id, to_be_destroyed_end.split_task_id}});
+		}
 	}
 	extend_successors(new_task_list[0], new_task_list);
 
@@ -497,12 +541,15 @@ int optimize_task_list(int makespan, vector<Task>& task_list)
 		destroyed_tasks.push_back(destroyed_task);
 	}
 
+	vector<int> cleanup_task_ids;
+
 	while (destroyed_tasks.size() > 0)
 	{
 		vector<vector<Task>> destroyed_task = destroyed_tasks[0];
 		destroyed_tasks.erase(destroyed_tasks.begin());
 
-		vector<tuple<int, vector<Task>>> possible_task_lists;
+		pair<int, vector<Task>> best_possible_task_list = pair<int, vector<Task>>{ horizon, vector<Task>{} };
+		vector<int> previous_best_parts;
 
 		for (int i = 0; i < destroyed_task.size(); i++)
 		{
@@ -515,7 +562,7 @@ int optimize_task_list(int makespan, vector<Task>& task_list)
 				{
 					possible_task_list.insert(possible_task_list.begin() + k, destroyed_task[i][j]);
 					if (!check_presedence_violation(possible_task_list)) {
-						int makespan_test = calculate_makespan(possible_task_list, new_task_list.size());
+						int makespan_test = calculate_makespan(possible_task_list, job_id.get_max_id());
 						if (makespan_test < minimum_makespan) {
 							minimum_makespan = makespan_test;
 							optimal_insertion_index = k;
@@ -526,87 +573,43 @@ int optimize_task_list(int makespan, vector<Task>& task_list)
 				assert(optimal_insertion_index >= 0);
 				possible_task_list.insert(possible_task_list.begin() + optimal_insertion_index, destroyed_task[i][j]);
 			}
-			int possible_task_list_makespan = calculate_makespan(possible_task_list, new_task_list.size());
-			possible_task_lists.push_back(tuple<int, vector<Task>>(possible_task_list_makespan, possible_task_list));
-		}
-
-		continue;
-	}
-
-	return -1;
-}
-
-int optimize_task_list_backup(int makespan, vector<Task>& task_list)
-{
-	vector<Task> new_task_list;
-	vector<Task> remaining_task_list;
-
-	vector<int> destruction_indices;
-	for (int i = 0; i < destruction_count; i++)
-	{
-		int random = (rand() % (task_list.size() - 2)) + 1;
-		while (find(destruction_indices.begin(), destruction_indices.end(), random) != destruction_indices.end()) {
-			random = (rand() % (task_list.size() - 2)) + 1;
-		}
-		destruction_indices.push_back(random);
-	}
-
-	for (int i = 0; i < task_list.size(); i++)
-	{
-		if (find(destruction_indices.begin(), destruction_indices.end(), i) != destruction_indices.end())
-		{
-			remaining_task_list.push_back(initial_tasks[i]);
-		}
-		else
-		{
-			new_task_list.push_back(initial_tasks[i]);
-		}
-	}
-
-	while (remaining_task_list.size() > 0) {
-
-		int minimum_makespan = horizon;
-		int optimal_index = -1;
-		Task remaining_task = remaining_task_list[0];
-		remaining_task_list.erase(remaining_task_list.begin());
-		for (int i = 0; i <= new_task_list.size(); i++)
-		{
-			new_task_list.insert(new_task_list.begin() + i, remaining_task);
-			if (!check_presedence_violation(new_task_list)) {
-				int makespan_test = calculate_makespan(new_task_list, task_list.size());
-				if (makespan_test < minimum_makespan) {
-					minimum_makespan = makespan_test;
-					optimal_index = i;
+			int possible_task_list_makespan = calculate_makespan(possible_task_list, job_id.get_max_id());
+			if (possible_task_list_makespan < best_possible_task_list.first) {
+				best_possible_task_list = pair<int, vector<Task>>{ possible_task_list_makespan , possible_task_list };
+				for (int j = 0; j < previous_best_parts.size(); j++)
+				{
+					cleanup_task_ids.push_back(previous_best_parts[j]);
+				}
+				previous_best_parts = vector<int>{};
+				for (int j = 0; j < destroyed_task[i].size(); j++)
+				{
+					previous_best_parts.push_back(destroyed_task[i][j].split_task_id);
 				}
 			}
-			new_task_list.erase(new_task_list.begin() + i);
+			else {
+				for (int j = 0; j < destroyed_task[i].size(); j++)
+				{
+					cleanup_task_ids.push_back(destroyed_task[i][j].split_task_id);
+				}
+			}
 		}
-
-
-		int split_index = (rand() % (remaining_task.duration - 1)) + 1;
-
-		Task remaining_task_end = remaining_task;
-		remaining_task_end.split_task_id = task_list.size();
-		remaining_task_end.duration = remaining_task.duration - split_index + setup_time;
-
-		Task remaining_task_begin = remaining_task;
-		remaining_task_begin.successors = vector<int>{ remaining_task_end.split_task_id };
-		remaining_task_begin.duration = split_index;
-
-		vector<Task> testing_task_list = task_list;
-		int remaining_task_id = remaining_task.split_task_id;
-		testing_task_list.erase(remove_if(testing_task_list.begin(), testing_task_list.end(), [&remaining_task_id](const Task& testing_task) {return testing_task.split_task_id == remaining_task_id; }), testing_task_list.end());
-		testing_task_list.push_back(remaining_task_begin);
-		testing_task_list.push_back(remaining_task_end);
-		extend_successors(testing_task_list[0], testing_task_list);
-
-		assert(optimal_index >= 0);
-		new_task_list.insert(new_task_list.begin() + optimal_index, remaining_task);
+		assert(best_possible_task_list.first < horizon);
+		remaining_tasks = best_possible_task_list.second;
 	}
-	int makespan_test = calculate_makespan(new_task_list, task_list.size());
 
-	if (makespan_test < makespan) {
-		task_list = new_task_list;
+	int makespan_test = calculate_makespan(remaining_tasks, job_id.get_max_id());
+
+	if (makespan_test < makespan)
+	{
+		for (int i = 0; i < cleanup_task_ids.size(); i++)
+		{
+			int cleanup_task_id = cleanup_task_ids[i];
+			for (int j = 0; j < remaining_tasks.size(); j++)
+			{
+				remaining_tasks[j].successors.erase(remove_if(remaining_tasks[j].successors.begin(), remaining_tasks[j].successors.end(), [&cleanup_task_id](int successor) {return successor == cleanup_task_id; }), remaining_tasks[j].successors.end());
+			}
+		}
+		task_list = remaining_tasks;
 		return makespan_test;
 	}
 
@@ -649,17 +652,20 @@ void extend_successors(Task& task, vector<Task>& task_list)
 void write_resource_schedule(int makespan, vector<int>& start_times, vector<Task>& task_list, string filename)
 {
 	vector<vector<vector<int>>> resource_schedule;
+	vector<vector<vector<int>>> resource_schedule_preemption_ids;
+
+	vector<Task> scheduling_task_list = task_list;
 
 	bool found_possible_schedule = false;
 	while (!found_possible_schedule) {
 		try
 		{
-			try_build_3d_resource_schedule(task_list, start_times, resource_schedule);
+			try_build_3d_resource_schedule(scheduling_task_list, start_times, resource_schedule, resource_schedule_preemption_ids);
 			found_possible_schedule = true;
 		}
 		catch (const exception&)
 		{
-			shuffle(task_list.begin(), task_list.end(), default_random_engine());
+			shuffle(scheduling_task_list.begin(), scheduling_task_list.end(), default_random_engine());
 		}
 	}
 
@@ -667,6 +673,11 @@ void write_resource_schedule(int makespan, vector<int>& start_times, vector<Task
 	if (schedule_file.is_open())
 	{
 		schedule_file << "Makespan: " << makespan << "\n\n";
+		for (int i = 1; i <= makespan; i++)
+		{
+			schedule_file << i << '\t';
+		}
+		schedule_file << '\n' << '\t';
 		for (int i = 0; i < resource_count; i++)
 		{
 			schedule_file << "R " << i + 1 << '\n';
@@ -687,18 +698,50 @@ void write_resource_schedule(int makespan, vector<int>& start_times, vector<Task
 		}
 		schedule_file.close();
 	}
+
+	ofstream schedule_file_preemption_ids(filename + "_preemption_ids" + ".txt");
+	if (schedule_file_preemption_ids.is_open())
+	{
+		schedule_file_preemption_ids << "Makespan: " << makespan << "\n\n";
+		for (int i = 1; i <= makespan; i++)
+		{
+			schedule_file_preemption_ids << i << '\t' << '\t';
+		}
+		schedule_file_preemption_ids << '\n';
+		for (int i = 0; i < resource_count; i++)
+		{
+			schedule_file_preemption_ids << "R " << i + 1 << '\n';
+			for (int j = 0; j < resource_schedule_preemption_ids[i][0].size(); j++)
+			{
+				for (int k = 0; k < resource_schedule_preemption_ids[i].size(); k++)
+				{
+					if (resource_schedule_preemption_ids[i][k][j] == 0)
+					{
+						schedule_file_preemption_ids << ' ' << '\t';
+					}
+					else {
+						schedule_file_preemption_ids << resource_schedule_preemption_ids[i][k][j] << '\t';
+					}
+				}
+				schedule_file_preemption_ids << '\n';
+			}
+		}
+		schedule_file_preemption_ids.close();
+	}
 }
 
-void try_build_3d_resource_schedule(vector<Task>& task_list, vector<int>& start_times, vector<vector<vector<int>>>& resource_schedule)
+void try_build_3d_resource_schedule(vector<Task>& task_list, vector<int>& start_times, vector<vector<vector<int>>>& resource_schedule, vector<vector<vector<int>>>& resource_schedule_preemption_ids)
 {
 	vector<vector<vector<int>>> new_resource_schedule;
+	vector<vector<vector<int>>> new_resource_schedule_preemption_ids;
 
 	for (int i = 0; i < resource_count; i++)
 	{
-		new_resource_schedule.push_back(vector<vector<int>>(start_times[task_list.size() - 1], vector<int>(resource_availabilities[i], 0)));
+		new_resource_schedule.push_back(vector<vector<int>>(start_times[initial_task_count - 1], vector<int>(resource_availabilities[i], 0)));
+		new_resource_schedule_preemption_ids.push_back(vector<vector<int>>(start_times[initial_task_count - 1], vector<int>(resource_availabilities[i], 0)));
 	}
 
-	for (int i = 1; i < task_list.size() - 1; i++)
+	for (int i = 0; i < task_list.size(); i++)
 	{
 		assert(task_list[i].split_task_id < start_times.size());
 		int start_time = start_times[task_list[i].split_task_id];
@@ -735,10 +778,12 @@ void try_build_3d_resource_schedule(vector<Task>& task_list, vector<int>& start_
 		{
 			for (int k = 0; k < task_list[i].resource_requirement; k++)
 			{
-				new_resource_schedule[task_list[i].resource_type][j][k + resource_index] = task_list[i].split_task_id;
+				new_resource_schedule[task_list[i].resource_type][j][k + resource_index] = task_list[i].task_id;
+				new_resource_schedule_preemption_ids[task_list[i].resource_type][j][k + resource_index] = task_list[i].split_task_id;
 			}
 		}
 	}
 
 	resource_schedule = new_resource_schedule;
+	resource_schedule_preemption_ids = new_resource_schedule_preemption_ids;
 }
