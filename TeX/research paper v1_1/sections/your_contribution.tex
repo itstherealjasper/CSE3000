@@ -1,0 +1,46 @@
+\section{Heuristics and augmentation of SAT solvers}
+To evaluate the performance of a heuristically augmented SAT solver on PRCPSP-ST instances comparative data needs to be generated.  To make sure the variables between algorithms are limited they were all designed, implemented and run on the same hardware for this research. This way the at least coding skills and hardware improvements over time are not introduced in the data. Improved performance of new algorithms only as a result of the use of more recent hardware has shown up in the past as described in section \ref{responsible research}. Three algorithms are used to solve the same problem instances for an equal amount of time: a heuristic algorithm, SAT solver, heuristically augmented SAT solver.
+
+The heuristic algorithm is an adapted version of the iterated greedy algorithm \cite{RN32}. It was designed for flow-shop scheduling but with a few tweaks it can also be applied to RCPSP.
+
+For a SAT solver to be used the PRCPSP-ST has to be encoded into conjunctive normal form boolean logic. When the encoding is made any SAT solver is able to provide feasible schedules. Because there is a clear objective to reduce the makespan a more advanced MAX-SAT solver is used. This will create feasible schedules while also trying to optimize to an objective function.
+
+To augment a SAT solver for a specific problem the code of the solver has to be changed. In the case of this research a heuristic function will be added that improves the selection of a possible variable. The heuristic function will use knowledge about PRCPSP-ST to try and select a variable that will reduce the resulting schedule makespan.
+
+\subsection{Heuristic}
+
+\subsection{CNF Encoding}
+%Variable \(w_{i,x,y,t}\) is equal to 1 if activity segment \(S^i_xD_y\) starts at time \(t\), and 0 otherwise.
+%\begin{align}
+%\sum_{y=1}^{d_i} \sum_{x=max(c-y+1,1)}^{min(d_i-y+1,c)} \sum_{t=0}^{T-y} w_{i,x,y,t}&=1	&	\all i\in N; c=1,...,d_i
+%\end{align}
+
+
+
+%\begin{equation}
+%\neg w_{i,x,y} \bigvee_{t\in{0,...,T-y}} s_{i,x,y,t}
+%\end{equation}
+
+Variable \(w_{i,x,y,t}\) is equal to 1 if activity segment \(S^i_xD_y\) starts at time \(t\), and 0 otherwise.
+Variable \(c_{i,x,y,s}\) is 1 if segment \(S^i_xD_y\) contains \(S^i_sD_1\) as a segment, and 0 otherwise.
+\begin{align}
+\neg c_{i,x,y,s} \bigvee_{t=0,...,T-y} w_{i,x,y,t}
+\end{align}
+\begin{gather*}
+\forall i\in N; x\in{1,...,d_i}; y\in{1,...,d_i-x+1}; s\in{1,...,d_i}
+\end{gather*}
+
+Variable \(u_{i,x,y,t}\) is equal to 1 if activity segment \(S^i_xD_y\) is in process at time \(t\), and 0 otherwise.
+\begin{equation}
+\neg w_{i,x,y,t} \vee u_{i,x,y,l}
+\end{equation}
+\begin{gather*}
+\forall i\in N; x\in{1,...,d_i}; y\in{1,...,d_i-x+1};\\
+t\in{0,...,T-y}; l\in{t,...,t+d_i-1}
+\end{gather*}
+
+\begin{equation}
+\neg w_{i,x,y,t}
+\forall ({i,x,d),{j,k,l))\in E; t\in{0,...,T-d_j}
+\end{equation}
+\subsection{SAT solver}
