@@ -12,8 +12,8 @@ struct Task
 	int resource_requirement;
 
 	// CNF variables
-	vector<int> start_variables;
-	vector<int> process_variables;
+	vector<unsigned long> start_variables;
+	vector<unsigned long> process_variables;
 };
 
 struct Task_Id
@@ -326,7 +326,6 @@ void preempt_task(Task task)
 
 void set_start_variables()
 {
-	preempted_tasks[0].start_variables.push_back(cnf_variable_id->get_id());
 	for (int i = 1; i < preempted_tasks.size() - 1; i++)
 	{
 		for (int t = 1; t <= horizon - preempted_tasks[i].duration + 1; t++)
@@ -355,10 +354,10 @@ void write_cnf_file()
 {
 	stringstream cnf_file_content;
 	int clause_count = 0;
+	build_start_clauses(cnf_file_content, clause_count);
+	build_precedence_clauses(cnf_file_content, clause_count);
 	build_objective_clauses(cnf_file_content, clause_count);
 	build_consistency_clauses(cnf_file_content, clause_count);
-	build_precedence_clauses(cnf_file_content, clause_count);
-	build_start_clauses(cnf_file_content, clause_count);
 	build_cover_clauses(cnf_file_content, clause_count);
 
 	ofstream schedule_file(project_lib_file_j30 + '.' + cnf_file_type);
@@ -371,64 +370,93 @@ void write_cnf_file()
 	}
 }
 
-void build_consistency_clauses(stringstream& cnf_file_content, int& clause_count)
+void build_start_clauses(stringstream& cnf_file_content, int& clause_count)
 {
-	//for (int i = 0; i < preempted_tasks.size(); i++)
+	for (int id = 1; id < parsed_tasks.size() - 1; id++)
+	{
+		for (int segment = 1; segment <= parsed_tasks[id].duration; segment++)
+		{
+			vector<Task> matched_tasks;
+			for (int i = 0; i < preempted_tasks.size(); i++)
+			{
+				if (preempted_tasks[i].id == parsed_tasks[id].id && preempted_tasks[i].segment <= segment && segment <= preempted_tasks[i].segment + preempted_tasks[i].duration - 1) {
+					matched_tasks.push_back(preempted_tasks[i]);
+				}
+			}
+
+			cnf_file_content << get_cnf_hard_clause_weight() << ' ';
+			for each (Task matched_task in matched_tasks)
+			{
+				for each (unsigned long start_variable in matched_task.start_variables)
+				{
+					cnf_file_content << start_variable << ' ';
+				}
+			}
+			cnf_file_content << '0' << '\n';
+			clause_count++;
+
+			for (int i = 0; i < matched_tasks.size(); i++)
+			{
+				for (int j = i + 1; j < matched_tasks.size(); j++)
+				{
+					for (int k = 0; k < matched_tasks[i].start_variables.size(); k++)
+					{
+						for (int l = 0; l < matched_tasks[j].start_variables.size(); l++)
+						{
+							cnf_file_content << get_cnf_hard_clause_weight() << ' ';
+							cnf_file_content << '-' << matched_tasks[i].start_variables[k] << ' ';
+							cnf_file_content << '-' << matched_tasks[j].start_variables[l] << ' ';
+							cnf_file_content << '0' << '\n';
+							clause_count++;
+						}
+					}
+				}
+			}
+		}
+	}
+	//for (int i = 1; i < preempted_tasks.size(); i++)
 	//{
-	//	for (int t_i = 0; t_i <= preempted_tasks[i].late_start - preempted_tasks[i].early_start; t_i++)
+	//	cnf_file_content << get_cnf_hard_clause_weight() << ' ';
+	//	for (int t = 0; t < preempted_tasks[i].start_variables.size(); t++)
 	//	{
-	//		for (int l = t_i; l <= t_i + preempted_tasks[i].duration - 1; l++)
-	//		{
-	//			cnf_file_content << get_cnf_hard_clause_weight() << ' ' << '-' << preempted_tasks[i].start_variables[t_i] << ' ' << preempted_tasks[i].process_variables[l] << ' ' << '0' << '\n';
-	//			clause_count++;
-	//		}
+	//		cnf_file_content << preempted_tasks[i].start_variables[t] << ' ';
 	//	}
+	//	cnf_file_content << '0' << '\n';
+	//	clause_count++;
 	//}
 }
 
 void build_precedence_clauses(stringstream& cnf_file_content, int& clause_count)
 {
-	//for (int i = 0; i < preempted_tasks.size(); i++)
+	//for (int i = 1; i < preempted_tasks.size(); i++)
 	//{
-	//	for (int j = 0; j < preempted_tasks.size(); j++)
+	//	for (int j = 1; j < preempted_tasks.size(); j++)
 	//	{
 
 	//		bool has_precedence = false;
-	//		for (int k = 0; k < preempted_tasks[j].successors.size(); k++)
+	//		for (int k = 0; k < preempted_tasks[i].successors.size(); k++)
 	//		{
-	//			if (preempted_tasks[j].successors[k].first == preempted_tasks[i].id && preempted_tasks[j].successors[k].second == preempted_tasks[i].segment)
+	//			if (preempted_tasks[i].successors[k].first == preempted_tasks[j].id && preempted_tasks[i].successors[k].second == preempted_tasks[j].segment)
 	//			{
 	//				has_precedence = true;
 	//			}
 	//		}
 
 	//		if (has_precedence) {
-	//			for (int t = preempted_tasks[i].early_start; t <= preempted_tasks[i].late_start; t++)
+	//			for (int t = 0; t < preempted_tasks[j].start_variables.size(); t++)
 	//			{
-	//				cnf_file_content << get_cnf_hard_clause_weight() << ' ' << '-' << preempted_tasks[i].start_variables[t - preempted_tasks[i].early_start] << ' ';
-	//				for (int l = preempted_tasks[j].early_start; l <= preempted_tasks[i].early_start - preempted_tasks[j].duration; l++)
+	//				int start_index = t - preempted_tasks[i].duration < 0 ? 0 : t - preempted_tasks[i].duration;
+	//				for (int p = start_index; p < preempted_tasks[i].start_variables.size(); p++)
 	//				{
-	//					cnf_file_content << preempted_tasks[j].start_variables[l - preempted_tasks[j].early_start] << ' ';
+	//					cnf_file_content << get_cnf_hard_clause_weight() << ' ';
+	//					cnf_file_content << '-' << preempted_tasks[j].start_variables[t] << ' ';
+	//					cnf_file_content << '-' << preempted_tasks[i].start_variables[p] << ' ';
+	//					cnf_file_content << '0' << '\n';
+	//					clause_count++;
 	//				}
-	//				cnf_file_content << '0' << '\n';
-	//				clause_count++;
 	//			}
 	//		}
 	//	}
-	//}
-}
-
-void build_start_clauses(stringstream& cnf_file_content, int& clause_count)
-{
-	//for (int i = 0; i < preempted_tasks.size(); i++)
-	//{
-	//	cnf_file_content << get_cnf_hard_clause_weight() << ' ';
-	//	for (int t_i = 0; t_i <= preempted_tasks[i].late_start - preempted_tasks[i].early_start; t_i++)
-	//	{
-	//		cnf_file_content << preempted_tasks[i].start_variables[t_i] << ' ';
-	//	}
-	//	cnf_file_content << '0' << '\n';
-	//	clause_count++;
 	//}
 }
 
@@ -445,5 +473,20 @@ void build_objective_clauses(stringstream& cnf_file_content, int& clause_count)
 	//	cnf_file_content << preempted_tasks.back().start_variables[i] << ' ';
 	//	cnf_file_content << '0' << '\n';
 	//	clause_count++;
+	//}
+}
+
+void build_consistency_clauses(stringstream& cnf_file_content, int& clause_count)
+{
+	//for (int i = 0; i < preempted_tasks.size(); i++)
+	//{
+	//	for (int t_i = 0; t_i <= preempted_tasks[i].late_start - preempted_tasks[i].early_start; t_i++)
+	//	{
+	//		for (int l = t_i; l <= t_i + preempted_tasks[i].duration - 1; l++)
+	//		{
+	//			cnf_file_content << get_cnf_hard_clause_weight() << ' ' << '-' << preempted_tasks[i].start_variables[t_i] << ' ' << preempted_tasks[i].process_variables[l] << ' ' << '0' << '\n';
+	//			clause_count++;
+	//		}
+	//	}
 	//}
 }
