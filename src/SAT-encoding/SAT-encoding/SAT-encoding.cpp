@@ -85,19 +85,17 @@ public:
 };
 
 void parse_input_file(string filename);
-void write_cnf_file();
 void preempt_tasks();
 void preempt_task(Task task);
-//void critical_path();
-void forward_pass(pair<int, int> task_segment_id, int earliest_start);
-void backward_pass(pair<int, int> task_segment_id, int late_finish);
 void set_start_variables();
 void set_process_variables();
-void build_consistency_clauses(stringstream& cnf_file_content, int& clause_count);
-void build_precedence_clauses(stringstream& cnf_file_content, int& clause_count);
-void build_start_clauses(stringstream& cnf_file_content, int& clause_count);
-void build_cover_clauses(stringstream& cnf_file_content, int& clause_count);
-void build_objective_clauses(stringstream& cnf_file_content, int& clause_count);
+void remove_duplicate_segments(vector<Task>& task_list);
+void write_cnf_file(vector<Task>& task_list);
+void build_consistency_clauses(vector<Task>& task_list, stringstream& cnf_file_content, int& clause_count);
+void build_precedence_clauses(vector<Task>& task_list, stringstream& cnf_file_content, int& clause_count);
+void build_completion_clauses(vector<Task>& task_list, stringstream& cnf_file_content, int& clause_count);
+void build_cover_clauses(vector<Task>& task_list, stringstream& cnf_file_content, int& clause_count);
+void build_objective_clauses(vector<Task>& task_list, stringstream& cnf_file_content, int& clause_count);
 
 // Global algorithm variables
 const int setup_time = 1;
@@ -132,7 +130,10 @@ int main()
 	set_start_variables();
 	set_process_variables();
 
-	write_cnf_file();
+	vector<Task> reduced_preempted_tasks = preempted_tasks;
+	remove_duplicate_segments(reduced_preempted_tasks);
+
+	write_cnf_file(reduced_preempted_tasks);
 
 	Task back_task = preempted_tasks.back();
 
@@ -262,68 +263,6 @@ void preempt_task(Task task)
 	}
 }
 
-//void critical_path()
-//{
-//	for (int j = 0; j < preempted_tasks[0].successors.size(); j++)
-//	{
-//		forward_pass(preempted_tasks[0].successors[j], 0);
-//	}
-//
-//	for (int j = 0; j < preempted_tasks.size(); j++)
-//	{
-//		for (int k = 0; k < preempted_tasks[j].successors.size(); k++)
-//		{
-//			if (preempted_tasks[j].successors[k].first == preempted_tasks.back().id && preempted_tasks[j].successors[k].second == preempted_tasks.back().segment)
-//			{
-//				backward_pass(pair<int, int>(preempted_tasks[j].id, preempted_tasks[j].segment), horizon);
-//			}
-//		}
-//	}
-//}
-//
-//void forward_pass(pair<int, int> task_segment_id, int early_start)
-//{
-//	for (int i = 0; i < preempted_tasks.size(); i++)
-//	{
-//		if (preempted_tasks[i].id == task_segment_id.first && preempted_tasks[i].segment == task_segment_id.second)
-//		{
-//			if (early_start > preempted_tasks[i].early_start) {
-//				preempted_tasks[i].early_start = early_start;
-//				preempted_tasks[i].early_finish = early_start + preempted_tasks[i].duration;
-//				for (int j = 0; j < preempted_tasks[i].successors.size(); j++)
-//				{
-//					forward_pass(preempted_tasks[i].successors[j], preempted_tasks[i].early_finish);
-//				}
-//			}
-//		}
-//	}
-//}
-//
-//void backward_pass(pair<int, int> task_segment_id, int late_finish)
-//{
-//	for (int i = 0; i < preempted_tasks.size(); i++)
-//	{
-//		if (preempted_tasks[i].id == task_segment_id.first && preempted_tasks[i].segment == task_segment_id.second)
-//		{
-//			if (late_finish < preempted_tasks[i].late_finish) {
-//				preempted_tasks[i].late_finish = late_finish;
-//				preempted_tasks[i].late_start = late_finish - preempted_tasks[i].duration;
-//
-//				for (int j = 0; j < preempted_tasks.size(); j++)
-//				{
-//					for (int k = 0; k < preempted_tasks[j].successors.size(); k++)
-//					{
-//						if (preempted_tasks[j].successors[k].first == task_segment_id.first && preempted_tasks[j].successors[k].second == task_segment_id.second)
-//						{
-//							backward_pass(pair<int, int>(preempted_tasks[j].id, preempted_tasks[j].segment), preempted_tasks[i].late_start);
-//						}
-//					}
-//				}
-//			}
-//		}
-//	}
-//}
-
 void set_start_variables()
 {
 	for (int i = 1; i < preempted_tasks.size() - 1; i++)
@@ -350,15 +289,43 @@ void set_process_variables()
 	}
 }
 
-void write_cnf_file()
+void remove_duplicate_segments(vector<Task>& task_list)
+{
+	int i = 0;
+	while (i < task_list.size())
+	{
+		bool removed_segment = false;
+		int j = i + 1;
+		while (j < task_list.size())
+		{
+			if (task_list[j].id == task_list[i].id &&
+				task_list[j].segment >= task_list[i].segment &&
+				task_list[j].segment < task_list[i].segment + task_list[i].duration)
+			{
+				task_list.erase(task_list.begin() + j);
+				removed_segment = true;
+			}
+			j++;
+		}
+		if (removed_segment) {
+			i = 0;
+		}
+		else {
+			i++;
+		}
+	}
+}
+
+
+void write_cnf_file(vector<Task>& task_list)
 {
 	stringstream cnf_file_content;
 	int clause_count = 0;
-	build_start_clauses(cnf_file_content, clause_count);
-	build_precedence_clauses(cnf_file_content, clause_count);
-	build_objective_clauses(cnf_file_content, clause_count);
-	build_consistency_clauses(cnf_file_content, clause_count);
-	build_cover_clauses(cnf_file_content, clause_count);
+	build_completion_clauses(task_list, cnf_file_content, clause_count);
+	build_precedence_clauses(task_list, cnf_file_content, clause_count);
+	build_consistency_clauses(task_list, cnf_file_content, clause_count);
+	//build_objective_clauses(task_list, cnf_file_content, clause_count);
+	//build_cover_clauses(task_list, cnf_file_content, clause_count);
 
 	ofstream schedule_file(project_lib_file_j30 + '.' + cnf_file_type);
 	if (schedule_file.is_open())
@@ -370,123 +337,94 @@ void write_cnf_file()
 	}
 }
 
-void build_start_clauses(stringstream& cnf_file_content, int& clause_count)
+void build_completion_clauses(vector<Task>& task_list, stringstream& cnf_file_content, int& clause_count)
 {
-	for (int id = 1; id < parsed_tasks.size() - 1; id++)
+	for each (Task task in task_list)
 	{
-		for (int segment = 1; segment <= parsed_tasks[id].duration; segment++)
+		if (task.id == 0)
 		{
-			vector<Task> matched_tasks;
-			for (int i = 0; i < preempted_tasks.size(); i++)
+			continue;
+		}
+
+		cnf_file_content << get_cnf_hard_clause_weight() << ' ';
+		for each (unsigned long start_variable in task.start_variables)
+		{
+			cnf_file_content << start_variable << ' ';
+		}
+		cnf_file_content << '0' << '\n';
+		clause_count++;
+	}
+}
+
+void build_precedence_clauses(vector<Task>& task_list, stringstream& cnf_file_content, int& clause_count)
+{
+	for each (Task successor in task_list)
+	{
+		if (successor.id == 0)
+		{
+			continue;
+		}
+
+		for each (Task predecessor in task_list)
+		{
+			if (predecessor.id == 0)
 			{
-				if (preempted_tasks[i].id == parsed_tasks[id].id && preempted_tasks[i].segment <= segment && segment <= preempted_tasks[i].segment + preempted_tasks[i].duration - 1) {
-					matched_tasks.push_back(preempted_tasks[i]);
-				}
+				continue;
 			}
 
-			cnf_file_content << get_cnf_hard_clause_weight() << ' ';
-			for each (Task matched_task in matched_tasks)
+			for each (pair<int, int> successor_id_segment in predecessor.successors)
 			{
-				for each (unsigned long start_variable in matched_task.start_variables)
+				if (successor.id == successor_id_segment.first && successor.segment == successor_id_segment.second)
 				{
-					cnf_file_content << start_variable << ' ';
-				}
-			}
-			cnf_file_content << '0' << '\n';
-			clause_count++;
-
-			for (int i = 0; i < matched_tasks.size(); i++)
-			{
-				for (int j = i + 1; j < matched_tasks.size(); j++)
-				{
-					for (int k = 0; k < matched_tasks[i].start_variables.size(); k++)
+					for (int i = 0; i < successor.start_variables.size(); i++)
 					{
-						for (int l = 0; l < matched_tasks[j].start_variables.size(); l++)
+						cnf_file_content << get_cnf_hard_clause_weight() << ' ';
+						cnf_file_content << '-' << successor.start_variables[i] << ' ';
+						for (int j = 0; j < i - predecessor.duration; j++)
 						{
-							cnf_file_content << get_cnf_hard_clause_weight() << ' ';
-							cnf_file_content << '-' << matched_tasks[i].start_variables[k] << ' ';
-							cnf_file_content << '-' << matched_tasks[j].start_variables[l] << ' ';
-							cnf_file_content << '0' << '\n';
-							clause_count++;
+							cnf_file_content << predecessor.start_variables[j] << ' ';
 						}
+						cnf_file_content << '0' << '\n';
+						clause_count++;
 					}
+
+
 				}
 			}
 		}
+
+
 	}
-	//for (int i = 1; i < preempted_tasks.size(); i++)
-	//{
-	//	cnf_file_content << get_cnf_hard_clause_weight() << ' ';
-	//	for (int t = 0; t < preempted_tasks[i].start_variables.size(); t++)
-	//	{
-	//		cnf_file_content << preempted_tasks[i].start_variables[t] << ' ';
-	//	}
-	//	cnf_file_content << '0' << '\n';
-	//	clause_count++;
-	//}
 }
 
-void build_precedence_clauses(stringstream& cnf_file_content, int& clause_count)
+void build_consistency_clauses(vector<Task>& task_list, stringstream& cnf_file_content, int& clause_count)
 {
-	//for (int i = 1; i < preempted_tasks.size(); i++)
-	//{
-	//	for (int j = 1; j < preempted_tasks.size(); j++)
-	//	{
+	for each (Task task in task_list)
+	{
+		if (task.id == 0)
+		{
+			continue;
+		}
 
-	//		bool has_precedence = false;
-	//		for (int k = 0; k < preempted_tasks[i].successors.size(); k++)
-	//		{
-	//			if (preempted_tasks[i].successors[k].first == preempted_tasks[j].id && preempted_tasks[i].successors[k].second == preempted_tasks[j].segment)
-	//			{
-	//				has_precedence = true;
-	//			}
-	//		}
-
-	//		if (has_precedence) {
-	//			for (int t = 0; t < preempted_tasks[j].start_variables.size(); t++)
-	//			{
-	//				int start_index = t - preempted_tasks[i].duration < 0 ? 0 : t - preempted_tasks[i].duration;
-	//				for (int p = start_index; p < preempted_tasks[i].start_variables.size(); p++)
-	//				{
-	//					cnf_file_content << get_cnf_hard_clause_weight() << ' ';
-	//					cnf_file_content << '-' << preempted_tasks[j].start_variables[t] << ' ';
-	//					cnf_file_content << '-' << preempted_tasks[i].start_variables[p] << ' ';
-	//					cnf_file_content << '0' << '\n';
-	//					clause_count++;
-	//				}
-	//			}
-	//		}
-	//	}
-	//}
+		for (int i = 0; i < task.start_variables.size(); i++)
+		{
+			for (int j = i; j < i + task.duration; j++)
+			{
+				cnf_file_content << get_cnf_hard_clause_weight() << ' ';
+				cnf_file_content << '-' << task.start_variables[i] << ' ';
+				cnf_file_content << task.process_variables[j] << ' ';
+				cnf_file_content << '0' << '\n';
+				clause_count++;
+			}
+		}
+	}
 }
 
-void build_cover_clauses(stringstream& cnf_file_content, int& clause_count)
+void build_cover_clauses(vector<Task>& task_list, stringstream& cnf_file_content, int& clause_count)
 {
 }
 
-void build_objective_clauses(stringstream& cnf_file_content, int& clause_count)
+void build_objective_clauses(vector<Task>& task_list, stringstream& cnf_file_content, int& clause_count)
 {
-	//for (int i = 0; i < preempted_tasks.back().start_variables.size(); i++)
-	//{
-	//	//cnf_file_content << (preempted_tasks.back().late_start - preempted_tasks.back().early_start - i) << ' ';
-	//	cnf_file_content << 1 << ' ';
-	//	cnf_file_content << preempted_tasks.back().start_variables[i] << ' ';
-	//	cnf_file_content << '0' << '\n';
-	//	clause_count++;
-	//}
-}
 
-void build_consistency_clauses(stringstream& cnf_file_content, int& clause_count)
-{
-	//for (int i = 0; i < preempted_tasks.size(); i++)
-	//{
-	//	for (int t_i = 0; t_i <= preempted_tasks[i].late_start - preempted_tasks[i].early_start; t_i++)
-	//	{
-	//		for (int l = t_i; l <= t_i + preempted_tasks[i].duration - 1; l++)
-	//		{
-	//			cnf_file_content << get_cnf_hard_clause_weight() << ' ' << '-' << preempted_tasks[i].start_variables[t_i] << ' ' << preempted_tasks[i].process_variables[l] << ' ' << '0' << '\n';
-	//			clause_count++;
-	//		}
-	//	}
-	//}
 }
