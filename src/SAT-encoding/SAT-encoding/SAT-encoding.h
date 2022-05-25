@@ -10,4 +10,4 @@
 #include <ctime>
 #include <vector>
 #include <tuple>
-#include <pb2cnf.h>
+#include "../pblib/pblib/pb2cnf.h"

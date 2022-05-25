@@ -137,6 +137,8 @@ int main()
 
 	Task back_task = preempted_tasks.back();
 
+	PB2CNF pb2cnf;
+
 	return 0;
 }
 
