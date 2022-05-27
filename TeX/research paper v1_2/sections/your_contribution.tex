@@ -21,26 +21,4 @@ To augment a SAT solver for a specific problem the code of the solver has to be 
 %\neg w_{i,x,y} \bigvee_{t\in{0,...,T-y}} s_{i,x,y,t}
 %\end{equation}
 
-Variable \(w_{i,x,y,t}\) is equal to 1 if activity segment \(S^i_xD_y\) starts at time \(t\), and 0 otherwise.
-Variable \(c_{i,x,y,s}\) is 1 if segment \(S^i_xD_y\) contains \(S^i_sD_1\) as a segment, and 0 otherwise.
-\begin{align}
-\neg c_{i,x,y,s} \bigvee_{t=0,...,T-y} w_{i,x,y,t}
-\end{align}
-\begin{gather*}
-\forall i\in N; x\in{1,...,d_i}; y\in{1,...,d_i-x+1}; s\in{1,...,d_i}
-\end{gather*}
-
-Variable \(u_{i,x,y,t}\) is equal to 1 if activity segment \(S^i_xD_y\) is in process at time \(t\), and 0 otherwise.
-\begin{equation}
-\neg w_{i,x,y,t} \vee u_{i,x,y,l}
-\end{equation}
-\begin{gather*}
-\forall i\in N; x\in{1,...,d_i}; y\in{1,...,d_i-x+1};\\
-t\in{0,...,T-y}; l\in{t,...,t+d_i-1}
-\end{gather*}
-
-\begin{equation}
-\neg w_{i,x,y,t}
-\forall ({i,x,d),{j,k,l))\in E; t\in{0,...,T-d_j}
-\end{equation}
 \subsection{SAT solver}
