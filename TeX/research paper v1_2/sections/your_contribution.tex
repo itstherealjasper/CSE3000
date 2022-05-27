@@ -8,6 +8,16 @@ For a SAT solver to be used the PRCPSP-ST has to be encoded into conjunctive nor
 To augment a SAT solver for a specific problem the code of the solver has to be changed. In the case of this research a heuristic function will be added that improves the selection of a possible variable. The heuristic function will use knowledge about PRCPSP-ST to try and select a variable that will reduce the resulting schedule makespan.
 
 \subsection{Heuristic}
+As a heuristic solution a tweaked version of the iterated greedy algorithm is implemented \cite{RN32}. This algorithm requires an activity list representation of the project. It start with a setup of an initial schedule and then iterates over a destruction phase and a construction phase until a time limit or number of iterations limit is reached. 
+
+The activity list represent a project as permutation vector of all the tasks. something, something priority / reference serial generation scheme Kelly 1963
+
+The initial schedule is generated with the use of a greedy heuristic. Firstly a resource utility rate \(u_i\) is calculated for each task 
+\begin{equation}
+u_i=\frac{d_i \times r_{i,k}}{a_k} 
+\end{equation}
+For each task its resource requirement is divided by the resource availability. The result is multiplied by the task duration. Next all tasks are put into a list and ordered by non-increasing resource utility rate. After ordering each task is moved directly in front of the first successor in the list. This way a serial schedule generation scheme can be used to create feasible left-justified schedule. This is done by going over the list in order and scheduling each task as early as possible without breaking resource or precedence constraints.
+
 
 \subsection{CNF Encoding}
 %Variable \(w_{i,x,y,t}\) is equal to 1 if activity segment \(S^i_xD_y\) starts at time \(t\), and 0 otherwise.
