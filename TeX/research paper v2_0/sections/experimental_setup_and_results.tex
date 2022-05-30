@@ -1,0 +1,18 @@
+\section{Experimental Setup and Results}
+In order to test the performance of the different algorithmic approaches to solving PRCPSP-ST a number of experiments have been carried out.
+Each experiment is run on the high performance computing cluster at Delft University of Technology. The algorithms have access to 12GB RAM and 2 cores of the Intel(R) Xeon(R) CPU E5-26** v* running at 2.* GHz.
+
+\subsection{Project data}
+To test the difference between the approaches to include activity preemption a number of tests are performed using three different datasets. The datasets contain a different amount of problem instances (\# instances) and project ranging from 10 to 50 tasks (\# tasks). The J30 and RG30 datasets contain projects with 30 tasks and have 480 and 1800 instances respectively and the DC1 dataset has project ranging from 10 to 50 tasks also containing 1800 instances.
+
+The setup time penalty \(s\) is set to 1, 2 and 5 to test the impact on the overall makespan. These values are chosen to be around .1, .2 and .5 of the longer tasks in the datasets that are around 10 time units in length.
+
+As algorithms to test the tweaked version of the iterated greedy heuristic is used to calculate a baseline and the CNF encoding run on the pumpkin MAX-SAT solver is used to calculate data to compare to the baseline. Each algorithm is run for 10 (? not yet sure if this is in any way feasible and the limit might need to change an order of magnitude) seconds of CPU time on each instance.
+
+To assess the performance two test values are calculated. First is the percentage deviation from the either the known optimal makespan or the lower bound makespan without activity preemption is calculated. This is used to check if both algorithms can come up with schedules that are reasonably close to existing solutions. The second test value is the percentage of makespans that is improved by the CNF endocing run on the pumpkin MAX-SAT solver compared to the iterated greedy heuristic solution. This measure will show if using a CNF encoding instead of a heuristic approach without any further optimization could be used to find more optimal schedules.
+
+\subsection{Problem size}
+This subsection is to show the impact of the problem size on the performance of the algorithms. The experiments must still be run so this section remains empty for now.
+
+\subsection{Setup time}
+This subsection is to show the impact of the setup times on the resulting makespans when allowing preemption. The experiments must still be run so this section remains empty for now.

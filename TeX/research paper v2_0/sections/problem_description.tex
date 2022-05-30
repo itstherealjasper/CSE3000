@@ -1,0 +1,14 @@
+\section{Problem Formulation}
+The resource-constrained project scheduling problem is a strongly NP-hard algorithmic problem \cite{RN20} with the objective is to minimize makespan (overall required time to finish all tasks). 
+
+\subsection{RCPSP}
+RCPSP is about a project consisting of a set of tasks \(N\) which all have to completed to finish the project. Each task \(i\) has a duration \(d_i\) and a requires an amount \(r_{i,k}\) of a resource type \(k\). A project provides a set of limited resources types \(R\) to process tasks each with an availability \(a_k\) constant throughout the project horizon. Tasks can be scheduled in timeslots as long as the overall resource type requirement does not exceed the provided amount at any time. Furthermore, a (possible empty) set of  task pairs defines precedence relations \(A\). The task pairs have a finish-start type precedence meaning that a task must be completed entirely before its successor can be started. Some additional assumptions are that each resource type required by any task is provided \(k\in R\) and no single task will require more of a resource type than provided \(r_{i,k}\leq a_k\).
+
+This project structure can be modelled as an activity-on-the-node network (where activity also means task) \(G=(N,A)\). The network is extended with 2 dummy tasks that model the start and finish of the project. These dummy tasks have a duration of 0 and no resource requirement. The makespan can now be difined as the starting time of the finish dummy task.
+
+\subsection{PRCPSP-ST}
+The RCPSP definition can be extended in different ways including task preemption and setup times \cite{RN6}, \cite{RN27}.
+
+Preemption allows and activity to be paused after it has been started by the project. A preempted task in a schedule is like multiple individual tasks that each represent a segment of the original task. Preemption is only allowed at integer points of the task duration. In reality tasks might be preempted at any fraction of the duration but the infinite ways to split a task makes an algorithm much harder to define. A solution to approximate fractional preemption is rescaling the time units used project. When hours are scaled down to minutes for example, a task can be preempted on each minute instead of on the hour approaching a possible required granularity.
+
+Setup time \(s\) is introduced as a way to try and prevent task being split into many impractical segments. This prevention is done by adding additional processing time (setup time) to task segments that start after a previous segment has been preempted. During the setup time the same amount and type of resource are required as the task itself. By penalizing preemption in this way algorithms will only introduce split tasks when the makespan can be improved in a meaningful way.
