@@ -10,25 +10,31 @@ To augment a SAT solver for a specific problem the code of the solver has to be 
 \subsection{Heuristic}
 As a heuristic solution a tweaked version of the iterated greedy algorithm is implemented \cite{RN32}. This algorithm requires an activity list representation of the project. It start with a setup of an initial schedule and then iterates over a destruction phase and a construction phase until a time limit or number of iterations limit is reached. 
 
-The activity list represent a project as permutation vector of all the tasks. something, something priority / reference serial generation scheme Kelly 1963
+An activity list representation allows a serial generation scheme to construct a feasible schedule \cite{RN46}. The activity list represent a project as permutation vector of all the tasks. It is required that no task appears in the list after any of its successors. The serial generation scheme schedules all the task in the order of the list at the earliest possible start time that does not break precedence or resource restrictions. Because the generation scheme uses the tasks in order of the list tasks close to the front of the list can be seen as having a higher priority and are scheduled sooner by the algorithm. When the algorithm has scheduled all tasks the result is a left-justified schedule.
 
 The initial schedule is generated with the use of a greedy heuristic. Firstly a resource utility rate \(u_i\) is calculated for each task 
 \begin{equation}
 u_i=\frac{d_i \times r_{i,k}}{a_k} 
 \end{equation}
-For each task its resource requirement is divided by the resource availability. The result is multiplied by the task duration. Next all tasks are put into a list and ordered by non-increasing resource utility rate. After ordering each task is moved directly in front of the first successor in the list. This way a serial schedule generation scheme can be used to create feasible left-justified schedule. This is done by going over the list in order and scheduling each task as early as possible without breaking resource or precedence constraints.
+For each task its resource requirement is divided by the resource availability. The result is multiplied by the task duration. Next all tasks are put into a list and ordered by non-increasing resource utility rate. After ordering each task is moved directly in front of the first successor in the list. The result is an activity list representation and the serial generation scheme is run on it to create the initial (left-justified) schedule.
+
+After the initial list is generated the main iterative part of the algorithm starts with the destruction phase. During this phase a copy is made of the initial schedule and next \(d=\lceil\frac{|N|}{4}\rceil\)  tasks are removed from the activity list at random. These are picked one by one and are kept separately in the order they were removed.
+
+The second step of the main iteration is the construction phase. From the removed tasks the first is picked and placed at any index in the remaining activity list that doesn't break the precedence order. For each possible index the makespan of the left-justified schedule made with the serial generation scheme is calculated. The index with the lowest makespan is chosen and the task is inserted at the index. This process is repeated for each removed task until all tasks are in the activity list. At this point the resulting schedule makespan is compared to the initial schedule makespan and when an improved makespan has been found the initial schedule is overwritten by the new schedule.
+
+This heuristic solution can any number of iterations of the destruction and construction phases until either a iterations limit is reached or a time limit is reached. At that point it will return the most optimal schedule it has found.
 
 
 \subsection{CNF Encoding}
+The CNF encoding is very much still in process and is therefore not a part of the draft version.
 %Variable \(w_{i,x,y,t}\) is equal to 1 if activity segment \(S^i_xD_y\) starts at time \(t\), and 0 otherwise.
 %\begin{align}
 %\sum_{y=1}^{d_i} \sum_{x=max(c-y+1,1)}^{min(d_i-y+1,c)} \sum_{t=0}^{T-y} w_{i,x,y,t}&=1	&	\all i\in N; c=1,...,d_i
 %\end{align}
-
-
 
 %\begin{equation}
 %\neg w_{i,x,y} \bigvee_{t\in{0,...,T-y}} s_{i,x,y,t}
 %\end{equation}
 
 \subsection{SAT solver}
+Due to difficulties during the CNF encoding my current planning does not allow for any time spent on improving the SAT solver.
