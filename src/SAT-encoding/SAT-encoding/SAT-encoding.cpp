@@ -120,11 +120,11 @@ void build_resource_clauses(vector<Task>& task_list, stringstream& cnf_file_cont
 void build_objective_clauses(vector<Task>& task_list, stringstream& cnf_file_content, int& clause_count);
 
 // Global algorithm variables
-const int setup_time = 1;
+const int setup_time = 5;
 
 // Global variables for the specific problem instance used
 const string project_lib_folder_j30 = "C:/Projects/cse3000/src/j30.sm/";
-const string project_lib_file_j30 = "j301_1";
+const string project_lib_file_j30 = "j301_4";
 const string project_lib_type_j30 = ".sm";
 
 Task_Id* Task_Id::instance = 0;
@@ -176,7 +176,7 @@ int main()
 #pragma endregion
 
 #pragma region CNF encoding
-	write_cnf_file(reduced_preempted_tasks);
+	write_cnf_file(preempted_tasks);
 #pragma endregion
 
 
@@ -365,7 +365,10 @@ void preempt_task(Task task)
 		{
 			Task task_part = task;
 			task_part.segment = i;
-			task_part.duration = j;
+			task_part.duration = task_part.segment > 1 ? j + setup_time : j;
+			if (task_part.segment > 1) {
+				task_part.early_start += (i - 1);
+			}
 			if (task_part.segment + task_part.duration != task.segment + task.duration) {
 				task_part.successors = vector<pair<int, int>>{ pair<int, int>(task.id, task_part.segment + task_part.duration) };
 			}
@@ -378,7 +381,7 @@ void set_start_variables()
 {
 	for (int i = 1; i < preempted_tasks.size(); i++)
 	{
-		for (int t = preempted_tasks[i].early_start; t <= preempted_tasks[i].late_start; t++)
+		for (int t = preempted_tasks[i].early_start; t <= preempted_tasks[i].late_finish - preempted_tasks[i].duration; t++)
 		{
 			preempted_tasks[i].start_variables.push_back(cnf_variable->get_variable());
 		}
@@ -639,24 +642,43 @@ void build_completion_clauses(vector<Task>& task_list, stringstream& cnf_file_co
 		cnf_file_content << 'c' << ' ' << "Completion clauses" << '\n';
 	}
 
-	for each (Task task in task_list)
+	for each (Task task in parsed_tasks)
 	{
 		if (task.id == 0)
 		{
 			continue;
 		}
 
-		if (write_comments) {
-			cnf_file_content << 'c' << ' ' << "job nmbr: " << task.id << '\n';
+		vector<Task> task_segments;
+
+		for each (Task task_segment in task_list)
+		{
+			if (task_segment.id == task.id) {
+				task_segments.push_back(task_segment);
+			}
 		}
 
-		cnf_file_content << get_cnf_hard_clause_weight() << ' ';
-		for each (int32_t start_variable in task.start_variables)
+		for (int time_slot = 1; time_slot <= task.duration; time_slot++)
 		{
-			cnf_file_content << start_variable << ' ';
+			vector<Task> active_task_segments;
+			for each (Task task_segment in task_segments)
+			{
+				if (task_segment.segment <= time_slot && task_segment.segment + task_segment.duration - 1 >= time_slot) {
+					active_task_segments.push_back(task_segment);
+				}
+			}
+			cnf_file_content << get_cnf_hard_clause_weight() << ' ';
+			for each (Task active_task_segment in active_task_segments)
+			{
+				for each (int32_t start_variable in active_task_segment.start_variables)
+				{
+					cnf_file_content << start_variable << ' ';
+				}
+			}
+			cnf_file_content << '0' << '\n';
+			clause_count++;
 		}
-		cnf_file_content << '0' << '\n';
-		clause_count++;
+
 	}
 }
 
@@ -669,6 +691,7 @@ void build_precedence_clauses(vector<Task>& task_list, stringstream& cnf_file_co
 			continue;
 		}
 
+		vector<vector<Task>> predecessor_groups(parsed_tasks.size());
 		for each (Task predecessor in task_list)
 		{
 			if (predecessor.id == 0)
@@ -680,32 +703,32 @@ void build_precedence_clauses(vector<Task>& task_list, stringstream& cnf_file_co
 			{
 				if (successor.id == successor_id_segment.first && successor.segment == successor_id_segment.second)
 				{
-					if (write_comments) {
-						cnf_file_content << 'c' << ' ' << "pred: " << predecessor.id << "; succ: " << successor.id << '\n';
-					}
-					for (int i = 0; i < successor.start_variables.size(); i++)
-					{
-						if (write_comments) {
-							cnf_file_content << 'c' << ' ' << "succ start time: " << successor.early_start + i << "; pred duration: " << predecessor.duration << "; pred start range: " << '[' << 0 << " - " << i + successor.early_start - predecessor.duration - predecessor.early_start << ']' << '\n';
-						}
-						assert(i + successor.early_start - predecessor.duration - predecessor.early_start >= 0);
-						assert(predecessor.start_variables.size() >= 0);
-						cnf_file_content << get_cnf_hard_clause_weight() << ' ';
-						cnf_file_content << '-' << successor.start_variables[i] << ' ';
-						for (int j = 0; j <= i + successor.early_start - predecessor.duration - predecessor.early_start && j < predecessor.start_variables.size(); j++)
-						{
-							cnf_file_content << predecessor.start_variables[j] << ' ';
-						}
-						cnf_file_content << '0' << '\n';
-						clause_count++;
-					}
-
-
+					predecessor_groups[predecessor.id].push_back(predecessor);
 				}
 			}
 		}
 
-
+		for each (vector<Task> predecessor_group in predecessor_groups)
+		{
+			for (int i = 0; i < successor.start_variables.size(); i++)
+			{
+				if (predecessor_group.size() > 0) {
+					cnf_file_content << get_cnf_hard_clause_weight() << ' ';
+					cnf_file_content << '-' << successor.start_variables[i] << ' ';
+					for each (Task predecessor in predecessor_group)
+					{
+						assert(i + successor.early_start - predecessor.duration - predecessor.early_start >= 0);
+						assert(predecessor.start_variables.size() >= 0);
+						for (int j = 0; j <= i + successor.early_start - predecessor.duration - predecessor.early_start && j < predecessor.start_variables.size(); j++)
+						{
+							cnf_file_content << predecessor.start_variables[j] << ' ';
+						}
+					}
+					cnf_file_content << '0' << '\n';
+					clause_count++;
+				}
+			}
+		}
 	}
 }
 
