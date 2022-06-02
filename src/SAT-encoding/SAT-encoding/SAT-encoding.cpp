@@ -124,7 +124,7 @@ const int setup_time = 5;
 
 // Global variables for the specific problem instance used
 const string project_lib_folder_j30 = "C:/Projects/cse3000/src/j30.sm/";
-const string project_lib_file_j30 = "j301_4";
+const string project_lib_file_j30 = "j301_3";
 const string project_lib_type_j30 = ".sm";
 
 Task_Id* Task_Id::instance = 0;
