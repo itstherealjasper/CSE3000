@@ -77,11 +77,11 @@ void extend_successors(Task& task, vector<Task>& task_list);
 const int destruction_count = 8;
 const int cpu_time_deadline_optimization = 10; // seconds
 const int cpu_time_deadline_preemption = 50; // seconds
-const int setup_time = 1;
+const int setup_time = 5;
 
 // Global variables for the specific problem instance used
 const string project_lib_folder_j30 = "C:/Projects/cse3000/src/datasets/j30.sm/";
-const string project_lib_file_j30 = "j301_4";
+const string project_lib_file_j30 = "j307_9";
 const string project_lib_type_j30 = ".sm";
 
 int horizon;
