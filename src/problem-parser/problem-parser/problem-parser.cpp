@@ -12,6 +12,7 @@ struct Task
 };
 
 void write_custom_project_file(string file_path, int horizon, vector<Task> parsed_tasks, vector<int> resource_availabilities, int optimal_heuristic_solution);
+void fix_j30_numbering(std::vector<std::string>& j30_filenames_sorted);
 string extract_filename_without_extention(string& file_path);
 void parse_j30_file(string file_path, ifstream& optimal_solution_fs);
 void parse_DC1_file(string file_path, ifstream& optimal_solution_fs);
@@ -38,42 +39,7 @@ int main(int argc, char* argv[])
 		j30_filenames_sorted.push_back(entry.path().string());
 	}
 	sort(j30_filenames_sorted.begin(), j30_filenames_sorted.end(), [](const string& lhs, const string& rhs) {return make_pair(lhs.length(), cref(lhs)) < make_pair(rhs.length(), cref(rhs)); });
-	//for (int i = 0; i < j30_filenames_sorted.size(); i++)
-	//{
-	//	if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 4) == "1.sm") {
-	//		rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 4) + "0.sm").c_str());
-	//	}
-	//	else if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 4) == "2.sm") {
-	//		rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 4) + "1.sm").c_str());
-	//	}
-	//	else if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 4) == "3.sm") {
-	//		rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 4) + "2.sm").c_str());
-	//	}
-	//	else if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 4) == "4.sm") {
-	//		rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 4) + "3.sm").c_str());
-	//	}
-	//	else if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 4) == "5.sm") {
-	//		rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 4) + "4.sm").c_str());
-	//	}
-	//	else if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 4) == "6.sm") {
-	//		rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 4) + "5.sm").c_str());
-	//	}
-	//	else if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 4) == "7.sm") {
-	//		rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 4) + "6.sm").c_str());
-	//	}
-	//	else if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 4) == "8.sm") {
-	//		rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 4) + "7.sm").c_str());
-	//	}
-	//	else if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 4) == "9.sm") {
-	//		rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 4) + "8.sm").c_str());
-	//	}
-	//	else if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 5) == "10.sm") {
-	//		rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 5) + "9.sm").c_str());
-	//	}
-	//	else {
-	//		continue;
-	//	}
-	//}
+	//fix_j30_numbering(j30_filenames_sorted);
 	for (auto& filename : j30_filenames_sorted) {
 		parse_j30_file(filename, j30_optimal_solution_fs);
 	}
@@ -113,36 +79,76 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
+void fix_j30_numbering(std::vector<std::string>& j30_filenames_sorted)
+{
+	for (int i = 0; i < j30_filenames_sorted.size(); i++)
+	{
+		if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 4) == "1.sm") {
+			rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 4) + "0.sm").c_str());
+		}
+		else if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 4) == "2.sm") {
+			rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 4) + "1.sm").c_str());
+		}
+		else if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 4) == "3.sm") {
+			rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 4) + "2.sm").c_str());
+		}
+		else if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 4) == "4.sm") {
+			rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 4) + "3.sm").c_str());
+		}
+		else if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 4) == "5.sm") {
+			rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 4) + "4.sm").c_str());
+		}
+		else if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 4) == "6.sm") {
+			rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 4) + "5.sm").c_str());
+		}
+		else if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 4) == "7.sm") {
+			rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 4) + "6.sm").c_str());
+		}
+		else if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 4) == "8.sm") {
+			rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 4) + "7.sm").c_str());
+		}
+		else if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 4) == "9.sm") {
+			rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 4) + "8.sm").c_str());
+		}
+		else if (j30_filenames_sorted[i].substr(j30_filenames_sorted[i].size() - 5) == "10.sm") {
+			rename(j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size()).c_str(), (j30_filenames_sorted[i].substr(0, j30_filenames_sorted[i].size() - 5) + "9.sm").c_str());
+		}
+		else {
+			continue;
+		}
+	}
+}
+
 void write_custom_project_file(string file_path, int horizon, vector<Task> parsed_tasks, vector<int> resource_availabilities, int optimal_heuristic_solution)
 {
 	stringstream lib_file_content;
 
-	lib_file_content << "h;" << horizon << '\n';
-	lib_file_content << "s;" << parsed_tasks.size() << '\n';
-	lib_file_content << "r;" << resource_availabilities.size() << '\n';
-	lib_file_content << "o;" << optimal_heuristic_solution << '\n';
+	lib_file_content << horizon << '\t';
+	lib_file_content << parsed_tasks.size() << '\t';
+	lib_file_content << resource_availabilities.size() << '\t';
+	lib_file_content << optimal_heuristic_solution << '\t';
 	lib_file_content << '\n';
 	lib_file_content << resource_availabilities[0];
 	for (int i = 1; i < resource_availabilities.size(); i++)
 	{
-		lib_file_content << ';' << resource_availabilities[i];
+		lib_file_content << '\t' << resource_availabilities[i];
 	}
 	lib_file_content << '\n';
 	lib_file_content << '\n';
 
 	for (int i = 0; i < parsed_tasks.size(); i++)
 	{
-		lib_file_content << parsed_tasks[i].id << ';';
+		lib_file_content << parsed_tasks[i].id << '\t';
 		for (int j = 0; j < parsed_tasks[i].resource_requirements.size(); j++)
 		{
-			lib_file_content << parsed_tasks[i].resource_requirements[j] << ';';
+			lib_file_content << parsed_tasks[i].resource_requirements[j] << '\t';
 		}
 
-		lib_file_content << parsed_tasks[i].duration << ';' << parsed_tasks[i].successors.size();
+		lib_file_content << parsed_tasks[i].duration << '\t' << parsed_tasks[i].successors.size();
 
 		for (int j = 0; j < parsed_tasks[i].successors.size(); j++)
 		{
-			lib_file_content << ';' << parsed_tasks[i].successors[j];
+			lib_file_content << '\t' << parsed_tasks[i].successors[j];
 		}
 		lib_file_content << '\n';
 	}
@@ -210,12 +216,12 @@ void parse_j30_file(string file_path, ifstream& optimal_solution_fs)
 
 		int successor_count;
 		project_lib >> tmp >> tmp >> successor_count;
-		vector<int> successors(successor_count);
+		parsed_tasks[i].successors = vector<int>(successor_count);
 		for (int j = 0; j < successor_count; j++)
 		{
-			project_lib >> successors[j];
+			project_lib >> parsed_tasks[i].successors[j];
+			parsed_tasks[i].successors[j]--;
 		};
-		parsed_tasks[i].successors = successors;
 	}
 
 
@@ -253,9 +259,9 @@ void parse_j30_file(string file_path, ifstream& optimal_solution_fs)
 	write_custom_project_file(output_lib_folder + j30_sub_folder + file_without_extension, horizon, parsed_tasks, resource_availabilities, optimal_heuristic_solution);
 }
 
+// Base file without extention extraction found at https://stackoverflow.com/a/24386991
 string extract_filename_without_extention(string& file_path)
 {
-	// Base file without extention extraction found at https://stackoverflow.com/a/24386991
 	string base_filename = file_path.substr(file_path.find_last_of("/\\") + 1);
 	string::size_type const p(base_filename.find_last_of('.'));
 	return base_filename.substr(0, p);
@@ -312,6 +318,7 @@ void parse_DC1_file(string file_path, ifstream& optimal_solution_fs)
 		for (int j = 0; j < successor_count; j++)
 		{
 			project_lib >> parsed_tasks[i].successors[j];
+			parsed_tasks[i].successors[j]--;
 		}
 	}
 
@@ -373,6 +380,7 @@ void parse_RG30_file(string file_path, string set_directory, ifstream& optimal_s
 		for (int j = 0; j < successor_count; j++)
 		{
 			project_lib >> parsed_tasks[i].successors[j];
+			parsed_tasks[i].successors[j]--;
 		}
 	}
 
@@ -380,5 +388,5 @@ void parse_RG30_file(string file_path, string set_directory, ifstream& optimal_s
 	project_lib.close();
 
 	string file_without_extension = extract_filename_without_extention(file_path);
-	write_custom_project_file(output_lib_folder + RG30_sub_folder + set_directory + file_without_extension, horizon, parsed_tasks, resource_availabilities, optimal_heuristic_solution);
+	write_custom_project_file(output_lib_folder + RG30_sub_folder + set_directory.substr(0, set_directory.size() - 1) + file_without_extension, horizon, parsed_tasks, resource_availabilities, optimal_heuristic_solution);
 }

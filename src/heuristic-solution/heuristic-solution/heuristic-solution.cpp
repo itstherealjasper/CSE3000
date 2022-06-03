@@ -74,17 +74,17 @@ void extend_successors(Task& task, vector<Task>& task_list);
 //void try_build_3d_resource_schedule(vector<Task>& task_list, vector<int>& start_times, vector<vector<vector<int>>>& resource_schedule, vector<vector<vector<int>>>& resource_schedule_preemption_ids);
 
 // Parameters to tune the algorithm
-const int destruction_count = 8;
-const int cpu_time_deadline_optimization = 10; // seconds
-const int cpu_time_deadline_preemption = 50; // seconds
-const int setup_time = 5;
+int destruction_count = 0;
+const int cpu_time_deadline_optimization = 4; // seconds
+const int cpu_time_deadline_preemption = 6; // seconds
+const int setup_time = 1;
 
 // Global variables for the specific problem instance used
-const string project_lib_folder_j30 = "C:/Projects/cse3000/src/datasets/j30.sm/";
-const string project_lib_file_j30 = "j307_9";
-const string project_lib_type_j30 = ".sm";
+const string project_lib_folder_j30 = "C:/Projects/cse3000/src/parsed-datasets/j30.sm/";
+const string project_lib_file_j30 = "j301_0.RCP";
 
 int horizon;
+int optimal_solution;
 int initial_task_count;
 vector<Task> initial_tasks;
 int resource_count;
@@ -96,7 +96,7 @@ Id job_id;
 int main()
 {
 #pragma region setup
-	parse_activities(project_lib_folder_j30 + project_lib_file_j30 + project_lib_type_j30);
+	parse_activities(project_lib_folder_j30 + project_lib_file_j30);
 	extend_initial_successors(initial_tasks[0]);
 	calculate_rurs();
 #pragma endregion
@@ -151,100 +151,56 @@ int main()
 
 #pragma endregion
 
-
 	return 0;
 }
 
 void parse_activities(string filename)
 {
-
-	// Create a text string, which is used to output the text file
 	string tmp;
 
-	// Read from the text file
 	ifstream project_lib(filename);
 
 	if (!project_lib.is_open()) {
 		throw runtime_error("Could not open lib file");
 	};
 
-	int task_count;
+	project_lib >> horizon >> initial_task_count >> resource_count >> optimal_solution;
 
-	for (int i = 0; i < 5; i++)
+	resource_availabilities = vector<int>(resource_count);
+	for (int i = 0; i < resource_count; i++)
 	{
-		getline(project_lib, tmp);
-	};
-
-	getline(project_lib, tmp, ':');
-	project_lib >> task_count;
-
-	getline(project_lib, tmp, ':');
-	project_lib >> horizon;
-
-	for (int i = 0; i < 2; i++)
-	{
-		getline(project_lib, tmp);
-	};
-
-	getline(project_lib, tmp, ':');
-	project_lib >> resource_count;
-	getline(project_lib, tmp);
-
-	for (int i = 0; i < 9; i++)
-	{
-		getline(project_lib, tmp);
-	};
-
-	for (int i = 0; i < task_count; i++)
-	{
-		Task activity;
-		activity.task_id = job_id.get_next_id();
-		activity.split_task_id = activity.task_id;
-		initial_tasks.push_back(activity);
-
-		int successor_count;
-		project_lib >> tmp >> tmp >> successor_count;
-		vector<int> successors(successor_count);
-		for (int j = 0; j < successor_count; j++)
-		{
-			project_lib >> successors[j];
-			successors[j]--;
-		};
-		initial_tasks[i].successors = successors;
+		project_lib >> resource_availabilities[i];
 	}
 
-
-	for (int i = 0; i < 5; i++)
+	initial_tasks = vector<Task>(initial_task_count);
+	for (int i = 0; i < initial_task_count; i++)
 	{
-		getline(project_lib, tmp);
-	};
+		int parsed_task_id;
+		project_lib >> parsed_task_id;
+		initial_tasks[i].task_id = job_id.get_next_id();
+		initial_tasks[i].split_task_id = initial_tasks[i].task_id;
 
-	for (int i = 0; i < task_count; i++)
-	{
-		project_lib >> tmp >> tmp >> initial_tasks[i].duration;
-		initial_tasks[i].resource_requirements = vector<int>(resource_count, 0);
+		initial_tasks[i].resource_requirements = vector<int>(resource_count);
 		for (int j = 0; j < resource_count; j++)
 		{
 			project_lib >> initial_tasks[i].resource_requirements[j];
-		};
+		}
+
+		project_lib >> initial_tasks[i].duration;
+
+		int successor_count;
+		project_lib >> successor_count;
+		initial_tasks[i].successors = vector<int>(successor_count);
+		for (int j = 0; j < successor_count; j++)
+		{
+			project_lib >> initial_tasks[i].successors[j];
+		}
 	}
 
-	for (int i = 0; i < 4; i++)
-	{
-		getline(project_lib, tmp);
-	};
-
-	for (int i = 0; i < resource_count; i++)
-	{
-		int resource_availability;
-		project_lib >> resource_availability;
-		resource_availabilities.push_back(resource_availability);
-	}
+	destruction_count = ceil((double)initial_task_count / (double)4);
 
 	// Close the file
 	project_lib.close();
-
-	initial_task_count = task_count;
 }
 
 void extend_initial_successors(Task& task)
@@ -468,6 +424,7 @@ int optimize_task_list(int makespan, vector<Task>& task_list, bool preempt_tasks
 
 	vector<int> destruction_ids;
 	vector<vector<vector<int>>> destruction_split_ids;
+	assert(destruction_count > 0);
 	for (int i = 0; i < destruction_count; i++)
 	{
 
