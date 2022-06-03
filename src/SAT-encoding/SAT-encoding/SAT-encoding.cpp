@@ -9,8 +9,7 @@ struct Task
 	int segment;
 	vector<pair<int, int>> successors;
 	int duration;
-	int resource_type;
-	int resource_requirement;
+	vector<int> resource_requirements;
 
 	// Heuristic bound variable
 	double rur; // resource utility rate
@@ -111,26 +110,27 @@ bool check_presedence_violation(vector<Task>& task_list, vector<int>& task_in_vi
 template <typename t> void move(vector<t>& v, size_t oldIndex, size_t newIndex);
 void construct_upper_bound_task_list(vector<Task>& task_list);
 int calculate_sgs_makespan(vector<Task>& task_list);
-int find_earliest_start_time(int duration, int resource_type, int resource_requirement, vector<vector<int>>& remaining_resources, int earliest_start_time);
+int find_earliest_start_time(int duration, vector<int> resource_requirements, vector<vector<int>>& remaining_resources, int earliest_start_time);
 void write_cnf_file(vector<Task>& task_list);
 void build_consistency_clauses(vector<Task>& task_list, stringstream& cnf_file_content, int& clause_count);
 void build_precedence_clauses(vector<Task>& task_list, stringstream& cnf_file_content, int& clause_count);
 void build_completion_clauses(vector<Task>& task_list, stringstream& cnf_file_content, int& clause_count);
 void build_resource_clauses(vector<Task>& task_list, stringstream& cnf_file_content, int& clause_count);
 void build_objective_clauses(vector<Task>& task_list, stringstream& cnf_file_content, int& clause_count);
+string extract_filename_without_extention(string& file_path);
 
 // Global algorithm variables
 const int setup_time = 5;
 
 // Global variables for the specific problem instance used
-const string project_lib_folder_j30 = "C:/Projects/cse3000/src/j30.sm/";
-const string project_lib_file_j30 = "j301_4";
-const string project_lib_type_j30 = ".sm";
+const string project_lib_folder_j30 = "C:/Projects/cse3000/src/parsed-datasets/j30.sm/";
+string project_lib_file_j30 = "j301_0.RCP";
 
 Task_Id* Task_Id::instance = 0;
 Task_Id* unique_task_id = unique_task_id->get_instance();
 
 int horizon;
+int optimal_solution;
 vector<Task> parsed_tasks;
 vector<int> resource_availabilities;
 vector<Task> preempted_tasks;
@@ -149,7 +149,7 @@ const bool write_comments = false;
 int main()
 {
 #pragma region setup
-	parse_input_file(project_lib_folder_j30 + project_lib_file_j30 + project_lib_type_j30);
+	parse_input_file(project_lib_folder_j30 + project_lib_file_j30);
 
 #pragma region upper bound
 	vector<Task> upper_bound_task_list = parsed_tasks;
@@ -196,85 +196,40 @@ void parse_input_file(string filename)
 	};
 
 	int task_count;
-
-	for (int i = 0; i < 5; i++)
-	{
-		getline(project_lib, tmp);
-	};
-
-	getline(project_lib, tmp, ':');
-	project_lib >> task_count;
-
-	getline(project_lib, tmp, ':');
-	project_lib >> horizon;
-
-	for (int i = 0; i < 2; i++)
-	{
-		getline(project_lib, tmp);
-	};
-
-	getline(project_lib, tmp, ':');
 	int resource_count;
-	project_lib >> resource_count;
-	getline(project_lib, tmp);
 
-	for (int i = 0; i < 9; i++)
-	{
-		getline(project_lib, tmp);
-	};
+	project_lib >> horizon >> task_count >> resource_count >> optimal_solution;
 
-	for (int i = 0; i < task_count; i++)
-	{
-		Task task;
-		task.id = unique_task_id->get_unused_id();
-		task.segment = 1;
-		parsed_tasks.push_back(task);
-
-		int successor_count;
-		project_lib >> tmp >> tmp >> successor_count;
-		vector<pair<int, int>> successors(successor_count);
-		for (int j = 0; j < successor_count; j++)
-		{
-			project_lib >> successors[j].first;
-			successors[j].first--;
-			successors[j].second = 1;
-		};
-		parsed_tasks[i].successors = successors;
-	}
-
-
-	for (int i = 0; i < 5; i++)
-	{
-		getline(project_lib, tmp);
-	};
-
-	for (int i = 0; i < task_count; i++)
-	{
-		project_lib >> tmp >> tmp >> parsed_tasks[i].duration;
-		int max_resource_requirement = -1;
-		for (int j = 0; j < resource_count; j++)
-		{
-			int parsed_resource_requirement;
-			project_lib >> parsed_resource_requirement;
-
-			if (parsed_resource_requirement > max_resource_requirement) {
-				max_resource_requirement = parsed_resource_requirement;
-				parsed_tasks[i].resource_requirement = parsed_resource_requirement;
-				parsed_tasks[i].resource_type = j;
-			}
-		};
-	}
-
-	for (int i = 0; i < 4; i++)
-	{
-		getline(project_lib, tmp);
-	};
-
+	resource_availabilities = vector<int>(resource_count);
 	for (int i = 0; i < resource_count; i++)
 	{
-		int resource_availability;
-		project_lib >> resource_availability;
-		resource_availabilities.push_back(resource_availability);
+		project_lib >> resource_availabilities[i];
+	}
+
+	parsed_tasks = vector<Task>(task_count);
+	for (int i = 0; i < task_count; i++)
+	{
+		int parsed_task_id;
+		project_lib >> parsed_task_id;
+		parsed_tasks[i].id = unique_task_id->get_unused_id();
+		parsed_tasks[i].segment = 1;
+
+		parsed_tasks[i].resource_requirements = vector<int>(resource_count);
+		for (int j = 0; j < resource_count; j++)
+		{
+			project_lib >> parsed_tasks[i].resource_requirements[j];
+		}
+
+		project_lib >> parsed_tasks[i].duration;
+
+		int successor_count;
+		project_lib >> successor_count;
+		parsed_tasks[i].successors = vector<pair<int, int>>(successor_count);
+		for (int j = 0; j < successor_count; j++)
+		{
+			project_lib >> parsed_tasks[i].successors[j].first;
+			parsed_tasks[i].successors[j].second = 1;
+		};
 	}
 
 	// Close the file
@@ -369,6 +324,9 @@ void preempt_task(Task task)
 			if (task_part.segment > 1) {
 				task_part.early_start += (i - 1);
 			}
+			if (task_part.segment + task_part.duration - 1 < task.duration) {
+				task_part.late_finish -= (task.duration - task_part.segment - task_part.duration + 1 + setup_time);
+			}
 			if (task_part.segment + task_part.duration != task.segment + task.duration) {
 				task_part.successors = vector<pair<int, int>>{ pair<int, int>(task.id, task_part.segment + task_part.duration) };
 			}
@@ -452,7 +410,12 @@ void calculate_rurs(vector<Task>& task_list)
 {
 	for (int i = 0; i < task_list.size(); i++)
 	{
-		task_list[i].rur = (double)task_list[i].duration * (double)task_list[i].resource_requirement / (double)resource_availabilities[task_list[i].resource_type];;
+		task_list[i].rur = 0;
+		for (int j = 0; j < resource_availabilities.size(); j++)
+		{
+			task_list[i].rur += (double)task_list[i].resource_requirements[j] / (double)resource_availabilities[j];
+		}
+		task_list[i].rur *= task_list[i].duration;
 	}
 }
 
@@ -572,10 +535,13 @@ int calculate_sgs_makespan(vector<Task>& task_list)
 
 	for (int i = 0; i < task_list.size(); i++)
 	{
-		task_list[i].earliest_start_time = find_earliest_start_time(task_list[i].duration, task_list[i].resource_type, task_list[i].resource_requirement, remaining_resources, task_list[i].earliest_start_time);
+		task_list[i].earliest_start_time = find_earliest_start_time(task_list[i].duration, task_list[i].resource_requirements, remaining_resources, task_list[i].earliest_start_time);
 		for (int j = 0; j < task_list[i].duration; j++)
 		{
-			remaining_resources[task_list[i].earliest_start_time + j][task_list[i].resource_type] = remaining_resources[task_list[i].earliest_start_time + j][task_list[i].resource_type] - task_list[i].resource_requirement;
+			for (int k = 0; k < task_list[i].resource_requirements.size(); k++)
+			{
+				remaining_resources[task_list[i].earliest_start_time + j][k] = remaining_resources[task_list[i].earliest_start_time + j][k] - task_list[i].resource_requirements[k];
+			}
 		}
 
 		for (int j = 0; j < task_list[i].successors.size(); j++)
@@ -593,16 +559,19 @@ int calculate_sgs_makespan(vector<Task>& task_list)
 	return task_list.back().earliest_start_time + task_list.back().duration;
 }
 
-int find_earliest_start_time(int duration, int resource_type, int resource_requirement, vector<vector<int>>& remaining_resources, int earliest_start_time)
+int find_earliest_start_time(int duration, vector<int> resource_requirements, vector<vector<int>>& remaining_resources, int earliest_start_time)
 {
 	bool found_possible_timeslot = false;
 	while (!found_possible_timeslot) {
 		bool requirements_to_high = false;
 		for (int i = 0; i < duration; i++)
 		{
-			if (resource_requirement > remaining_resources[earliest_start_time + i][resource_type])
+			for (int j = 0; j < resource_requirements.size(); j++)
 			{
-				requirements_to_high = true;
+				if (resource_requirements[j] > remaining_resources[earliest_start_time + i][j])
+				{
+					requirements_to_high = true;
+				}
 			}
 		}
 		if (requirements_to_high) {
@@ -626,7 +595,7 @@ void write_cnf_file(vector<Task>& task_list)
 	build_resource_clauses(task_list, cnf_file_content, clause_count);
 	build_objective_clauses(task_list, cnf_file_content, clause_count);
 
-	ofstream schedule_file(project_lib_file_j30 + '.' + cnf_file_type);
+	ofstream schedule_file(extract_filename_without_extention(project_lib_file_j30) + '.' + cnf_file_type);
 	if (schedule_file.is_open())
 	{
 		// p FORMAT VARIABLES CLAUSES
@@ -776,10 +745,10 @@ void build_resource_clauses(vector<Task>& task_list, stringstream& cnf_file_cont
 				{
 					continue;
 				}
-				if (task.resource_type == i && task.early_start <= j && task.late_finish >= j)
+				if (task.resource_requirements[i] > 0 && task.early_start <= j && task.late_finish >= j)
 				{
 					literals.push_back(task.process_variables[j - task.early_start]);
-					weights.push_back(task.resource_requirement);
+					weights.push_back(task.resource_requirements[i]);
 					if (write_comments) {
 						cnf_file_content << task.id + 1 << ' ' << '[' << task.early_start << ", " << task.late_finish << ']' << ", ";
 					}
@@ -834,4 +803,12 @@ void build_objective_clauses(vector<Task>& task_list, stringstream& cnf_file_con
 		clause_count++;
 		literals.push_back(finish.start_variables[i]);
 	}
+}
+
+// Base file without extention extraction found at https://stackoverflow.com/a/24386991
+string extract_filename_without_extention(string& file_path)
+{
+	string base_filename = file_path.substr(file_path.find_last_of("/\\") + 1);
+	string::size_type const p(base_filename.find_last_of('.'));
+	return base_filename.substr(0, p);
 }
