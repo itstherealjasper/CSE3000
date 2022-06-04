@@ -1,3 +1,6 @@
 [submodule "src/SAT-encoding/pblib"]
 	path = src/SAT-encoding/pblib
 	url = https://github.com/master-keying/pblib.git
+[submodule "src/performance-testing/pblib"]
+	path = src/performance-testing/pblib
+	url = https://github.com/master-keying/pblib.git
