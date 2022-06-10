@@ -1,37 +1,76 @@
 ﻿#include "performance-testing.h"
 
 using namespace std;
+namespace fs = std::filesystem;
 
-int main()
+static void SIGINT_exit(int signum)
 {
-	Heuristic_Solver heuristic_solver;
-	int heuristic_makespan = heuristic_solver.solve(project_lib_folder, project_lib_file, setup_time, cpu_time_deadline);
-
-	cout << "heuristic makepsan: " << heuristic_makespan << '\n';
-
-	clock_t c_start = clock();
-	SAT_encoder sat_encoder;
-	sat_encoder.encode(project_lib_folder, project_lib_file, setup_time, cpu_time_deadline);
-	clock_t c_end = clock();
-	long double time_elapsed_ms = 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC;
-
-	long double remaining_cpu_time_deadline = (1000 * (long double)cpu_time_deadline) - time_elapsed_ms;
-	if (remaining_cpu_time_deadline > 0) {
-		int SAT_makespan = solve(extract_filename_without_extention(project_lib_file) + '.' + cnf_file_type, remaining_cpu_time_deadline / 1000);
-		cout << "SAT makepsan: " << SAT_makespan << '\n';
+	//cout << "SIGINT exit detected";
+	if (solve_heuristically) {
+		cout << solve_heuristically << '\t' << heuristic_solver.get_best_makespan() << '\n' << '\n';
 	}
 	else {
-		cout << "SAT makespan: " << "dnf" << '\n';
+		if (done_encoding) {
+			external_exit(solve_heuristically);
+		}
+		else {
+			cout << solve_heuristically << '\t' << -1 << '\t' << 0 << '\n' << '\n';
+		}
+		fs::path file_path_to_remove("./");
+		string file_name_to_remove = extract_filename_without_extention(project_file_name) + '.' + cnf_file_type;
+		remove(file_path_to_remove / file_name_to_remove);
+	}
+	exit(1);
+}
+
+int main(int argc, char* argv[])
+{
+	signal(SIGINT, SIGINT_exit);
+	signal(SIGTERM, SIGINT_exit);
+
+	stringstream command_line_parameters;
+	for (int i = 1; i < argc; ++i) {
+		command_line_parameters << argv[i] << '\n';
+	}
+
+	string project_lib_subfolder;
+	int setup_time;
+	command_line_parameters >> project_lib_subfolder >> project_file_name >> setup_time >> solve_heuristically;
+
+	ifstream project_lib(project_lib_subfolder + project_file_name);
+
+	if (!project_lib.is_open()) {
+		throw runtime_error("Could not open lib file");
+	};
+
+	string tmp;
+	int optimal_solution;
+	project_lib >> tmp >> tmp >> tmp >> optimal_solution;
+
+	cout << extract_filename_without_extention(project_file_name) << '\t' << optimal_solution << '\t' << setup_time << '\n';
+
+	if (solve_heuristically) {
+		heuristic_solver.solve(project_lib_subfolder, project_file_name, setup_time);
+	}
+	else {
+		sat_encoder.encode(project_lib_subfolder, project_file_name, setup_time);
+		done_encoding = true;
+
+		bool optimum_found;
+		int SAT_makespan = solve(extract_filename_without_extention(project_file_name) + '.' + cnf_file_type, optimum_found);
+		cout << solve_heuristically << '\t' << SAT_makespan << '\t' << optimum_found << '\n' << '\n';
+		fs::path file_path_to_remove("./");
+		string file_name_to_remove = extract_filename_without_extention(project_file_name) + '.' + cnf_file_type;
+		remove(file_path_to_remove / file_name_to_remove);
 	}
 
 	return 0;
 }
 
-int Heuristic_Solver::solve(string project_lib_folder, string project_lib_file, int setup_time, int cpu_time_deadline)
+int Heuristic_Solver::solve(string project_lib_folder, string project_lib_file, int setup_time)
 {
 #pragma region setup
 	parse_activities(project_lib_folder + project_lib_file);
-	extend_initial_successors(initial_tasks[0]);
 	calculate_rurs();
 #pragma endregion
 
@@ -49,33 +88,34 @@ int Heuristic_Solver::solve(string project_lib_folder, string project_lib_file, 
 
 #pragma region algorithm
 	vector<Task> task_list = initial_task_list;
-	int makespan = initial_makespan;
+	makespan = initial_makespan;
 
-	clock_t c_start = clock();
-
-	long double time_elapsed_ms = 0.0;
-	while (time_elapsed_ms < 1000 * (double)cpu_time_deadline / 5) {
-		makespan = optimize_task_list(makespan, task_list, false, setup_time);
-		clock_t c_end = clock();
-		time_elapsed_ms = 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC;
+	int no_better_solution_found = 0;
+	while (no_better_solution_found > 20) {
+		int new_makespan = optimize_task_list(makespan, task_list, false, setup_time);
+		if (new_makespan == makespan) {
+			no_better_solution_found++;
+		}
+		else {
+			no_better_solution_found = 0;
+		}
+		makespan = new_makespan;
 	}
 
 	vector<int> start_times = vector<int>(job_id.get_max_id(), 0);
 	construct_schedule(task_list, start_times, job_id.get_max_id());
 
-	c_start = clock();
-	time_elapsed_ms = 0.0;
-	while (time_elapsed_ms < 1000 * 4 * (double)cpu_time_deadline / 5) {
+	while (true) {
 		makespan = optimize_task_list(makespan, task_list, true, setup_time);
-		clock_t c_end = clock();
-		time_elapsed_ms = 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC;
 	}
-
-	start_times = vector<int>(job_id.get_max_id(), 0);
-	construct_schedule(task_list, start_times, job_id.get_max_id());
 
 #pragma endregion
 
+	return makespan;
+}
+
+int Heuristic_Solver::get_best_makespan()
+{
 	return makespan;
 }
 
@@ -128,24 +168,6 @@ void Heuristic_Solver::parse_activities(string filename)
 	project_lib.close();
 }
 
-void Heuristic_Solver::extend_initial_successors(Task& task)
-{
-	if (task.split_task_id == initial_tasks[initial_tasks.size() - 1].split_task_id) {
-		return;
-	}
-	for (int i = 0; i < task.successors.size(); i++)
-	{
-		extend_initial_successors(initial_tasks[task.successors[i]]);
-		for (int j = 0; j < initial_tasks[task.successors[i]].successors.size(); j++)
-		{
-			if (find(task.successors.begin(), task.successors.end(), initial_tasks[task.successors[i]].successors[j]) == task.successors.end()) {
-				task.successors.push_back(initial_tasks[task.successors[i]].successors[j]);
-			}
-		}
-		sort(task.successors.begin(), task.successors.end());
-	}
-}
-
 void Heuristic_Solver::calculate_rurs()
 {
 	for (int i = 0; i < initial_task_count; i++)
@@ -158,10 +180,10 @@ void Heuristic_Solver::fix_presedence_constraint(vector<Task>& task_list)
 {
 	vector<int> task_in_violation_at_index;
 
-	bool presedence_violated = check_presedence_violation(task_list, task_in_violation_at_index);
+	bool presedence_violated = check_presedence_violation(task_list, task_in_violation_at_index, task_list);
 	while (presedence_violated) {
 		move(task_list, task_in_violation_at_index[0], task_in_violation_at_index[1]);
-		presedence_violated = check_presedence_violation(task_list, task_in_violation_at_index);
+		presedence_violated = check_presedence_violation(task_list, task_in_violation_at_index, task_list);
 	}
 }
 
@@ -177,22 +199,60 @@ template <typename t> void Heuristic_Solver::move(vector<t>& v, size_t oldIndex,
 	}
 }
 
-bool Heuristic_Solver::check_presedence_violation(vector<Task>& task_list, vector<int>& task_in_violation_at_index)
+template<typename T> vector<T> Heuristic_Solver::flatten(vector<vector<T>> const& vec)
+{
+	vector<T> flattened;
+	for (auto const& v : vec) {
+		flattened.insert(flattened.end(), v.begin(), v.end());
+	}
+	return flattened;
+}
+
+bool Heuristic_Solver::check_presedence_violation(vector<Task>& task_list, vector<int>& task_in_violation_at_index, vector<Task>& complete_task_list)
 {
 	for (int i = 1; i < task_list.size(); i++)
 	{
-		for (int j = 0; j < i; j++)
+		vector<int> successors = task_list[i].successors;
+		while (successors.size() > 0)
 		{
-			int sucessor_index = find(task_list[i].successors.begin(), task_list[i].successors.end(), task_list[j].split_task_id) - task_list[i].successors.begin();
-			if (sucessor_index != task_list[i].successors.end() - task_list[i].successors.begin())
+			int successor = successors[0];
+			successors.erase(successors.begin());
+			for (int j = 0; j < i; j++)
 			{
-				task_in_violation_at_index = { i, j };
-				return true;
+				if (task_list[j].split_task_id == successor) {
+					task_in_violation_at_index = { i,j };
+					return true;
+				}
+			}
+			for (int j = 0; j < complete_task_list.size(); j++)
+			{
+				if (complete_task_list[j].split_task_id == successor)
+				{
+					for (int k = 0; k < complete_task_list[j].successors.size(); k++)
+					{
+						successors.push_back(complete_task_list[j].successors[k]);
+					}
+					break;
+				}
 			}
 		}
 	}
 
 	return false;
+	//for (int i = 1; i < task_list.size(); i++)
+	//{
+	//	for (int j = 0; j < i; j++)
+	//	{
+	//		int sucessor_index = find(task_list[i].successors.begin(), task_list[i].successors.end(), task_list[j].split_task_id) - task_list[i].successors.begin();
+	//		if (sucessor_index != task_list[i].successors.end() - task_list[i].successors.begin())
+	//		{
+	//			task_in_violation_at_index = { i, j };
+	//			return true;
+	//		}
+	//	}
+	//}
+
+	//return false;
 }
 
 void Heuristic_Solver::construct_initial_task_list(vector<Task>& task_list)
@@ -216,7 +276,7 @@ void Heuristic_Solver::construct_initial_task_list(vector<Task>& task_list)
 		{
 			new_task_list.insert(new_task_list.begin() + i, to_schedule_task);
 			vector<int>tmp(2);
-			if (!check_presedence_violation(new_task_list, tmp)) {
+			if (!check_presedence_violation(new_task_list, tmp, task_list)) {
 				int makespan_test = calculate_makespan(new_task_list, initial_task_count);
 				if (makespan_test < minimum_makespan) {
 					minimum_makespan = makespan_test;
@@ -388,7 +448,6 @@ int Heuristic_Solver::optimize_task_list(int makespan, vector<Task>& task_list, 
 			destruction_split_ids.push_back(vector<vector<int>> {vector<int>{to_be_destroyed.split_task_id}, vector<int>{to_be_destroyed_begin.split_task_id, to_be_destroyed_end.split_task_id}});
 		}
 	}
-	extend_successors(new_task_list[0], new_task_list);
 
 	vector<Task> remaining_tasks = new_task_list;
 	vector<vector<vector<Task>>> destroyed_tasks;
@@ -416,6 +475,43 @@ int Heuristic_Solver::optimize_task_list(int makespan, vector<Task>& task_list, 
 		destroyed_tasks.push_back(destroyed_task);
 	}
 
+	if (preempt_tasks) {
+		for (int i = 0; i < destroyed_tasks.size(); i++)
+		{
+			if (destroyed_tasks[i].size() < 2)
+			{
+				continue;
+			}
+			for (int j = 0; j < destroyed_tasks.size(); j++)
+			{
+				if (j == i)
+				{
+					continue;
+				}
+				for (int k = 0; k < destroyed_tasks[j].size(); k++)
+				{
+					for (int l = 0; l < destroyed_tasks[j][k].size(); l++)
+					{
+						for (int m = 0; m < destroyed_tasks[j][k][l].successors.size(); m++)
+						{
+							if (destroyed_tasks[i][1][0].task_id == destroyed_tasks[j][k][l].successors[m])
+							{
+								destroyed_tasks[j][k][l].successors.push_back(destroyed_tasks[i][1][0].split_task_id);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	vector<int>tmp(2);
+	vector<Task> successor_test_list = remaining_tasks;
+	for (vector<vector<Task>> destroyed_task : destroyed_tasks) {
+		vector<Task> flattened = flatten(destroyed_task);
+		successor_test_list.insert(successor_test_list.end(), flattened.begin(), flattened.end());
+	}
+
 	vector<int> cleanup_task_ids;
 
 	while (destroyed_tasks.size() > 0)
@@ -436,8 +532,7 @@ int Heuristic_Solver::optimize_task_list(int makespan, vector<Task>& task_list, 
 				for (int k = 0; k < possible_task_list.size(); k++)
 				{
 					possible_task_list.insert(possible_task_list.begin() + k, destroyed_task[i][j]);
-					vector<int>tmp(2);
-					if (!check_presedence_violation(possible_task_list, tmp)) {
+					if (!check_presedence_violation(possible_task_list, tmp, successor_test_list)) {
 						int makespan_test = calculate_makespan(possible_task_list, job_id.get_max_id());
 						if (makespan_test < minimum_makespan) {
 							minimum_makespan = makespan_test;
@@ -492,40 +587,7 @@ int Heuristic_Solver::optimize_task_list(int makespan, vector<Task>& task_list, 
 	return makespan;
 }
 
-void Heuristic_Solver::extend_successors(Task& task, vector<Task>& task_list)
-{
-	if (task.split_task_id == initial_task_count - 1) {
-		return;
-	}
-	for (int i = 0; i < task.successors.size(); i++)
-	{
-		int successor_id = task.successors[i];
-		Task successor;
-		bool successor_found = false;
-		int j = 1;
-		while (!successor_found)
-		{
-			if (task_list[j].split_task_id == successor_id)
-			{
-				successor = task_list[j];
-				successor_found = true;
-			}
-			j++;
-		}
-		extend_successors(successor, task_list);
-		for (int j = 0; j < successor.successors.size(); j++)
-		{
-			int successor_successor_id = successor.successors[j];
-			if (find(task.successors.begin(), task.successors.end(), successor_successor_id) == task.successors.end())
-			{
-				task.successors.push_back(successor_successor_id);
-			}
-		}
-		sort(task.successors.begin(), task.successors.end());
-	}
-}
-
-string SAT_encoder::encode(string project_lib_folder, string project_lib_file, int setup_time, int cpu_time_deadline)
+string SAT_encoder::encode(string project_lib_folder, string project_lib_file, int setup_time)
 {
 #pragma region setup
 	parse_input_file(project_lib_folder + project_lib_file);
@@ -533,8 +595,6 @@ string SAT_encoder::encode(string project_lib_folder, string project_lib_file, i
 #pragma region upper bound
 	vector<Task> upper_bound_task_list = parsed_tasks;
 	vector<int> upper_bound_start_times;
-
-	extend_initial_successors(upper_bound_task_list[0], upper_bound_task_list);
 
 	calculate_rurs(upper_bound_task_list);
 	sort(upper_bound_task_list.begin() + 1, upper_bound_task_list.end() - 1, [](const Task& lhs, const Task& rhs) {return lhs.rur > rhs.rur; });
@@ -545,7 +605,7 @@ string SAT_encoder::encode(string project_lib_folder, string project_lib_file, i
 #pragma endregion
 
 	critical_path();
-	preempt_tasks();
+	preempt_tasks(setup_time);
 
 	set_start_variables();
 	set_process_variables();
@@ -681,17 +741,17 @@ void SAT_encoder::backward_pass(pair<int, int> task_segment_id, int late_finish)
 	}
 }
 
-void SAT_encoder::preempt_tasks()
+void SAT_encoder::preempt_tasks(int setup_time)
 {
 	preempted_tasks.push_back(parsed_tasks.front());
 	for (Task parsed_task : parsed_tasks)
 	{
-		preempt_task(parsed_task);
+		preempt_task(parsed_task, setup_time);
 	}
 	preempted_tasks.push_back(parsed_tasks.back());
 }
 
-void SAT_encoder::preempt_task(Task task)
+void SAT_encoder::preempt_task(Task task, int setup_time)
 {
 	for (int i = 1; i <= task.duration; i++)
 	{
@@ -763,28 +823,6 @@ void SAT_encoder::remove_duplicate_segments(vector<Task>& task_list)
 	}
 }
 
-void SAT_encoder::extend_initial_successors(Task& task, vector<Task>& task_list)
-{
-	if (task.id == parsed_tasks.back().id) {
-		return;
-	}
-	for (int i = 0; i < task.successors.size(); i++)
-	{
-		for (int j = 0; j < task_list.size(); j++)
-		{
-			if (task.successors[i].first == task_list[j].id && task.successors[i].second == task_list[j].segment) {
-				extend_initial_successors(task_list[j], task_list);
-				for (int k = 0; k < task_list[j].successors.size(); k++)
-				{
-					if (find(task.successors.begin(), task.successors.end(), task_list[j].successors[k]) == task.successors.end()) {
-						task.successors.push_back(task_list[j].successors[k]);
-					}
-				}
-			}
-		}
-	}
-}
-
 void SAT_encoder::calculate_rurs(vector<Task>& task_list)
 {
 	for (int i = 0; i < task_list.size(); i++)
@@ -813,6 +851,35 @@ bool SAT_encoder::check_presedence_violation(vector<Task>& task_list, vector<int
 {
 	for (int i = 1; i < task_list.size(); i++)
 	{
+		vector<pair<int, int>> successors = task_list[i].successors;
+		while (successors.size() > 0)
+		{
+			pair<int, int> successor = successors[0];
+			successors.erase(successors.begin());
+			for (int j = 0; j < i; j++)
+			{
+				if (task_list[j].id == successor.first) {
+					task_in_violation_at_index = { i,j };
+					return true;
+				}
+			}
+			for (int j = 0; j < parsed_tasks.size(); j++)
+			{
+				if (parsed_tasks[j].id == successor.first) {
+					for (int k = 0; k < parsed_tasks[j].successors.size(); k++)
+					{
+						successors.push_back(parsed_tasks[j].successors[k]);
+					}
+					break;
+				}
+			}
+		}
+	}
+
+	return false;
+
+	/*for (int i = 1; i < task_list.size(); i++)
+	{
 		for (int j = 0; j < i; j++)
 		{
 			for (int k = 0; k < task_list[i].successors.size(); k++)
@@ -826,7 +893,7 @@ bool SAT_encoder::check_presedence_violation(vector<Task>& task_list, vector<int
 		}
 	}
 
-	return false;
+	return false;*/
 }
 
 // Found on StackOverflow answer: https://stackoverflow.com/a/57399634
@@ -840,6 +907,8 @@ template <typename t> void SAT_encoder::move(vector<t>& v, size_t oldIndex, size
 		rotate(v.begin() + oldIndex, v.begin() + oldIndex + 1, v.begin() + newIndex + 1);
 	}
 }
+
+
 
 void SAT_encoder::construct_upper_bound_task_list(vector<Task>& task_list)
 {

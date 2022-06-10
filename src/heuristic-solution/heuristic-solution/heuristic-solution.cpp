@@ -57,18 +57,15 @@ struct Task
 };
 
 void parse_activities(string filename);
-void extend_initial_successors(Task& task);
 void calculate_rurs();
 void fix_presedence_constraint(vector<Task>& task_list);
 template <typename t> void move(vector<t>& v, size_t oldIndex, size_t newIndex);
-bool check_presedence_violation(vector<Task>& task_list);
-bool check_presedence_violation(vector<Task>& task_list, vector<int>& task_in_violation_at_index);
+bool check_presedence_violation(vector<Task>& task_list, vector<int>& task_in_violation_at_index, vector<Task>& complete_task_list);
 void construct_initial_task_list(vector<Task>& task_list);
 int calculate_makespan(vector<Task>& task_list, int task_count);
 int find_earliest_start_time(int duration, vector<int> resource_requirements, vector<vector<int>>& remaining_resources, int earliest_start_time);
 int construct_schedule(vector<Task>& task_list, vector<int>& start_times, int task_count);
 int optimize_task_list(int makespan, vector<Task>& job_list, bool preempt_tasks);
-void extend_successors(Task& task, vector<Task>& task_list);
 
 //void write_resource_schedule(int makespan, vector<int>& start_times, vector<Task>& task_list, string filename);
 //void try_build_3d_resource_schedule(vector<Task>& task_list, vector<int>& start_times, vector<vector<vector<int>>>& resource_schedule, vector<vector<vector<int>>>& resource_schedule_preemption_ids);
@@ -76,12 +73,12 @@ void extend_successors(Task& task, vector<Task>& task_list);
 // Parameters to tune the algorithm
 int destruction_count = 0;
 const int cpu_time_deadline_optimization = 4; // seconds
-const int cpu_time_deadline_preemption = 6; // seconds
+const int cpu_time_deadline_preemption = 60; // seconds
 const int setup_time = 1;
 
 // Global variables for the specific problem instance used
 const string project_lib_folder_j30 = "C:/Projects/cse3000/src/parsed-datasets/j30.sm/";
-const string project_lib_file_j30 = "j301_0.RCP";
+const string project_lib_file_j30 = "j301_3.RCP";
 
 int horizon;
 int optimal_solution;
@@ -97,7 +94,6 @@ int main()
 {
 #pragma region setup
 	parse_activities(project_lib_folder_j30 + project_lib_file_j30);
-	extend_initial_successors(initial_tasks[0]);
 	calculate_rurs();
 #pragma endregion
 
@@ -203,24 +199,6 @@ void parse_activities(string filename)
 	project_lib.close();
 }
 
-void extend_initial_successors(Task& task)
-{
-	if (task.split_task_id == initial_tasks[initial_tasks.size() - 1].split_task_id) {
-		return;
-	}
-	for (int i = 0; i < task.successors.size(); i++)
-	{
-		extend_initial_successors(initial_tasks[task.successors[i]]);
-		for (int j = 0; j < initial_tasks[task.successors[i]].successors.size(); j++)
-		{
-			if (find(task.successors.begin(), task.successors.end(), initial_tasks[task.successors[i]].successors[j]) == task.successors.end()) {
-				task.successors.push_back(initial_tasks[task.successors[i]].successors[j]);
-			}
-		}
-		sort(task.successors.begin(), task.successors.end());
-	}
-}
-
 void calculate_rurs()
 {
 	for (int i = 0; i < initial_task_count; i++)
@@ -233,10 +211,10 @@ void fix_presedence_constraint(vector<Task>& task_list)
 {
 	vector<int> task_in_violation_at_index;
 
-	bool presedence_violated = check_presedence_violation(task_list, task_in_violation_at_index);
+	bool presedence_violated = check_presedence_violation(task_list, task_in_violation_at_index, task_list);
 	while (presedence_violated) {
 		move(task_list, task_in_violation_at_index[0], task_in_violation_at_index[1]);
-		presedence_violated = check_presedence_violation(task_list, task_in_violation_at_index);
+		presedence_violated = check_presedence_violation(task_list, task_in_violation_at_index, task_list);
 	}
 }
 
@@ -252,39 +230,62 @@ template <typename t> void move(vector<t>& v, size_t oldIndex, size_t newIndex)
 	}
 }
 
-bool check_presedence_violation(vector<Task>& task_list, vector<int>& task_in_violation_at_index)
+template<typename T>
+std::vector<T> flatten(std::vector<std::vector<T>> const& vec)
 {
-	for (int i = 1; i < task_list.size(); i++)
-	{
-		for (int j = 0; j < i; j++)
-		{
-			int sucessor_index = find(task_list[i].successors.begin(), task_list[i].successors.end(), task_list[j].split_task_id) - task_list[i].successors.begin();
-			if (sucessor_index != task_list[i].successors.end() - task_list[i].successors.begin())
-			{
-				task_in_violation_at_index = { i, j };
-				return true;
-			}
-		}
+	std::vector<T> flattened;
+	for (auto const& v : vec) {
+		flattened.insert(flattened.end(), v.begin(), v.end());
 	}
-
-	return false;
+	return flattened;
 }
 
-bool check_presedence_violation(vector<Task>& task_list)
+bool check_presedence_violation(vector<Task>& task_list, vector<int>& task_in_violation_at_index, vector<Task>& complete_task_list)
 {
 	for (int i = 1; i < task_list.size(); i++)
 	{
-		for (int j = 0; j < i; j++)
+		vector<int> successors = task_list[i].successors;
+		while (successors.size() > 0)
 		{
-			int sucessor_index = find(task_list[i].successors.begin(), task_list[i].successors.end(), task_list[j].split_task_id) - task_list[i].successors.begin();
-			if (sucessor_index != task_list[i].successors.end() - task_list[i].successors.begin())
+			int successor = successors[0];
+			successors.erase(successors.begin());
+			for (int j = 0; j < i; j++)
 			{
-				return true;
+				if (task_list[j].split_task_id == successor) {
+					task_in_violation_at_index = { i,j };
+					return true;
+				}
+			}
+			for (int j = 0; j < complete_task_list.size(); j++)
+			{
+				if (complete_task_list[j].split_task_id == successor)
+				{
+					for (int k = 0; k < complete_task_list[j].successors.size(); k++)
+					{
+						successors.push_back(complete_task_list[j].successors[k]);
+					}
+					break;
+				}
 			}
 		}
 	}
 
 	return false;
+
+	//for (int i = 1; i < task_list.size(); i++)
+	//{
+	//	for (int j = 0; j < i; j++)
+	//	{
+	//		int sucessor_index = find(task_list[i].successors.begin(), task_list[i].successors.end(), task_list[j].split_task_id) - task_list[i].successors.begin();
+	//		if (sucessor_index != task_list[i].successors.end() - task_list[i].successors.begin())
+	//		{
+	//			task_in_violation_at_index = { i, j };
+	//			return true;
+	//		}
+	//	}
+	//}
+
+	//return false;
 }
 
 void construct_initial_task_list(vector<Task>& task_list)
@@ -307,7 +308,8 @@ void construct_initial_task_list(vector<Task>& task_list)
 		for (int i = 0; i <= new_task_list.size(); i++)
 		{
 			new_task_list.insert(new_task_list.begin() + i, to_schedule_task);
-			if (!check_presedence_violation(new_task_list)) {
+			vector<int>tmp(2);
+			if (!check_presedence_violation(new_task_list, tmp, task_list)) {
 				int makespan_test = calculate_makespan(new_task_list, initial_task_count);
 				if (makespan_test < minimum_makespan) {
 					minimum_makespan = makespan_test;
@@ -455,6 +457,7 @@ int optimize_task_list(int makespan, vector<Task>& task_list, bool preempt_tasks
 			int split_index = (rand() % (to_be_destroyed.duration - 1)) + 1;
 
 			Task to_be_destroyed_begin = to_be_destroyed;
+			int max_id = job_id.get_max_id();
 			to_be_destroyed_begin.split_task_id = job_id.get_next_id();
 			to_be_destroyed_begin.duration = split_index;
 
@@ -462,7 +465,7 @@ int optimize_task_list(int makespan, vector<Task>& task_list, bool preempt_tasks
 			to_be_destroyed_end.split_task_id = job_id.get_next_id();
 			to_be_destroyed_end.duration = to_be_destroyed.duration - split_index + setup_time;
 
-			to_be_destroyed_begin.successors.push_back(to_be_destroyed_end.split_task_id);
+			to_be_destroyed_begin.successors = { to_be_destroyed_end.split_task_id };
 
 			new_task_list.push_back(to_be_destroyed_begin);
 			new_task_list.push_back(to_be_destroyed_end);
@@ -479,7 +482,6 @@ int optimize_task_list(int makespan, vector<Task>& task_list, bool preempt_tasks
 			destruction_split_ids.push_back(vector<vector<int>> {vector<int>{to_be_destroyed.split_task_id}, vector<int>{to_be_destroyed_begin.split_task_id, to_be_destroyed_end.split_task_id}});
 		}
 	}
-	extend_successors(new_task_list[0], new_task_list);
 
 	vector<Task> remaining_tasks = new_task_list;
 	vector<vector<vector<Task>>> destroyed_tasks;
@@ -509,6 +511,43 @@ int optimize_task_list(int makespan, vector<Task>& task_list, bool preempt_tasks
 
 	vector<int> cleanup_task_ids;
 
+	if (preempt_tasks) {
+		for (int i = 0; i < destroyed_tasks.size(); i++)
+		{
+			if (destroyed_tasks[i].size() < 2)
+			{
+				continue;
+			}
+			for (int j = 0; j < destroyed_tasks.size(); j++)
+			{
+				if (j == i)
+				{
+					continue;
+				}
+				for (int k = 0; k < destroyed_tasks[j].size(); k++)
+				{
+					for (int l = 0; l < destroyed_tasks[j][k].size(); l++)
+					{
+						for (int m = 0; m < destroyed_tasks[j][k][l].successors.size(); m++)
+						{
+							if (destroyed_tasks[i][1][0].task_id == destroyed_tasks[j][k][l].successors[m])
+							{
+								destroyed_tasks[j][k][l].successors.push_back(destroyed_tasks[i][1][0].split_task_id);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	vector<int>tmp(2);
+	vector<Task> successor_test_list = remaining_tasks;
+	for (vector<vector<Task>> destroyed_task : destroyed_tasks) {
+		vector<Task> flattened = flatten(destroyed_task);
+		successor_test_list.insert(successor_test_list.end(), flattened.begin(), flattened.end());
+	}
+
 	while (destroyed_tasks.size() > 0)
 	{
 		vector<vector<Task>> destroyed_task = destroyed_tasks[0];
@@ -527,7 +566,7 @@ int optimize_task_list(int makespan, vector<Task>& task_list, bool preempt_tasks
 				for (int k = 0; k < possible_task_list.size(); k++)
 				{
 					possible_task_list.insert(possible_task_list.begin() + k, destroyed_task[i][j]);
-					if (!check_presedence_violation(possible_task_list)) {
+					if (!check_presedence_violation(possible_task_list, tmp, successor_test_list)) {
 						int makespan_test = calculate_makespan(possible_task_list, job_id.get_max_id());
 						if (makespan_test < minimum_makespan) {
 							minimum_makespan = makespan_test;
@@ -580,39 +619,6 @@ int optimize_task_list(int makespan, vector<Task>& task_list, bool preempt_tasks
 	}
 
 	return makespan;
-}
-
-void extend_successors(Task& task, vector<Task>& task_list)
-{
-	if (task.split_task_id == initial_task_count - 1) {
-		return;
-	}
-	for (int i = 0; i < task.successors.size(); i++)
-	{
-		int successor_id = task.successors[i];
-		Task successor;
-		bool successor_found = false;
-		int j = 1;
-		while (!successor_found)
-		{
-			if (task_list[j].split_task_id == successor_id)
-			{
-				successor = task_list[j];
-				successor_found = true;
-			}
-			j++;
-		}
-		extend_successors(successor, task_list);
-		for (int j = 0; j < successor.successors.size(); j++)
-		{
-			int successor_successor_id = successor.successors[j];
-			if (find(task.successors.begin(), task.successors.end(), successor_successor_id) == task.successors.end())
-			{
-				task.successors.push_back(successor_successor_id);
-			}
-		}
-		sort(task.successors.begin(), task.successors.end());
-	}
 }
 
 //void write_resource_schedule(int makespan, vector<int>& start_times, vector<Task>& task_list, string filename)

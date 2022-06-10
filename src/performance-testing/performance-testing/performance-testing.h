@@ -10,19 +10,19 @@
 #include <random>
 #include <ctime>
 #include <tuple>
+#include <filesystem>
 #include "../pblib/pblib/pb2cnf.h"
 #include "../pumpkin-solver/pumpkin-solver/pumpkin-solver.h"
 
 using namespace std;
 
-// Parameters to tune the algorithm
-const int setup_time = 1; // time_units
-const int cpu_time_deadline = 20; // seconds
-
 // Global variables for the specific problem instance used
-const string project_lib_folder = "C:/Projects/cse3000/src/parsed-datasets/j30.sm/";
-const string project_lib_file = "j301_0.RCP";
+//const string project_lib_folder = "C:/Projects/cse3000/src/parsed-datasets/j30.sm/";
+//const string project_lib_file = "j301_0.RCP";
 
+bool solve_heuristically;
+bool done_encoding = false;
+string project_file_name;
 const string cnf_file_type = "wcnf";
 static string extract_filename_without_extention(string file_path);
 
@@ -83,24 +83,26 @@ private:
 	int resource_count;
 	vector<int> resource_availabilities;
 
+	int makespan;
+
 	// Global task counter to prevent duplicates
 	Id job_id;
 
 	void parse_activities(string filename);
-	void extend_initial_successors(Task& task);
 	void calculate_rurs();
 	void fix_presedence_constraint(vector<Task>& task_list);
-	template <typename t> void move(vector<t>& v, size_t oldIndex, size_t newIndex);
-	bool check_presedence_violation(vector<Task>& task_list, vector<int>& task_in_violation_at_index);
+	template<typename t> void move(vector<t>& v, size_t oldIndex, size_t newIndex);
+	template<typename T> vector<T> flatten(vector<vector<T>> const& vec);
+	bool check_presedence_violation(vector<Task>& task_list, vector<int>& task_in_violation_at_index, vector<Task>& complete_task_list);
 	void construct_initial_task_list(vector<Task>& task_list);
 	int calculate_makespan(vector<Task>& task_list, int task_count);
 	int find_earliest_start_time(int duration, vector<int> resource_requirements, vector<vector<int>>& remaining_resources, int earliest_start_time);
 	int construct_schedule(vector<Task>& task_list, vector<int>& start_times, int task_count);
 	int optimize_task_list(int makespan, vector<Task>& job_list, bool preempt_tasks, int setup_time);
-	void extend_successors(Task& task, vector<Task>& task_list);
 
 public:
-	int solve(string project_lib_folder, string project_lib_file, int setup_time, int cpu_time_deadline);
+	int solve(string project_lib_folder, string project_lib_file, int setup_time);
+	int get_best_makespan();
 };
 
 class SAT_encoder
@@ -147,7 +149,7 @@ private:
 		void set_reusable_id(int reusable_id)
 		{
 			if (reusable_id >= next_unused_id) {
-				throw new exception("reusable id is outside of the used id range");
+				throw runtime_error("reusable id is outside of the used id range");
 			}
 			reusable_ids.push_back(reusable_id);
 		}
@@ -179,12 +181,11 @@ private:
 	void critical_path();
 	void forward_pass(pair<int, int> task_segment_id, int early_start);
 	void backward_pass(pair<int, int> task_segment_id, int late_finish);
-	void preempt_tasks();
-	void preempt_task(Task task);
+	void preempt_tasks(int setup_time);
+	void preempt_task(Task task, int setup_time);
 	void set_start_variables();
 	void set_process_variables();
 	void remove_duplicate_segments(vector<Task>& task_list);
-	void extend_initial_successors(Task& task, vector<Task>& task_list);
 	void calculate_rurs(vector<Task>& task_list);
 	void fix_presedence_constraint(vector<Task>& task_list);
 	bool check_presedence_violation(vector<Task>& task_list, vector<int>& task_in_violation_at_index);
@@ -214,5 +215,8 @@ private:
 	CNF_variable cnf_variable;
 
 public:
-	string encode(string project_lib_folder, string project_lib_file, int setup_time, int cpu_time_deadline);
+	string encode(string project_lib_folder, string project_lib_file, int setup_time);
 };
+
+Heuristic_Solver heuristic_solver;
+SAT_encoder sat_encoder;
