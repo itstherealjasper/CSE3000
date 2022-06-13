@@ -1,0 +1,465 @@
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.0
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.2
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.4
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.6
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.8
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.10
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.12
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.14
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.16
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.18
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.20
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.22
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.24
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.26
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.28
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.30
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.32
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.34
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.36
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.38
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.40
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.42
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.44
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.46
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.48
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.50
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.52
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.54
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.56
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.58
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.60
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.62
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.64
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.66
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.68
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.70
+srun: error: cmp093: task 0: Segmentation fault
+srun: launch/slurm: _step_signal: Terminating StepId=215885.72
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.73
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.74
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.76
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.78
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.80
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.81
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.82
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.84
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.86
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.87
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.88
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.89
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.90
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.92
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.93
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.94
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.96
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.98
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.100
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.102
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.104
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.106
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.108
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.110
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.112
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.114
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.116
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.118
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.120
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.121
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.122
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.123
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.124
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.125
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.126
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.127
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.128
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.129
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.130
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.131
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.132
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.133
+srun: error: cmp093: task 0: Segmentation fault
+srun: launch/slurm: _step_signal: Terminating StepId=215885.134
+/usr/bin/timeout: the monitored command dumped core
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.136
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.137
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.138
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.139
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.140
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.141
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.142
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.143
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.144
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.146
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.148
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.150
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.152
+srun: error: cmp093: task 0: Segmentation fault
+srun: launch/slurm: _step_signal: Terminating StepId=215885.154
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.155
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.156
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.158
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.159
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.160
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.161
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.162
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.163
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.164
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.165
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.166
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.168
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.170
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.171
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.172
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.174
+srun: error: cmp093: task 0: Segmentation fault
+srun: launch/slurm: _step_signal: Terminating StepId=215885.176
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.177
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.178
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.180
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.181
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.182
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.183
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.184
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.185
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.186
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.187
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.188
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.189
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.190
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.191
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.192
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.193
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.194
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.195
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.196
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.197
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.198
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.199
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.200
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.201
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.202
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.204
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.205
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.206
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.208
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.209
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.210
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.212
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.213
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.214
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.215
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.216
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.217
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.218
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.219
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.220
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.221
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.222
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.224
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.225
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.226
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.227
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.228
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.229
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.230
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.231
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:544: int Heuristic_Solver::optimize_task_list(int, std::vector<Heuristic_Solver::Task>&, bool, int): Assertion `optimal_insertion_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.232
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.233
+srun: error: cmp093: task 0: Segmentation fault
+srun: launch/slurm: _step_signal: Terminating StepId=215885.234
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.235
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:288: void Heuristic_Solver::construct_initial_task_list(std::vector<Heuristic_Solver::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.236
+performance-testing: /home/jaspervermeule/executables/performance-testing/performance-testing.cpp:946: void SAT_encoder::construct_upper_bound_task_list(std::vector<SAT_encoder::Task>&): Assertion `optimal_index >= 0' failed.
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp093: task 0: Aborted
+srun: launch/slurm: _step_signal: Terminating StepId=215885.237
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.238
+srun: error: cmp093: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=215885.239

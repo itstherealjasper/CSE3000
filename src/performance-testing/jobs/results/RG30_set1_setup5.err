@@ -1,0 +1,483 @@
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.0
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.1
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.2
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.3
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.4
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.5
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.6
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.7
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.8
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.9
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.10
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.11
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.12
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.13
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.14
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.15
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.16
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.17
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.18
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.19
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.20
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.21
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.22
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.23
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.24
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.25
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.26
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.27
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.28
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.29
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.30
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.31
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.32
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.33
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.34
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.35
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.36
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.37
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.38
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.39
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.40
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.41
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.42
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.43
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.44
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.45
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.46
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.47
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.48
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.49
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.50
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.51
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.52
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.53
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.54
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.55
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.56
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.57
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.58
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.59
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.60
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.61
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.62
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.63
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.64
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.65
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.66
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.67
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.68
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.69
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.70
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.71
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.72
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.73
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.74
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.75
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.76
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.77
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.78
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.79
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.80
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.81
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.82
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.83
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.84
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.85
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.86
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.87
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.88
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.89
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.90
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.91
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.92
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.93
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.94
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.95
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.96
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.97
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.98
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.99
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.100
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.101
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.102
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.103
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.104
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.105
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.106
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.107
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.108
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.109
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.110
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.111
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.112
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.113
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.114
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.115
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.116
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.117
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.118
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.119
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.120
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.121
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.122
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.123
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.124
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.125
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.126
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.127
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.128
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.129
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.130
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.131
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.132
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.133
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.134
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.135
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.136
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.137
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.138
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.139
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.140
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.141
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.142
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.143
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.144
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.145
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.146
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.147
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.148
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.149
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.150
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.151
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.152
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.153
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.154
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.155
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.156
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.157
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.158
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.159
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.160
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.161
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.162
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.163
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.164
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.165
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.166
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.167
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.168
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.169
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.170
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.171
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.172
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.173
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.174
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.175
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.176
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.177
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.178
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.179
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.180
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.181
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.182
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.183
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.184
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.185
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.186
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.187
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.188
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.189
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.190
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.191
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.192
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.193
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.194
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.195
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.196
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.197
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.198
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.199
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.200
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.201
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.202
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.203
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.204
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.205
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.206
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.207
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.208
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.209
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.210
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.211
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.212
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.213
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.214
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.215
+/usr/bin/timeout: the monitored command dumped core
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.216
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.217
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.218
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.219
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.220
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.221
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.222
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.223
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.224
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.225
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.226
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.227
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.228
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.229
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.230
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.231
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.232
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.233
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.234
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.235
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.236
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.237
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.238
+srun: error: cmp003: task 0: Exited with exit code 124
+srun: launch/slurm: _step_signal: Terminating StepId=213111.239
