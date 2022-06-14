@@ -1,0 +1,5 @@
+/mnt/c/Projects/cse3000/src/result-parser/CMakeFiles/edit_cache.dir
+/mnt/c/Projects/cse3000/src/result-parser/CMakeFiles/rebuild_cache.dir
+/mnt/c/Projects/cse3000/src/result-parser/result-parser/CMakeFiles/result-parser.dir
+/mnt/c/Projects/cse3000/src/result-parser/result-parser/CMakeFiles/edit_cache.dir
+/mnt/c/Projects/cse3000/src/result-parser/result-parser/CMakeFiles/rebuild_cache.dir

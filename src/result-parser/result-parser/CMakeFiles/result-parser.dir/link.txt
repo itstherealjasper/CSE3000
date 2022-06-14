@@ -1,0 +1,1 @@
+/usr/sbin/c++ "CMakeFiles/result-parser.dir/result-parser.cpp.o" -o result-parser  -lstdc++fs 

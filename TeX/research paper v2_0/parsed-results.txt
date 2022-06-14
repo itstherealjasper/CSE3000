@@ -1,0 +1,71 @@
+Filename read:          DC1_all_setup1.out
+Failed instances %:     20
+SAT solved %:           77.0833
+SAT solved optimally %: 65.2027
+Dev% heuristic:         -0.161695
+Dev% SAT:               -0.182647
+% improved by SAT:      12.8378
+
+Filename read:          DC1_all_setup2.out
+Failed instances %:     95.4167
+SAT solved %:           68.1818
+SAT solved optimally %: 46.6667
+Dev% heuristic:         -0.15674
+Dev% SAT:               0.0815922
+% improved by SAT:      20
+
+Filename read:          DC1_all_setup5.out
+Failed instances %:     38.5417
+SAT solved %:           80.339
+SAT solved optimally %: 90.7173
+Dev% heuristic:         0.705696
+Dev% SAT:               -0.204958
+% improved by SAT:      18.5654
+
+Filename read:          J30_all_setup1.out
+Failed instances %:     0
+SAT solved %:           26.0417
+SAT solved optimally %: 73.6
+Dev% heuristic:         1.93463
+Dev% SAT:               1.37823
+% improved by SAT:      30.4
+
+Filename read:          J30_all_setup2.out
+Failed instances %:     25.4167
+SAT solved %:           30.4469
+SAT solved optimally %: 86.2385
+Dev% heuristic:         2.42239
+Dev% SAT:               0.324666
+% improved by SAT:      39.4495
+
+Filename read:          J30_all_setup5.out
+Failed instances %:     17.0833
+SAT solved %:           29.8995
+SAT solved optimally %: 85.7143
+Dev% heuristic:         2.94301
+Dev% SAT:               1.83022
+% improved by SAT:      37.8151
+
+Filename read:          RG30_all_setup1.out
+Failed instances %:     1.04167
+SAT solved %:           23.5789
+SAT solved optimally %: 6.25
+Dev% heuristic:         5.31935
+Dev% SAT:               11.8474
+% improved by SAT:      17.8571
+
+Filename read:          RG30_all_setup2.out
+Failed instances %:     1.25
+SAT solved %:           23.6287
+SAT solved optimally %: 8.92857
+Dev% heuristic:         5.82648
+Dev% SAT:               10.4312
+% improved by SAT:      24.1071
+
+Filename read:          RG30_all_setup5.out
+Failed instances %:     1.66667
+SAT solved %:           24.7881
+SAT solved optimally %: 11.9658
+Dev% heuristic:         5.55277
+Dev% SAT:               9.53795
+% improved by SAT:      26.4957
