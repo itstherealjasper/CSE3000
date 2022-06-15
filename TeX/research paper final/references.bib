@@ -71,6 +71,16 @@ Multi-mode RCPSP},
    type = {Journal Article}
 }
 
+@book{RN53,
+   author = {Cormen, T. H. and Leiserson, C. E. and Rivest, R. L.},
+   title = {Introduction to algorithms},
+   publisher = {MIT press},
+   edition = {1st},
+   ISBN = {0262031418},
+   year = {1990},
+   type = {Book}
+}
+
 @article{RN14,
    author = {Debels, D. and Vanhoucke, M.},
    title = {A Decomposition-Based Genetic Algorithm for the Resource-Constrained Project-Scheduling Problem},
@@ -105,6 +115,23 @@ Applications},
    DOI = {https://doi.org/10.1016/0377-2217(95)00358-4},
    url = {https://www.sciencedirect.com/science/article/pii/0377221795003584},
    year = {1996},
+   type = {Journal Article}
+}
+
+@article{RN38,
+   author = {Eén, N. and Sörensson, N.},
+   title = {Translating Pseudo-Boolean Constraints into SAT},
+   journal = {Journal on Satisfiability, Boolean Modeling and Computation},
+   volume = {2},
+   pages = {1-26},
+   abstract = {In this paper, we describe and evaluate three different techniques for translating pseudo-boolean constraints (linear constraints over boolean variables) into clauses that can be handled by a standard SAT-solver. We show that by applying a proper mix of translation techniques, a SAT-solver can perform on a par with the best existing native pseudo-boolean solvers. This is particularly valuable in those cases where the constraint problem of interest is naturally expressed as a SAT problem, except for a handful of constraints. Translating those constraints to get a pure clausal problem will take full advantage of the latest improvements in SAT research. A particularly interesting result of this work is the efficiency of sorting networks to express pseudo-boolean constraints. Although tangential to this presentation, the result gives a suggestion as to how synthesis tools may be modified to produce arithmetic circuits more suitable for SAT based reasoning.},
+   keywords = {pseudo-Boolean
+SAT-solver
+SAT translation
+integer linear programming},
+   ISSN = {1574-0617},
+   DOI = {10.3233/SAT190014},
+   year = {2006},
    type = {Journal Article}
 }
 
@@ -182,6 +209,21 @@ Networks},
    type = {Book Section}
 }
 
+@article{RN17,
+   author = {Horbach, A.},
+   title = {A Boolean satisfiability approach to the resource-constrained project scheduling problem},
+   journal = {Annals of Operations Research},
+   volume = {181},
+   number = {1},
+   pages = {89-107},
+   abstract = {We formulate the resource-constrained project scheduling problem as a satisfiability problem and adapt a satisfiability solver for the specific domain of the problem. Our solver is lightweight and shows good performance both in finding feasible solutions and in proving lower bounds. Our numerical tests allowed us to close several benchmark instances of the RCPSP that have never been closed before by proving tighter lower bounds and by finding better feasible solutions. Using our method we solve optimally more instances of medium and large size from the benchmark library PSPLIB and do it faster compared to any other existing solver.},
+   ISSN = {1572-9338},
+   DOI = {https://doi.org/10.1007/s10479-010-0693-2},
+   url = {https://doi.org/10.1007/s10479-010-0693-2},
+   year = {2010},
+   type = {Journal Article}
+}
+
 @unpublished{RN13,
    author = {Kaplan, L.},
    title = {Resource-constrained project scheduling with setup times},
@@ -201,7 +243,7 @@ Networks},
 }
 
 @article{RN42,
-   author = {Moumene, Kl and Ferland, Jl A.},
+   author = {Moumene, K. and Ferland, J. A.},
    title = {Activity list representation for a generalization of the resource-constrained project scheduling problem},
    journal = {European Journal of Operational Research},
    volume = {199},

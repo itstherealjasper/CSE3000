@@ -26,15 +26,40 @@ This heuristic solution can any number of iterations of the destruction and cons
 
 
 \subsection{CNF Encoding}
-The CNF encoding is very much still in process and is therefore not a part of the draft version.
-%Variable \(w_{i,x,y,t}\) is equal to 1 if activity segment \(S^i_xD_y\) starts at time \(t\), and 0 otherwise.
-%\begin{align}
-%\sum_{y=1}^{d_i} \sum_{x=max(c-y+1,1)}^{min(d_i-y+1,c)} \sum_{t=0}^{T-y} w_{i,x,y,t}&=1	&	\all i\in N; c=1,...,d_i
-%\end{align}
+The conjunctive normal form encoding used for this research is based on existing work used to solve the RCPSP with SAT \cite{RN17}. This encoding was altered to include preemption.
 
-%\begin{equation}
-%\neg w_{i,x,y} \bigvee_{t\in{0,...,T-y}} s_{i,x,y,t}
-%\end{equation}
+For the new encoding a project has to be extended into a new network \(N^*\) by replacing each task with a new network of tasks that represents all possible ways the task could be preempted. This extension has already been documented but a short summary will be given \cite{RN1}. A task will be split into a set of all possible integer segments. From this new set of segments all chains of segments are generated that represent the original task in its entirety. These chains can now replace the original task in the task network. All segments are added as new tasks with precedence relations representing the segment chains. All predecessors of the task get an additional successor for each segment that contains the first integer part of the original task. Each of the segments that contain the last integer part of the original task must also have the original successors of the task.
 
-\subsection{SAT solver}
-Due to difficulties during the CNF encoding my current planning does not allow for any time spent on improving the SAT solver.
+With the extended network the earliest \(es_i\) and its latest \(ls_i\) start times, its ealiest \(ef_i\) and its latest \(lf_i\) finish times are calculated using the critical-part method by the Floyd-Warshall algorithm \cite{RN53}. With these values two boolean variables will be defined and used in the SAT clauses. For each task \(i \in N\) and \(t \in \{es_i,...,ls_i\}\) there is a start variable \(s_{i,t}\) which is true if activity \(i\) start at time \(t\) and for east task \(i \in N\) and \(t \in \{es_i,...,lf_i\}\) a process variable \(u_{i,t}\) which is true if activity \(i\) is in process at time \(t\).
+
+Now the complete encoding can be made and it includes five types of clauses. The completion, consistency, precedence, resource and objective clauses. The first four are defined as hard clauses meaning the SAT solver must satisfy them. For the objective a set of soft clauses is used. The SAT solver will try and maximize the amount of soft clauses it can satisfy.
+
+Completion clauses make sure that each task segment is processed once and therefore making sure that all the work in the project is done. New subsets are required to define the completion clauses. \(C^*_{i,l} \subseteq N^*\) each have as elements all task segments that contain time segment \(l\) of task \(i\). Equation \ref{eq:equation2} gives the mathematical definition of the completion clauses.
+\begin{align}\label{eq:equation2}
+\bigvee_{t\in {es_i,...,ls_i}} s_{it}   &&  j\in N; l\in \{0,...,d_j\}; i\in C^*_{j,l}
+\end{align}
+
+When a start variable of a task is set to true the consistency clauses given in equation \ref{eq:equation3} ensure that the required process variables of the task are also set to true.
+\begin{align}\label{eq:equation3}
+\neg s_{i,t} \vee u_{i,l}   &&  i\in N^*;t\in \{es_i,...,ls_i\};l\in \{t,...,t+d_i-1\}
+\end{align}
+
+A set of precedence clauses is introduced to satisfy the required precedence constraints. This is done by only allowing a task to have a start variable set to true if all predecessors started early enough to be finished by that time. This clause is given in equation \ref{eq:equation4}.
+\begin{align}\label{eq:equation4}
+\neg s_{i,t} \bigvee_{l=es_j,...,es_i-d_j} s_{j,l}  &&  (j,i)\in A; t\in\{es_i,...,ls_i\}
+\end{align}
+
+The resource clauses are defined as pseudo-boolean function that are converted into true CNF. The conversion is done by first building binary decision diagrams from the pseudo-boolean function. Next the binary decision diagrams are converted to a set of CNF clauses that represent the same pseudo-boolean function. The process of converting pseudo-boolean into SAT is known and researched \cite{RN38}. The used pseudo-boolean function is given in equation \ref{eq:equation5}.
+\begin{align}\label{eq:equation5}
+\sum^n_{i=1} u_{i,t}r_{i,k} \leq a_k    &&  t\in \{1,...,T\}; k\in R
+\end{align}
+
+Lastly there are the objective clauses in equation \ref{eq:equation6}. These are soft clauses and the SAT solver tries to satisfy as many of these clauses as possible.
+\begin{align}\label{eq:equation6}
+s_{i,t} &&  t\in \{1,...,T\}; i = \text{dummy finish task}
+\end{align}
+
+When this encoding is done the result is run on the Pumpkin MAX-SAT solver that was provided to the research by supervisor Emir Demirović.
+
+% \subsection{SAT solver}
+% Due to difficulties during the CNF encoding my current planning does not allow for any time spent on improving the SAT solver.
