@@ -5,6 +5,8 @@ Each experiment is run on the high performance computing cluster at the Delft Un
 \subsection{Project data}
 To test the difference between the algorithmic approaches to solve instances with activity preemption a number of tests are performed using three different datasets. The complete datasets contain a different amount of problem instances (\# inst) and project ranging from 10 to 50 tasks (\# tasks). The J30 and RG30 datasets contain projects with 30 tasks and have 480 and 1800 instances respectively and the DC1 dataset has project ranging from 10 to 50 tasks also containing 1800 instances. For the experiments the a subset of the first 480 instances have been taken of all three datasets. This reduces the size of the projects in the DC1 dataset to a range from 10 to 20 tasks. The information about the datasets is summarized in table \ref{table:table1}.
 
+The networks structures of the datasets has been subject to earlier research. One thing of note is the serial/parallel indicator \(I_2\) (later renamed to SP) of the datasets \cite{RN65,RN63}. This indicator measures how close the network structure of a project is to a complete serial of paralles network. The indicator shows that both the DC1 and J30 have a more limited SP indicator range and the RG30 has the largest range. This means that the RG30 dataset has the biggest variance in network structures for its project instances.
+
 \begin{table}
 	\begin{center}
 		\caption{Summary of datasets used in the experiments}
@@ -103,7 +105,7 @@ In table \ref{table:table5} the comparison between the results of the SAT solver
 
 \begin{table}
 	\begin{center}
-		\caption{Deviations from known optimal or lower bound makespan solutions}
+		\caption{Comparison of SAT solver solutions against heuristic algorithm}
 		\label{table:table5}
 		\begin{tabular}{ c | c c c }
 			Dataset & \(s\) & \%Imp by SAT & \%Equal \\
@@ -128,11 +130,11 @@ Finally an overview of the SAT algorithm performance is given in table \ref{tabl
 		\caption{SAT algorithm performance}
 		\label{table:table6}
 		\begin{tabular}{ c | c c c }
-			Dataset & \%Satisfied & \%Optimality proven & \%Improved \\
+			Dataset & \%Satisfied & \%Optimality proven \\
 			\hline
-			DC1 & 75.2 & 67.5 & 20.6 \\
-			J30 & 28.8 & 81.9 & 35.9 \\ 
-			RG30 & 24.0 & 9.0 & 22.8
+			DC1 & 75.2 & 67.5 \\
+			J30 & 28.8 & 81.9 \\ 
+			RG30 & 24.0 & 9.0
 		\end{tabular}
 	\end{center}
 \end{table}
