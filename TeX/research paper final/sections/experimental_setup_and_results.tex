@@ -1,11 +1,11 @@
 \section{Experimental Setup and Results}
-In order to test the performance of the different algorithmic approaches to solving PRCPSP-ST a number of experiments have been carried out.
-Each experiment is run on the high performance computing cluster at the Delft University of Technology. The algorithms have access to 8GB RAM and 1 core of the Intel(R) Xeon(R) Gold 6248R CPU running at a base frequency of 3.00 GHz and max turbo frequency of 4.00 GHz.
+To test the performance of the different algorithmic approaches to solving PRCPSP-ST several experiments have been carried out.
+Each experiment is run on the high-performance computing cluster at the Delft University of Technology. The algorithms have access to 8GB RAM and 1 core of the Intel(R) Xeon(R) Gold 6248R CPU running at a base frequency of 3.00 GHz and a max turbo frequency of 4.00 GHz.
 
 \subsection{Project data}
-To test the difference between the algorithmic approaches to solve instances with activity preemption a number of tests are performed using three different datasets. The complete datasets contain a different amount of problem instances (\# inst) and project ranging from 10 to 50 tasks (\# tasks). The J30 from the PSPLIB \cite{RN25} and RG30 datasets contain projects with 30 tasks and have 480 and 1800 instances respectively and the DC1 dataset has project ranging from 10 to 50 tasks also containing 1800 instances. For the experiments the a subset of the first 480 instances have been taken of all three datasets. This reduces the size of the projects in the DC1 dataset to a range from 10 to 20 tasks. The information about the datasets is summarized in table \ref{table:table1}.
+To test the difference between the algorithmic approaches to solve instances with activity preemption several tests are performed using three different datasets. The complete datasets contain a different amount of problem instances (\# inst) and projects ranging from 10 to 50 tasks (\# tasks). The J30 from the PSPLIB \cite{RN25} and RG30 datasets contain projects with 30 tasks and have 480 and 1800 instances respectively and the DC1 dataset has projects ranging from 10 to 50 tasks also containing 1800 instances. For the experiments, the subset of the first 480 instances has been taken from all three datasets. This reduces the size of the projects in the DC1 dataset to a range from 10 to 20 tasks. The information about the datasets is summarized in table \ref{table:table1}.
 
-The networks structures of the datasets has been subject to earlier research. One thing of note is the serial/parallel indicator \(I_2\) (later renamed to SP) of the datasets \cite{RN65,RN63}. This indicator measures how close the network structure of a project is to a complete serial of paralles network. The indicator shows that both the DC1 and J30 have a more limited SP indicator range and the RG30 has the largest range. This means that the RG30 dataset has the biggest variance in network structures for its project instances.
+The network structures of the datasets have been subject to earlier research. One thing of note is the serial/parallel indicator \(I_2\) (later renamed to SP) of the datasets \cite{RN65, RN63}. This indicator measures how close the network structure of a project is to a complete serial or parallel network. The indicator shows that both the DC1 and J30 have a more limited SP indicator range and the RG30 has the largest range. This means that the RG30 dataset has the biggest variance in network structures for its project instances.
 
 \begin{table}
 	\begin{center}
@@ -26,16 +26,16 @@ The setup time penalty \(s\) is set to 1, 2 and 5 time units to test the impact 
 To solve the instances the tweaked version of the iterated greedy heuristic is used to calculate a baseline and the CNF encoding run on the Pumpkin MAX-SAT solver is used to calculate data to compare to the baseline. Each algorithm is run for 60 seconds of CPU time on each instance.
 
 \subsection{Performance indicators}
-The percentage of schedules that can be reduced below the known optimal solution by allowing preemption is calculated to motivate why introducing preemption can be beneficial for certain projects. This value is the calculated by taking the percentage of instances within a dataset for a certain setup time that is lower than the known optimal makespan. Additionally the deviation percentage of the lower makespan can give an idication of the amount of time saved and is also calculated.
+The percentage of schedules that can be reduced below the known optimal solution by allowing preemption is calculated to motivate why introducing preemption can be beneficial for certain projects. This value is then calculated by taking the percentage of instances within a dataset for a certain setup time that is lower than the known optimal makespan. Additionally, the deviation percentage of the lower makespan can indicate the amount of time saved and is also calculated.
 
-To assess the performance two test values are calculated. First the average percentage deviation from the either the known optimal makespan or the lower bound makespan without activity preemption is calculated. This is used to check if both algorithms can come up with schedules that are reasonably close to existing solutions. The second test value is the percentage of makespans that is improved by the CNF endocing run on the Pumpkin MAX-SAT solver compared to the iterated greedy heuristic solution. This measure will show if using a CNF encoding instead of a heuristic approach without any further optimization could be used to find more optimal schedules.
+To assess the performance two test values are calculated. First, the average percentage deviation from either the known optimal makespan or the lower bound makespan without activity preemption is calculated. This is used to check if both algorithms can come up with schedules that are reasonably close to existing solutions. The second test value is the percentage of makespans that is improved by the CNF encoding run on the Pumpkin MAX-SAT solver compared to the iterated greedy heuristic solution. This measure will show if using a CNF encoding instead of a heuristic approach without any further optimization could be used to find more optimal schedules.
 
-During the assessment of the two test values it has to be taken into account that the CNF encoding solved by a SAT solver might not produce a single schedule in the given time limit. So a percentage of instances where the SAT solver finds a solution is also calculated. This number will indicate the tradeoff for finding a proven optimal solution when time to create a schedule is limited.
+During the assessment of the two test values, it must be considered that the CNF encoding solved by a SAT solver might not produce a single schedule within the given time limit. So, a percentage of instances where the SAT solver finds a solution is also calculated. This number will indicate the trade-off for finding a proven optimal solution when the time to create a schedule is limited.
 
 \subsection{Results}
 The experiments described have been performed and the data is collected and summarized.
 
-Table \ref{table:table2} shows the percentage of instances for which the algorithms could find a lower makespan when preemption is allowed (\%Imp). For the lower setup times of 1 and 2 time units the heuristic approach could find reduces makespans in 0.8 to 13\% of instances. This number drops down to almost 0\% for the high setup time of 5 time units. The SAT solver approach shows a similar range of 1.9 to 13.6\% for the lower setup times but this number stays more consistent at a range of 1.5 to 10.8\% when the setup times are increased to 5 time units.
+Table \ref{table:table2} shows the percentage of instances for which the algorithms could find a lower makespan when preemption is allowed (\%Imp). For the lower setup times of 1 and 2 time units, the heuristic approach could find reduces makespans in 0.8 to 13\% of instances. This number drops down to almost 0\% for the high setup time of 5 time units. The SAT solver approach shows a similar range of 1.9 to 13.6\% for the lower setup times but this number stays more consistent at a range of 1.5 to 10.8\% when the setup times are increased to 5 time units.
 
 \begin{table}
 	\begin{center}
@@ -57,7 +57,7 @@ Table \ref{table:table2} shows the percentage of instances for which the algorit
 	\end{center}
 \end{table}
 
-For the improved instances the deviation percentage (\%Dev) from the known optimal solutions are shown in table \ref{table:table3}. When the heuristic algorithm finds an improved schedule the deviation percentage from the known optimal solution is around -3.8\% for the DC1 dataset, -1.2\% for the RG30 dataset and -2.5\% for the J30 dataset. The SAT solver algorithm has values of -4.4\%, -3.4\% and -1.6\% for those datasets respectively. These are the averaged values over the different setup times.
+For the improved instances, the deviation percentage (\%Dev) from the known optimal solutions is shown in table \ref{table:table3}. When the heuristic algorithm finds an improved schedule the deviation percentage from the known optimal solution is around -3.8\% for the DC1 dataset, -1.2\% for the RG30 dataset and -2.5\% for the J30 dataset. The SAT solver algorithm has values of -4.4\%, -3.4\% and -1.6\% for those datasets respectively. These are the averaged values over the different setup times.
 
 \begin{table}
 	\begin{center}
@@ -79,7 +79,7 @@ For the improved instances the deviation percentage (\%Dev) from the known optim
 	\end{center}
 \end{table}
 
-Table 4 shows the average deviation percentage (\%Dev) of all instances compared to the known optimal solutions. For the DC1 dataset all deviations for both algorithms are close to 0. The results for dataset J30 shows a higher deviation of around 2 to 3\% for the heuristic algorithm and around 0.5 to 1.5\% for the SAT solve algorithm. The higher number indicates the algorithms could not find the known optimal solutions on average. For the RG30 dataset these numbers go up the highest at 5\% for the heuristic and 10\% for the SAT solve approach.
+Table 4 shows the average deviation percentage (\%Dev) of all instances compared to the known optimal solutions. For the DC1 dataset, all deviations for both algorithms are close to 0. The results for dataset J30 show a higher deviation of around 2 to 3\% for the heuristic algorithm and around 0.5 to 1.5\% for the SAT solver algorithm. The higher number indicates the algorithms could not find the known optimal solutions on average. For the RG30 dataset, these numbers go up the highest at 5\% for the heuristic and 10\% for the SAT solver approach.
 
 \begin{table}
 	\begin{center}
@@ -101,7 +101,7 @@ Table 4 shows the average deviation percentage (\%Dev) of all instances compared
 	\end{center}
 \end{table}
 
-In table \ref{table:table5} the comparison between the results of the SAT solver compared to the heuristic algorithm is shown. For the DC1 and J30 datasets the number of instances for which the heuristic solution could find a solution strictly better than the SAT solver is aroung 9\% on average over the different setup times. The RG30 dataset shows that heuristic approach found lower makespans in around 70\% of the instances.These results are calculated for the instances where the SAT solver could find a solution.
+In table \ref{table:table5} the comparison between the results of the SAT solver compared to the heuristic algorithm is shown. For the DC1 and J30 datasets, the number of instances for which the heuristic solution could find a solution strictly better than the SAT solver is around 9\% on average over the different setup times. The RG30 dataset shows that the heuristic approach found lower makespans in around 70\% of the instances. These results are calculated for the instances where the SAT solver could find a solution.
 
 \begin{table}
 	\begin{center}
@@ -123,7 +123,7 @@ In table \ref{table:table5} the comparison between the results of the SAT solver
 	\end{center}
 \end{table}
 
-Finally an overview of the SAT algorithm performance is given in table \ref{table:table5}. This shows that the percentage of instances for which a schedules could be found (\%Satisfied) are 75.2\%, 28.8\% and 24.0\% in the DC1, J30 and RG30 datasets respectively. For found schedules the SAT solver also provides if it is proven to be optimal. The percentage of proven optimal solutions (\%Optimality proven) are 67.5\%, 81.9\% and 9.0\% for the DC1, J30 and RG30 datasets respectively.
+Finally, an overview of the SAT algorithm performance is given in table \ref{table:table5}. This shows that the percentage of instances for which a schedule could be found (\%Satisfied) are 75.2\%, 28.8\% and 24.0\% in the DC1, J30 and RG30 datasets respectively. For found schedules, the SAT solver also provides if it is proven to be optimal. The percentage of proven optimal solutions (\%Optimality proven) are 67.5\%, 81.9\% and 9.0\% for the DC1, J30 and RG30 datasets respectively.
 
 \begin{table}
 	\begin{center}
