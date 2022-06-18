@@ -1,11 +1,9 @@
-\section{Heuristics and augmentation of SAT solvers}
-To evaluate the performance of a heuristically augmented SAT solver on PRCPSP-ST instances comparative data needs to be generated.  To make sure the variables between algorithms are limited they were all designed, implemented and run on the same hardware for this research. This way the at least coding skills and hardware improvements over time are not introduced in the data. Improved performance of new algorithms only as a result of the use of more recent hardware has shown up in the past as described in section \ref{section:responsible research}. Three algorithms are used to solve the same problem instances for an equal amount of time: a heuristic algorithm, SAT solver, heuristically augmented SAT solver.
+\section{Heuristic and SAT solver}
+Two algorithms were implemented for this research to be compared: a heuristic algorithm and a boolean satisfiability encoding run on a SAT solver.
 
 The heuristic algorithm is an adapted version of the iterated greedy algorithm \cite{RN32}. It was designed for flow-shop scheduling but with a few tweaks it can also be applied to RCPSP.
 
-For a SAT solver to be used the PRCPSP-ST has to be encoded into conjunctive normal form boolean logic. When the encoding is made any SAT solver is able to provide feasible schedules. Because there is a clear objective to reduce the makespan a more advanced MAX-SAT solver is used. This will create feasible schedules while also trying to optimize to an objective function.
-
-To augment a SAT solver for a specific problem the code of the solver has to be changed. In the case of this research a heuristic function will be added that improves the selection of a possible variable. The heuristic function will use knowledge about PRCPSP-ST to try and select a variable that will reduce the resulting schedule makespan.
+For a SAT solver to be used the PRCPSP-ST has to be encoded into conjunctive normal form boolean logic. When the encoding is made any SAT solver is able to provide feasible schedules. Because there is a clear objective to reduce the makespan a more advanced MAX-SAT solver is used. A MAX-SAT solver expand the features of a SAT solver by adding native support for an objective function. This objective function gives a score to each solution found and when running a MAX-SAT solver it keeps trying to maximize this score until no further improvements can be found.
 
 \subsection{Heuristic}
 As a heuristic solution a tweaked version of the iterated greedy algorithm is implemented \cite{RN32}. This algorithm requires an activity list representation of the project. It start with a setup of an initial schedule and then iterates over a destruction phase and a construction phase until a time limit or number of iterations limit is reached. 
