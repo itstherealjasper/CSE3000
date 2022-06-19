@@ -1,5 +1,5 @@
 # Research Project CSE3000
 
-This repository links to the work of students for the Research project course of the CSE bachelor at TU Delft.
+This repository is part of the research project 2022 during the CSE bachelor at TU Delft.
 
-Please see their projects [here](https://cse3000-research-project.github.io/).
+Please see the other projects [here](https://cse3000-research-project.github.io/).
