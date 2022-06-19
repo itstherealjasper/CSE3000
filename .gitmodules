@@ -1,3 +1,9 @@
 [submodule "src/SAT-encoding/pblib"]
 	path = src/SAT-encoding/pblib
 	url = https://github.com/master-keying/pblib.git
+[submodule "src/performance-testing/pblib"]
+	path = src/performance-testing/pblib
+	url = https://github.com/master-keying/pblib.git
+[submodule "src/performance-testing/pumpkin-solver"]
+	path = src/performance-testing/pumpkin-solver
+	url = git@bitbucket.org:itstherealjasper/heuristic-pumpkin-solver.git
