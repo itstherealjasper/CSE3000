@@ -103,7 +103,6 @@ void preempt_task(Task task);
 void set_start_variables();
 void set_process_variables();
 void remove_duplicate_segments(vector<Task>& task_list);
-void extend_initial_successors(Task& task, vector<Task>& task_list);
 void calculate_rurs(vector<Task>& task_list);
 void fix_presedence_constraint(vector<Task>& task_list);
 bool check_presedence_violation(vector<Task>& task_list, vector<int>& task_in_violation_at_index);
@@ -123,8 +122,8 @@ string extract_filename_without_extention(string& file_path);
 const int setup_time = 5;
 
 // Global variables for the specific problem instance used
-const string project_lib_folder_j30 = "C:/Projects/cse3000/src/parsed-datasets/j30.sm/";
-string project_lib_file_j30 = "j301_0.RCP";
+const string project_lib_folder_j30 = "C:/Projects/cse3000/src/parsed-datasets/DC1/";
+string project_lib_file_j30 = "mv1.RCP";
 
 Task_Id* Task_Id::instance = 0;
 Task_Id* unique_task_id = unique_task_id->get_instance();
@@ -154,8 +153,6 @@ int main()
 #pragma region upper bound
 	vector<Task> upper_bound_task_list = parsed_tasks;
 	vector<int> upper_bound_start_times;
-
-	extend_initial_successors(upper_bound_task_list[0], upper_bound_task_list);
 
 	calculate_rurs(upper_bound_task_list);
 	sort(upper_bound_task_list.begin() + 1, upper_bound_task_list.end() - 1, [](const Task& lhs, const Task& rhs) {return lhs.rur > rhs.rur; });
@@ -384,28 +381,6 @@ void remove_duplicate_segments(vector<Task>& task_list)
 	}
 }
 
-void extend_initial_successors(Task& task, vector<Task>& task_list)
-{
-	if (task.id == parsed_tasks.back().id) {
-		return;
-	}
-	for (int i = 0; i < task.successors.size(); i++)
-	{
-		for (int j = 0; j < task_list.size(); j++)
-		{
-			if (task.successors[i].first == task_list[j].id && task.successors[i].second == task_list[j].segment) {
-				extend_initial_successors(task_list[j], task_list);
-				for (int k = 0; k < task_list[j].successors.size(); k++)
-				{
-					if (find(task.successors.begin(), task.successors.end(), task_list[j].successors[k]) == task.successors.end()) {
-						task.successors.push_back(task_list[j].successors[k]);
-					}
-				}
-			}
-		}
-	}
-}
-
 void calculate_rurs(vector<Task>& task_list)
 {
 	for (int i = 0; i < task_list.size(); i++)
@@ -434,39 +409,49 @@ bool check_presedence_violation(vector<Task>& task_list, vector<int>& task_in_vi
 {
 	for (int i = 1; i < task_list.size(); i++)
 	{
-		for (int j = 0; j < i; j++)
+		vector<pair<int, int>> successors = task_list[i].successors;
+		while (successors.size() > 0)
 		{
-			for (int k = 0; k < task_list[i].successors.size(); k++)
+			pair<int, int> successor = successors[0];
+			successors.erase(successors.begin());
+			for (int j = 0; j < i; j++)
 			{
-				if (task_list[i].successors[k].first == task_list[j].id && task_list[i].successors[k].second == task_list[j].segment)
-				{
-					task_in_violation_at_index = { i, j };
+				if (task_list[j].id == successor.first) {
+					task_in_violation_at_index = { i,j };
 					return true;
+				}
+			}
+			for (int j = 0; j < parsed_tasks.size(); j++)
+			{
+				if (parsed_tasks[j].id == successor.first) {
+					for (int k = 0; k < parsed_tasks[j].successors.size(); k++)
+					{
+						successors.push_back(parsed_tasks[j].successors[k]);
+					}
+					break;
 				}
 			}
 		}
 	}
 
 	return false;
-}
 
-bool check_presedence_violation(vector<Task>& task_list)
-{
-	for (int i = 1; i < task_list.size(); i++)
-	{
-		for (int j = 0; j < i; j++)
-		{
-			for (int k = 0; k < task_list[i].successors.size(); k++)
-			{
-				if (task_list[i].successors[k].first == task_list[j].id && task_list[i].successors[k].second == task_list[j].segment)
-				{
-					return true;
-				}
-			}
-		}
-	}
+	//for (int i = 1; i < task_list.size(); i++)
+	//{
+	//	for (int j = 0; j < i; j++)
+	//	{
+	//		for (int k = 0; k < task_list[i].successors.size(); k++)
+	//		{
+	//			if (task_list[i].successors[k].first == task_list[j].id && task_list[i].successors[k].second == task_list[j].segment)
+	//			{
+	//				task_in_violation_at_index = { i, j };
+	//				return true;
+	//			}
+	//		}
+	//	}
+	//}
 
-	return false;
+	//return false;
 }
 
 // Found on StackOverflow answer: https://stackoverflow.com/a/57399634
@@ -504,7 +489,8 @@ void construct_upper_bound_task_list(vector<Task>& task_list)
 		for (int i = 0; i <= new_task_list.size(); i++)
 		{
 			new_task_list.insert(new_task_list.begin() + i, to_schedule_task);
-			if (!check_presedence_violation(new_task_list)) {
+			vector<int> tmp;
+			if (!check_presedence_violation(new_task_list, tmp)) {
 				int makespan_test = calculate_sgs_makespan(new_task_list);
 				if (makespan_test < minimum_makespan) {
 					minimum_makespan = makespan_test;
