@@ -1,3 +1,5 @@
 \begin{abstract}
-This will only be written once all experiments have been done and the conclusion is on paper.
+    Scheduling has been subject to much research. The resource-constrained project scheduling problem (RCPSP) is no exception. With the multiple different variations and additions to the standard definition that are possible, many exact, heuristic and meta-heuristic approaches have been proposed. One of those variations is allowing tasks in the project to be split up into smaller subsegments and scheduled at different times. The splitting of tasks is introduced to try and find project schedules that require less overall time to complete.
+
+    This paper proposes a satisfiability (SAT) encoding for the RCPSP while also allowing tasks to be split. A SAT solver is used to solve the encoded problem instances and compared with the results of a heuristic algorithm. The comparison shows a lower rate of solved instances but found results are in almost all cases more optimal and proof of optimality can be provided. For applications where the sacrifice of completing tasks without splitting is only worthwhile if the absolute lowest schedule duration can be found this method provides a good alternative to other approaches.
 \end{abstract}
